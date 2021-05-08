@@ -21,5 +21,4 @@ git config --global core.autocrlf input
 ```
 git config --global core.autocrlf false
 ```
-
-https://stackoverflow.com/a/5834094
+source: https://stackoverflow.com/a/5834094
