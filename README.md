@@ -6,6 +6,7 @@ git init
 git config --global user.email "email@gmail.com"
 git config --global user.email "username"
 git remote add origin https://github.com/kasuta96/janote.git
+git pull origin master
 ...
 ```
 
