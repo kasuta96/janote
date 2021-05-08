@@ -78,7 +78,7 @@
                     @endauth
                 </div>
             @endif
-
+<h1>Nam da sua </h1>
             <div class="content">
                 <div class="title m-b-md">
                     Laravel
