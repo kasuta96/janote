@@ -1,14 +1,22 @@
 # janote
 
-command from janote-docker\src\janote
+command from janote-docker/src/
 ```
-git init
-git config --global user.email "email@gmail.com"
-git config --global user.email "username"
-git remote add origin https://github.com/kasuta96/janote.git
-git pull origin master
-...
+
+git clone https://github.com/kasuta96/janote.git
+cd janote
+code .
 ```
+edit .env file (add mysql password)
+
+```
+docker-compose exec app bash
+cd janote
+composer install
+php artisan key:generate
+php artisan migrate
+```
+now go http://localhost:8000/
 
 ## error
 Git Error: warning: CRLF will be replaced by LF in ...
