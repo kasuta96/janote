@@ -14,9 +14,16 @@ docker-compose exec app bash
 cd janote
 composer install
 php artisan key:generate
-php artisan migrate
+php artisan migrate:refresh
 ```
 now go http://localhost:8000/
+
+## seeder: auto add data to database
+first register 1 account
+then on bash terminal:
+```
+php artisan db:seed
+```
 
 ## error
 Git Error: warning: CRLF will be replaced by LF in ...
