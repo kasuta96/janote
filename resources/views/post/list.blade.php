@@ -22,16 +22,21 @@
                         <i class="icon i-3dot"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="">
-
+                        @auth
                         @if ($post->user_id == Auth::user()->id)
                         <form action="{{ route('deletePost', $post->id) }}" method="get" onsubmit="return checkDelete()">
                             @csrf
                             <button class="dropdown-item" type="submit" class="btn btn-link"><i class="icon i-trash"></i> Delete</button>
                         </form>
                         @endif
-
                         <a class="dropdown-item" href="#">Save</a>
                         <a class="dropdown-item" href="#">Report</a>
+
+                        @else
+                        <h7 class="dropdown-header">Login to use more</h7>
+                        <a class="dropdown-item" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        <a class="dropdown-item" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        @endauth
                     </div>
                 </div>
             </div>

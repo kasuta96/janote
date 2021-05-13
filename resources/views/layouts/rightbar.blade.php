@@ -1,4 +1,4 @@
-<div class="card sticky-top">
+<div class="card sticky-top z-index-fix">
     @auth
     <div class="card-body">
         <div class="h5">{{ Auth::user()->name }}</div>
