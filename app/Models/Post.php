@@ -16,4 +16,10 @@ class Post extends Model
         'embed',
         'created_at'
     ];
+
+    // relationship with user
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id');
+    }
 }
