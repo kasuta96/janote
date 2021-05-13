@@ -13,33 +13,33 @@ class PostController extends Controller
     //
     public function showPosts(Request $request)
     {
-        // $Posts = Post::all();
-
+        // get request
         $page = $request->input('p');
-        $posts = DB::table('posts')
-                    ->having('status','=',0)
-                    ->orderByRaw('id DESC')
-                    ->take(10)
-                    ->when($page, function ($query, $page)
-                    {
-                        if ($page > 1) {
-                            return $query->skip(10*($page - 1));
-                        } else {
-                            return false;
-                        }
-                    })
-                    ->get()
-                    ->each(function ($post) // get username by user_id
-                    {
-                        $user = DB::table('users')->having('id', '=', $post->user_id)->first();
-                        $post->username = $user->name;
-                    });
+        // get posts data
+        $posts = Post::with('user')
+        ->where('status','=',0)
+        ->orderBy('id', 'DESC')
+        ->take(10)
+        ->when($page, function ($query, $page)
+        {
+            if ($page > 1) {
+                return $query->skip(10*($page - 1));
+            } else {
+                return false;
+            }
+        })
+        ->get();
 
-        // dd($posts); // show data like console.log
-        return view('post.list', ['posts'=>$posts]);
+        // get more data
+        $data = new \stdClass();
+        $data->totalPost = DB::table('posts')->where('status','=',0)->count();
+        $data->totalPage = ceil($data->totalPost/10);
+        $data->currentPage = $page ?? 1;
+        
+        return view('post.list', ['posts'=>$posts,'data'=>$data]);
     }
 
-    public function createPost(Request $request)
+    public function create(Request $request)
     {
         $input = $request->all();
         if (Auth::check()) // if login
@@ -58,5 +58,22 @@ class PostController extends Controller
         {
             return redirect()->route('login');
         }
+    }
+
+    public function delete($id)
+    {
+        $post = Post::find($id);
+        if (empty($post)) {
+            return redirect()->route('posts')->with('error', 'データがありません！');
+        }
+        if ($post->user_id != Auth::user()->id) {
+            return redirect()->route('posts')->with('error', '削除できません');
+        }
+        try {
+            Post::destroy($id);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+        return redirect()->route('posts')->with('status', '削除しました');
     }
 }

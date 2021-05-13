@@ -1,5 +1,5 @@
 <!--- \\\\\\\Create Post-->
-<div class="card mb-3">
+<div class="card mb-5">
     <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
             <li class="nav-item">
@@ -32,11 +32,7 @@
                     <div class="py-4"></div>
                 </div>
             </div>
-            @if ($errors->has('content'))
-            <div class="text-danger mb-3">
-                {{ $errors->first('content') }}
-            </div>
-            @endif
+
             <div class="btn-toolbar justify-content-between">
                 <div class="btn-group">
                     @guest
@@ -53,9 +49,7 @@
                         <i class="fa fa-globe"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1">
-                        <a class="dropdown-item" href="#"><i class="fa fa-globe"></i> Public</a>
-                        <a class="dropdown-item" href="#"><i class="fa fa-users"></i> Friends</a>
-                        <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Just me</a>
+                        <a class="dropdown-item" href="#">Public</a>
                     </div>
                 </div>
             </div>

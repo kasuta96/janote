@@ -1,15 +1,13 @@
-<div class="card">
+<div class="card sticky-top">
     <div class="card-body">
-        <div class="h5">@LeeCross</div>
-        <div class="h7 text-muted">Fullname : Miracles Lee Cross</div>
-        <div class="h7">Developer of web applications, JavaScript, PHP, Java, Python, Ruby, Java,
-            Node.js,
-            etc.
-        </div>
+        @auth
+        <div class="h5">{{ Auth::user()->name }}</div>
+        <div class="h7 text-muted">email: {{ Auth::user()->email }}</div>
+        @endauth
     </div>
     <ul class="list-group list-group-flush">
         <li class="list-group-item">
-            <div class="h6 text-muted">Followers</div>
+            <div class="h6 text-muted">Pages</div>
             <div class="h5">5.2342</div>
         </li>
         <li class="list-group-item">

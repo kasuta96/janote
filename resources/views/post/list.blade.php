@@ -4,7 +4,7 @@
 
 @foreach($posts as $post)
 <!--- \\\\\\\Post-->
-<div class="card mb-3">
+<div class="card mb-3" data-post="{{ $post->id }}">
     <div class="card-header">
         <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex justify-content-between align-items-center">
@@ -12,7 +12,7 @@
                     <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
                 </div>
                 <div class="ml-2">
-                    <div class="h5 m-0" data-user="{{ $post->user_id }}">{{ $post->user_id.' - '.$post->username }}</div>
+                    <div class="h5 m-0" data-user="{{ $post->user_id }}">{{ $post->user->name }}</div>
                     <div class="h7 text-muted">{{ $post->created_at }}</div>
                 </div>
             </div>
@@ -22,7 +22,14 @@
                         <i class="icon i-3dot"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="">
-                        <div class="h6 dropdown-header">Configuration</div>
+
+                        @if ($post->user_id == Auth::user()->id)
+                        <form action="{{ route('deletePost', $post->id) }}" method="get" onsubmit="return checkDelete()">
+                            @csrf
+                            <button class="dropdown-item" type="submit" class="btn btn-link"><i class="icon i-trash"></i> Delete</button>
+                        </form>
+                        @endif
+
                         <a class="dropdown-item" href="#">Save</a>
                         <a class="dropdown-item" href="#">Report</a>
                     </div>

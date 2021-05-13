@@ -17,6 +17,7 @@ class Post extends Model
         'created_at'
     ];
 
+    // relationship with user
     public function user()
     {
         return $this->belongsTo('App\User', 'user_id');

@@ -19,8 +19,16 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-// showPosts
+// show Posts
 Route::get('/posts', 'Post\PostController@showPosts')->name('posts');
-
 // Create new post
-Route::post('/posts/create', 'Post\PostController@createPost')->name('createPost');
+Route::post('/post/create', 'Post\PostController@create')->name('createPost');
+// delete Posts
+Route::get('/post/delete/{id}', 'Post\PostController@delete')->name('deletePost');
+
+// show Notes
+Route::get('/notes', 'Post\PostController@showPosts')->name('notes');
+
+// show Categories
+Route::get('/categories', 'Post\PostController@showPosts')->name('categories');
+

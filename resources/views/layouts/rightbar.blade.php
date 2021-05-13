@@ -1,22 +1,24 @@
-<div class="card mb-3">
+<div class="card sticky-top">
+    @auth
     <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-            the
-            card's content.</p>
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
+        <div class="h5">{{ Auth::user()->name }}</div>
+        <div class="h7 text-muted">email: {{ Auth::user()->email }}</div>
     </div>
-</div>
-<div class="card mb-3">
-    <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-            the
-            card's content.</p>
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
-    </div>
+    @endauth
+    <ul class="list-group list-group-flush">
+
+        @if(Route::is('posts') )
+        <li class="list-group-item text-center">
+            <div class="h6 text-muted">Pages</div>
+            <a class="btn btn-light @if($data->currentPage < 2)disabled @endif" href="{{ route('posts').'/?p='.($data->currentPage-1) }}" role="button">Prev</a>
+            <span>{{ $data->currentPage.'/'.$data->totalPage }}</span>
+            <a class="btn btn-light @if($data->currentPage >= $data->totalPage)disabled @endif" href="{{ route('posts').'/?p='.($data->currentPage+1) }}" role="button">Next</a>
+        </li>
+        @endif
+
+        <li class="list-group-item">
+            <div class="h6 text-muted">somethings...</div>
+            <div class="h5"></div>
+        </li>
+    </ul>
 </div>
