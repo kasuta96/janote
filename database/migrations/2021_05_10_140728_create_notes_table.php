@@ -17,10 +17,10 @@ class CreateNotesTable extends Migration
             $table->bigIncrements('id');
             $table->text('title');
             $table->text('content')->nullable();
-            $table->bigInteger('user_id'); // foreign key user_id
-            // $table->foreign('user_id')->references('id')->on('users');
-            $table->bigInteger('category_id'); // foreign key category_id
-            // $table->foreign('category_id')->references('id')->on('categories');
+            $table->unsignedBigInteger('user_id'); // foreign key user_id
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('category_id'); // foreign key category_id
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->string('audio')->nullable(); // audio link
             $table->string('image')->nullable(); // image link
             $table->integer('status')->default(0);

@@ -8,8 +8,8 @@ $factory->define(App\Models\Note::class, function ($faker) {
     return [
         'title' => $faker->city,
         'content' => $faker->word,
-        'user_id' => 1,
-        'category_id' => random_int(1, 12),
+        'user_id' => \App\User::first()->id,
+        'category_id' => \App\Models\Category::inRandomOrder()->first()->id
         // 'audio',
         // 'image'
     ];
