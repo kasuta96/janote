@@ -7,6 +7,6 @@ use Faker\Generator as Faker;
 $factory->define(App\Models\Category::class, function ($faker) {
     return [
         'title' => $faker->company,
-        'user_id' => 1
+        'user_id' => \App\User::first()->id
     ];
 });

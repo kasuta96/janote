@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 $factory->define(App\Models\Post::class, function ($faker) {
     return [
         'content' => $faker->realText,
-        'user_id' => random_int(1, 11),
+        'user_id' => \App\User::inRandomOrder()->first()->id,
         'embed' => $faker->url
     ];
 });

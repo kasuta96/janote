@@ -21,9 +21,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('posts') }}">Posts</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('notes') }}">Notes</a>
-                </li>
                 <li class="nav-item mr-3">
                     <a class="nav-link" href="{{ route('categories') }}">Categories</a>
                 </li>
