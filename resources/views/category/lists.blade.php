@@ -12,7 +12,7 @@
     <tbody>
         @foreach($categories as $No => $category)
         <tr>
-            <td>{{ $No+1 }}</td><td><a href="{{ route('notes').'/'.($category->id) }}">{{ $category->title }}</a></td>
+            <td>{{ $No+1 }}</td><td><a href="{{ route('notes', $category->id) }}">{{ $category->title }}</a></td>
         </tr>
         @endforeach
     </tbody>

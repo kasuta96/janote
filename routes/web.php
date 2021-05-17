@@ -11,14 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return redirect()->route('home');
-});
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
+Route::get('/', 'Post\PostController@showPosts');
 // show Posts
 Route::get('/posts', 'Post\PostController@showPosts')->name('posts');
 // Create new post
