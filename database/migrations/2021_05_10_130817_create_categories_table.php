@@ -17,8 +17,8 @@ class CreateCategoriesTable extends Migration
             $table->bigIncrements('id');
             $table->text('title');
             // foreign key user_id
-            $table->bigInteger('user_id'); 
-            // $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('user_id'); 
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');;
             $table->integer('status')->default(0);
             $table->timestamps();
         });
