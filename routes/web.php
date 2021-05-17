@@ -30,5 +30,5 @@ Route::get('/post/delete/{id}', 'Post\PostController@delete')->name('deletePost'
 Route::get('/category/{id}', 'Note\NoteController@index')->name('notes');
 
 // show Categories
-Route::get('/categories', 'Post\PostController@showPosts')->name('categories');
+Route::get('/categories', 'Category\CategoryController@show')->name('categories');
 
