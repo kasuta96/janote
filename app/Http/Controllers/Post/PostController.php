@@ -47,7 +47,7 @@ class PostController extends Controller
             if ($input['content']) {
                 $input['user_id'] = Auth::id();
                 Post::create($input);
-                return redirect()->route('posts')->with('status', 'push success!');;
+                return redirect()->route('posts')->with('status', 'push success!');
             }
             else // with('status', '質問を編集しました')
             {
