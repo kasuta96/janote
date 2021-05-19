@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-    <div class="container">
+    <div class="container-fluid">
         <a class="navbar-brand" href="{{ url('/') }}">
             {{ config('app.name', 'Laravel') }}
         </a>
@@ -19,10 +19,10 @@
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('posts') }}">Posts</a>
+                    <a class="nav-link" href="{{ route('posts') }}">{{ __('Community') }}</a>
                 </li>
                 <li class="nav-item mr-3">
-                    <a class="nav-link" href="{{ route('categories') }}">Categories</a>
+                    <a class="nav-link" href="{{ route('categories') }}">{{ __('Categories') }}</a>
                 </li>
 
                 <!-- Authentication Links -->
@@ -52,7 +52,18 @@
                         </form>
                     </div>
                 </li>
+                
                 @endguest
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="icon i-globe"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="">
+                    @foreach (Config::get('languages') as $lang => $language)
+                        <a class="dropdown-item @if ($lang == App::getLocale())active @endif" href="{{ route('lang.switch', $lang) }}"> {{$language}}</a>
+                    @endforeach
+                    </div>
+                </li>
             </ul>
         </div>
     </div>

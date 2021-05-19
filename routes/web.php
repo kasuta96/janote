@@ -29,3 +29,5 @@ Route::get('/category/{id}', 'Note\NoteController@index')->name('notes');
 // show Categories
 Route::get('/categories', 'Category\CategoryController@show')->name('categories');
 
+// change language
+Route::get('lang/{lang}', 'LanguageController@switchLang')->name('lang.switch');
