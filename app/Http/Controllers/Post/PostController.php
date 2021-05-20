@@ -49,7 +49,7 @@ class PostController extends Controller
                 Post::create($input);
                 return redirect()->route('posts')->with('status', 'push success!');
             }
-            else // with('status', '質問を編集しました')
+            else
             {
                 return redirect()->route('posts')->with('error', 'Input data first!');
             }

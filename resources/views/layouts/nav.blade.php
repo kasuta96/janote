@@ -3,6 +3,18 @@
         <a class="navbar-brand" href="{{ url('/') }}">
             {{ config('app.name', 'Laravel') }}
         </a>
+        <!-- Add button -->
+        <div class="nav-item dropdown">
+            <button class="btn btn-light mx-3 dropdown-toggle" id="addDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="icon i-plus"></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="addDropdown">
+                <a class="dropdown-item" href="{{ route('createNote') }}"><i class="icon i-text"></i> {{ __('Note') }}</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href=""><i class="icon i-folder"></i> {{ __('Categories') }}</a>
+            </div>
+        </div>
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
         </button>

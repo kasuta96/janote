@@ -15,4 +15,10 @@ class Category extends Model
         'user_id',
         'created_at'
     ];
+
+    // relationship
+    public function notes()
+    {
+        return $this->hasMany('App\Models\Note');
+    }
 }

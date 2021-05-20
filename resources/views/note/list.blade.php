@@ -3,6 +3,24 @@
 
 @section('content')
 
+<div class="d-flex justify-content-between mb-2">
+    <a href="{{ route('categories') }}" class="btn btn-light">
+        <i class="icon i-back"></i> {{ __('Back') }}
+    </a>
+    <h6 class="text-center"><strong>{{ $Category->title }}</strong></h6>
+    <div>
+        <span class="dropdown">
+            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <i class="icon i-3dot"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="{{ route('createNote').'?category='.$Category->id }}"><i class="i-plus icon"></i> {{ __('Add') }}</a>
+            </div>
+        </span>
+    </div>
+</div>
+
 <table class="table table-striped">
     <thead>
         <tr>
@@ -30,8 +48,13 @@
                     <div class="dropdown-menu dropdown-menu-right">
                         <div class="dropdown-header">
                             <button class="btn btn-light btn-sm"><i class="icon i-mic"></i></button>
-                            <button class="btn btn-light btn-sm" data-edit="0"><i class="icon i-pencil"></i></button>
-                            <button class="btn btn-light btn-sm" data-rm="0"><i class="icon i-trash"></i></button>
+                            <a href="{{ route('editNote', $Note->id) }}" role="button" class="btn btn-light btn-sm" h><i class="icon i-pencil"></i></a>
+
+                            <form action="{{ route('deleteNote', $Note->id) }}" method="get" class="d-inline-block" onsubmit="return checkDelete()">
+                            @csrf
+                                <button type="submit" class="btn btn-light btn-sm" title="{{ __('Delete') }}"><i class="icon i-trash"></i></button>
+                            </form>
+
                         </div>
                     </div>
                 </div>
