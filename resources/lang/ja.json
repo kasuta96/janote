@@ -1,7 +1,15 @@
 {
     "Community":"コミュニティ",
     "Categories":"カテゴリー",
-
+    "Other":"その他",
+    "Back":"戻る",
+    "Title":"タイトル",
+    "Content":"内容",
+    "Sound":"音",
+    "Recording":"録音",
+    "Select":"選択",
+    "Deleted":"削除されました",
+    "Update successful":"更新しました",
 
 
     "A new verification link has been sent to the email address you provided during registration.": "登録時に提供されたメールアドレスに新しい検証リンクが送信されました。",
@@ -139,3 +147,4 @@
     "results": "結果",
     "to": "to"
   }
+  

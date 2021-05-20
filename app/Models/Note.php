@@ -19,4 +19,10 @@ class Note extends Model
         'image',
         'created_at'
     ];
+
+    // relationship
+    public function category()
+    {
+        return $this->belongsTo('App\Models\Category', 'category_id');
+    }
 }

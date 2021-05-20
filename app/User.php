@@ -37,8 +37,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function post()
+    // relationship
+    public function posts()
     {
         return $this->hasMany('App\Models\Post');
+    }
+    public function categories()
+    {
+        return $this->hasMany('App\Models\Category');
     }
 }

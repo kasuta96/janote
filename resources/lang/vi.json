@@ -1,7 +1,15 @@
 {
     "Community":"Cộng đồng",
     "Categories":"Chuyên mục",
-
+    "Other":"Khác",
+    "Back":"Trở về",
+    "Title":"Tiêu đề",
+    "Content":"Nội dung",
+    "Sound":"Âm thanh",
+    "Recording":"Ghi âm",
+    "Select":"Lựa chọn",
+    "Deleted":"Đã xóa",
+    "Update successful":"Cập nhật thành công",
 
 
     "A fresh verification link has been sent to your email address.": "Một đường dẫn xác minh mới đã được gửi đến địa chỉ email của bạn.",
