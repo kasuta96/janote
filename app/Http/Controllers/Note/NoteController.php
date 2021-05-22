@@ -46,6 +46,11 @@ class NoteController extends Controller
      */
     public function create(Request $request)
     {
+        if (!Auth::check()) // if login
+        {
+            return redirect()->route('login');
+        }
+
         // get categories list
         $Categories = Category::where('user_id','=',Auth::id())->get();
         if ($request['category']) {
@@ -63,29 +68,25 @@ class NoteController extends Controller
      */
     public function store(NoteRequest $request)
     {
-        $input = $request->all();
-        if (Auth::check()) // if login
-        {
-            $input['user_id'] = Auth::id();
-
-            // photo
-            if (request()->has('photo')) {
-                $uploaded = request()->file('photo');
-                $filename = time().'.'.$uploaded->getClientOriginalName();
-                $path = public_path('/images/');
-                $uploaded->move($path,$filename);
-                $input['image'] = '/images/'.$filename;
-            }
-
-            Note::create($input);
-
-            return redirect()->route('notes', $input['category_id'] ?? 0)->with('status', 'push success!');
-
-        }
-        else // if not login
+        if (!Auth::check()) // if login
         {
             return redirect()->route('login');
         }
+
+        $input = $request->all();
+        $input['user_id'] = Auth::id();
+
+        // photo
+        if (request()->has('photo')) {
+            $uploaded = request()->file('photo');
+            $filename = time().'.'.$uploaded->getClientOriginalName();
+            $path = public_path('/images/');
+            $uploaded->move($path,$filename);
+            $input['image'] = '/images/'.$filename;
+        }
+        // store data
+        Note::create($input);
+        return redirect()->route('notes', $input['category_id'] ?? 0)->with('status', 'push success!');
     }
 
     /**
