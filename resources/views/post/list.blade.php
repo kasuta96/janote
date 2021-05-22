@@ -8,8 +8,8 @@
     <div class="card-header">
         <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex justify-content-between align-items-center">
-                <div class="mr-2">
-                    <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
+                <div class="mr-2 avatar">
+                    <img class="" src="{{ $post->user->avatar }}" alt="">
                 </div>
                 <div class="ml-2">
                     <div class="h5 m-0" data-user="{{ $post->user_id }}">{{ $post->user->name }}</div>

@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->string('job')->nullable();
             $table->date('birthday')->nullable();
+            $table->string('avatar')->default('/images/default-avatar.jpg');
             $table->integer('status')->default(0);
             $table->timestamps();
         });
