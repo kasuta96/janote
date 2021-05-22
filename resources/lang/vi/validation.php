@@ -179,6 +179,7 @@ return [
         'message' => 'lời nhắn',
         'available' => 'có sẵn',
         'size' => 'kích thước',
+        'category_id' => 'Chuyên mục',
     ],
 
 ];

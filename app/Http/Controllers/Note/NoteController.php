@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Note;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Note;
+use App\Http\Requests\NoteRequest;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class NoteController extends Controller
 {
@@ -17,25 +19,25 @@ class NoteController extends Controller
     public function index($id, Request $request)
     {
         $Category = Category::find($id);
-        // if user's category
-        if (Auth::id() == $Category->user_id)
-        {
-            // page request
-            $page = $request->input('p') ?? 1;
-            // notes data
-            $notes = Note::where('category_id','=',$id)
-            ->orderBy('id', 'DESC')
-            ->skip(25*($page - 1))
-            ->take(25)
-            ->get();
-
-            // dd($notes);
-            return view('note.list', ['Notes'=>$notes, 'Category'=>$Category]);
+        // exits
+        if (empty($Category)) {
+            return redirect()->route('categories')->with('error', __('There is no data').'!');
         }
-        else
+        // if user's category
+        if (Auth::id() != $Category->user_id)
         {
             return redirect()->route('categories')->with('error', __('This action is unauthorized.'));
         }
+        // page request
+        $page = $request->input('p') ?? 1;
+        // notes data
+        $notes = Note::where('category_id','=',$id)
+        ->orderBy('id', 'DESC')
+        ->skip(25*($page - 1))
+        ->take(25)
+        ->get();
+
+        return view('note.list', ['Notes'=>$notes, 'Category'=>$Category]);
     }
 
     /**
@@ -59,20 +61,26 @@ class NoteController extends Controller
      * store created note
      * 
      */
-    public function store(Request $request)
+    public function store(NoteRequest $request)
     {
         $input = $request->all();
         if (Auth::check()) // if login
         {
-            if (isset($input['title']) && isset($input['category_id'])) {
-                $input['user_id'] = Auth::id();
-                Note::create($input);
-                return redirect()->route('notes', $input['category_id'] ?? 0)->with('status', 'push success!');
+            $input['user_id'] = Auth::id();
+
+            // photo
+            if (request()->has('photo')) {
+                $uploaded = request()->file('photo');
+                $filename = time().'.'.$uploaded->getClientOriginalName();
+                $path = public_path('/images/');
+                $uploaded->move($path,$filename);
+                $input['image'] = '/images/'.$filename;
             }
-            else
-            {
-                return redirect()->back()->with('error', 'Input data first!');
-            }
+
+            Note::create($input);
+
+            return redirect()->route('notes', $input['category_id'] ?? 0)->with('status', 'push success!');
+
         }
         else // if not login
         {
@@ -88,12 +96,18 @@ class NoteController extends Controller
     {
         $Note = Note::find($id);
         if (empty($Note)) {
-            return redirect()->back()->with('error', 'データがありません！');
+            return redirect()->back()->with('error', __('There is no data').'!');
         }
         if ($Note->user_id != Auth::id()) {
             return redirect()->back()->with('error', __('This action is unauthorized.'));
         }
         try {
+            // if has image
+            if ($Note->image) {
+                if(\File::exists(public_path($Note->image))) {
+                    \File::delete(public_path($Note->image));
+                }
+            }
             Note::destroy($id);
         } catch (\Throwable $th) {
             throw $th;
@@ -109,7 +123,7 @@ class NoteController extends Controller
     {
         $Note = Note::find($id);
         if (empty($Note)) {
-            return redirect()->back()->with('error', 'データがありません！');
+            return redirect()->back()->with('error', __('There is no data').'!');
         }
         if ($Note->user_id != Auth::id()) {
             return redirect()->back()->with('error', __('This action is unauthorized.'));
@@ -125,7 +139,7 @@ class NoteController extends Controller
      * Update note
      * 
      */
-    public function update(Request $request)
+    public function update(NoteRequest $request)
     {
         $input = $request->all();
         try {
