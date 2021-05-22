@@ -38,6 +38,6 @@ git config --global core.autocrlf false
 ```
 source: https://stackoverflow.com/a/5834094
 
-   # M1チップ対応のため追記
+   # M1チップ対応のため追記 (chi)
 - dbに追加：
 platform: linux/x86_64 
