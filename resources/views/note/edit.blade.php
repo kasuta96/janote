@@ -7,7 +7,7 @@
     <a href="{{ route('categories') }}" class="btn btn-light">
         <i class="icon i-back"></i> {{ __('Back') }}
     </a>
-    <h6 class="text-center"><strong>{{ __('Add') }}</strong></h6>
+    <h6 class="text-center"><strong>{{ __('Edit') }}</strong></h6>
     <div>
         <!-- <span class="dropdown">
             <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
@@ -36,18 +36,39 @@
                 @endforeach
             </select>
         </div>
+        @if ($errors->has('category_id'))
+        <div class="text-danger">
+            {{ $errors->first('category_id') }}
+        </div>
+        @endif
 
         <label for="">{{ __('Title') }}</label>
         <input type="text" name="title" class="form-control mb-3" placeholder="" value="{{ $Note->title }}" aria-describedby="">
         <small class="text-muted"></small>
+        @if ($errors->has('title'))
+        <div class="text-danger">
+            {{ $errors->first('title') }}
+        </div>
+        @endif
 
         <label for="">{{ __('Content') }}</label>
         <textarea class="form-control mb-3" name="content" rows="3">{{ $Note->content }}</textarea>
+        @if ($errors->has('content'))
+        <div class="text-danger">
+            {{ $errors->first('content') }}
+        </div>
+        @endif
 
-        <div class="w-100 text-center mb-3">
+        @if ($Note->image)
+        <div class="text-center my-4">
+            <img src="{{ $Note->image }}" class="rounded thumb" alt="">
+        </div>
+        @endif
+
+        <!-- <div class="w-100 text-center mb-3">
             <button type="button" class="btn btn-light"><i class="icon i-mic"></i> {{ __('Recording') }}</button>
             <button type="button" class="btn btn-light"><i class="icon i-image"></i> {{ __('Photo') }}</button>
-        </div>
+        </div> -->
 
     </div>
     <button type="submit" class="btn btn-primary w-100 text-center">{{ __('Save') }}</button>

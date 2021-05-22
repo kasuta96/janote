@@ -21,7 +21,7 @@
     </div>
 </div>
 
-<form action="{{ route('storeNote') }}" method="post">
+<form action="{{ route('storeNote') }}" method="post" enctype="multipart/form-data">
 @csrf
     <div class="form-group">
         <div class="input-group mb-3">
@@ -35,17 +35,38 @@
                 @endforeach
             </select>
         </div>
+        @if ($errors->has('category_id'))
+        <div class="text-danger">
+            {{ $errors->first('category_id') }}
+        </div>
+        @endif
 
         <label for="">{{ __('Title') }}</label>
         <input type="text" name="title" class="form-control mb-3" placeholder="" value="{{ old('title') }}" aria-describedby="">
         <small class="text-muted"></small>
+        @if ($errors->has('title'))
+        <div class="text-danger">
+            {{ $errors->first('title') }}
+        </div>
+        @endif
 
         <label for="">{{ __('Content') }}</label>
         <textarea class="form-control mb-3" name="content" rows="3">{{ old('content') }}</textarea>
+        @if ($errors->has('content'))
+        <div class="text-danger">
+            {{ $errors->first('content') }}
+        </div>
+        @endif
 
         <div class="w-100 text-center mb-3">
+            <i class="icon i-image"></i> {{ __('Photo') }}
+            <input type="file" name="photo" class="ml-2">
+            @if ($errors->has('photo'))
+            <div class="text-danger">
+                {{ $errors->first('photo') }}
+            </div>
+            @endif
             <button type="button" class="btn btn-light"><i class="icon i-mic"></i> {{ __('Recording') }}</button>
-            <button type="button" class="btn btn-light"><i class="icon i-image"></i> {{ __('Photo') }}</button>
         </div>
 
     </div>
