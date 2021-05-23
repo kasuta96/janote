@@ -1,4 +1,5 @@
 @extends('post.layout')
+@section('title', __('Posts'))
 
 @section('list')
 

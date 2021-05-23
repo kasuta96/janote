@@ -42,21 +42,18 @@ class PostController extends Controller
     public function create(Request $request)
     {
         $input = $request->all();
-        if (Auth::check()) // if login
-        {
-            if ($input['content']) {
-                $input['user_id'] = Auth::id();
-                Post::create($input);
-                return redirect()->route('posts')->with('status', 'push success!');
-            }
-            else
-            {
-                return redirect()->route('posts')->with('error', 'Input data first!');
-            }
-        }
-        else // if not login
+        if (!Auth::check()) // if login
         {
             return redirect()->route('login');
+        }
+        if ($input['content']) {
+            $input['user_id'] = Auth::id();
+            Post::create($input);
+            return redirect()->route('posts')->with('status', 'push success!');
+        }
+        else
+        {
+            return redirect()->route('posts')->with('error', 'Input data first!');
         }
     }
 

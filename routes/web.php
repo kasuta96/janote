@@ -33,6 +33,10 @@ Route::get('/note/delete/{id}', 'Note\NoteController@delete')->name('deleteNote'
 // Edit Note
 Route::get('/note/edit/{id}', 'Note\NoteController@edit')->name('editNote');
 Route::post('/note/update', 'Note\NoteController@update')->name('updateNote');
+// Trash
+Route::get('/trash/notes', 'Note\NoteController@trash')->name('trashNote');
+Route::get('/trash/remove/{id}', 'Note\NoteController@remove')->name('removeNote');
+Route::get('/trash/restore/{id}', 'Note\NoteController@restore')->name('restoreNote');
 
 
 // show Categories

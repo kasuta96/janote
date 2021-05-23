@@ -12,6 +12,17 @@
     "Update successful":"更新しました",
     "Edit":"編集",
     "There is no data":"データがありません",
+    "Total":"合計",
+    "Trash":"ごみ箱",
+    "Move to trash":"ゴミ箱に移動",
+    "Moved to trash":"ゴミ箱に移動しました",
+    "Restore":"戻す",
+    "Restore all":"すべて戻す",
+    "Delete all":"すべて削除",
+    "Notes":"ノート",
+    "Note":"ノート",
+    "Post":"投稿",
+    "Posts":"投稿",
 
 
     "A new verification link has been sent to the email address you provided during registration.": "登録時に提供されたメールアドレスに新しい検証リンクが送信されました。",
