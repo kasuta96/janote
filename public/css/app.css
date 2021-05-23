@@ -3,17 +3,27 @@
 main.container-fluid {
     max-width: 1440px;
 }
+.posts-main {
+    max-width: 960px;
+}
 .z-index-fix {
     z-index: 900;
 }
 body {
     overflow-x: hidden;
 }
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 20px 10px;
+    background-color: #f5f5f5;
+}
 /**********************/
 /*    Sidebar
 /**********************/
 #sidebar-wrapper {
-    margin-left: -15rem;
+    margin-left: -200px;
     position: sticky;
     top: 0;
     z-index: 1020;
@@ -29,11 +39,12 @@ body {
 }
 
 #sidebar-wrapper {
-    width: 15rem;
+    min-width: 200px;
+    width: 200px;
 }
 
 #page-content-wrapper {
-    min-width: 100vw;
+    min-width: 100%;
 }
 
 #app.toggled #sidebar-wrapper {
@@ -51,7 +62,7 @@ body {
     }
 
     #app.toggled #sidebar-wrapper {
-        margin-left: -15rem;
+        margin-left: -200px;
     }
 }
 /**********************/
