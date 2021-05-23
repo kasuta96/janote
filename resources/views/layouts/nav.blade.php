@@ -1,55 +1,32 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="{{ url('/') }}">
-            {{ config('app.name', 'Laravel') }}
-        </a>
-        <!-- Add button -->
-        <div class="nav-item dropdown">
-            <button class="btn btn-light mx-3 dropdown-toggle" id="addDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="icon i-plus"></i>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="addDropdown">
-                <a class="dropdown-item" href="{{ route('createNote') }}"><i class="icon i-text"></i> {{ __('Note') }}</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href=""><i class="icon i-folder"></i> {{ __('Categories') }}</a>
-            </div>
+<nav class="navbar navbar-light bg-white shadow-sm sticky-top">
+    <div class="container-fluid px-0">
+        <div>
+            <button class="btn btn-light btn-sm mr-2" id="sidebar-toggle"><span class="navbar-toggler-icon"></span></button>
+            <a class="navbar-brand" href="{{ url('/') }}">
+                {{ config('app.name', 'Laravel') }}
+            </a>
         </div>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Left Side Of Navbar -->
-            <ul class="navbar-nav mr-auto">
-                <form id="" class="form-inline search-form">
-                    <input type="text" placeholder="Search">
-                    <button type="button"><i class="icon i-search"></i></button>
-                </form>
-            </ul>
-
+        <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
             <!-- Right Side Of Navbar -->
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('posts') }}">{{ __('Community') }}</a>
-                </li>
-                <li class="nav-item mr-3">
-                    <a class="nav-link" href="{{ route('categories') }}">{{ __('Categories') }}</a>
-                </li>
-
+            <ul class="nav">
                 <!-- Authentication Links -->
                 @guest
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                    <a class="nav-link text-secondary" href="{{ route('login') }}">{{ __('Login') }}</a>
                 </li>
                 @if (Route::has('register'))
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                    <a class="nav-link text-secondary" href="{{ route('register') }}">{{ __('Register') }}</a>
                 </li>
                 @endif
                 @else
                 <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    <a id="navbarDropdown" class="nav-link text-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->name }} <span class="caret"></span>
                     </a>
 
@@ -77,6 +54,6 @@
                     </div>
                 </li>
             </ul>
-        </div>
+        <!-- </div> -->
     </div>
 </nav>

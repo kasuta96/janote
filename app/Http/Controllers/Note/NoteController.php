@@ -30,14 +30,22 @@ class NoteController extends Controller
         }
         // page request
         $page = $request->input('p') ?? 1;
+        // query
+        $query = Note::where('category_id','=',$id)
+        ->where('status','=',0)
+        ->orderBy('id', 'DESC');
+        // Count
+        $data = new \stdClass();
+        $data->count = $query->count();
+        $data->page = $page;
+        $data->limit = 25;
+        $data->totalPage = ceil($data->count/$data->limit);
         // notes data
-        $notes = Note::where('category_id','=',$id)
-        ->orderBy('id', 'DESC')
-        ->skip(25*($page - 1))
-        ->take(25)
+        $notes = $query->skip($data->limit*($page - 1))
+        ->take($data->limit)
         ->get();
 
-        return view('note.list', ['Notes'=>$notes, 'Category'=>$Category]);
+        return view('note.list', ['Notes'=>$notes, 'Category'=>$Category, 'Data'=>$data]);
     }
 
     /**
@@ -80,40 +88,13 @@ class NoteController extends Controller
         if (request()->has('photo')) {
             $uploaded = request()->file('photo');
             $filename = time().'.'.$uploaded->getClientOriginalName();
-            $path = public_path('/images/');
+            $path = public_path('/images/uploads/');
             $uploaded->move($path,$filename);
-            $input['image'] = '/images/'.$filename;
+            $input['image'] = '/images/uploads/'.$filename;
         }
         // store data
         Note::create($input);
         return redirect()->route('notes', $input['category_id'] ?? 0)->with('status', 'push success!');
-    }
-
-    /**
-     * delete note
-     * 
-     */
-    public function delete($id)
-    {
-        $Note = Note::find($id);
-        if (empty($Note)) {
-            return redirect()->back()->with('error', __('There is no data').'!');
-        }
-        if ($Note->user_id != Auth::id()) {
-            return redirect()->back()->with('error', __('This action is unauthorized.'));
-        }
-        try {
-            // if has image
-            if ($Note->image) {
-                if(\File::exists(public_path($Note->image))) {
-                    \File::delete(public_path($Note->image));
-                }
-            }
-            Note::destroy($id);
-        } catch (\Throwable $th) {
-            throw $th;
-        }
-        return redirect()->back()->with('status', __('Deleted'));
     }
 
     /**
@@ -155,5 +136,156 @@ class NoteController extends Controller
             throw $th;
         }
         return redirect()->route('notes', $input['category_id'])->with('status', __('Update successful'));
+    }
+
+    /**
+     * delete note
+     * 
+     */
+    public function delete($id)
+    {
+        $Note = Note::find($id);
+        if (empty($Note)) {
+            return redirect()->back()->with('error', __('There is no data').'!');
+        }
+        if ($Note->user_id != Auth::id()) {
+            return redirect()->back()->with('error', __('This action is unauthorized.'));
+        }
+        try
+        {
+            // Change status (0: active, 9: deleted)
+            $Note->fill([
+                'status' => 9,
+            ]);
+            $Note->save();
+        }
+        catch (\Throwable $th)
+        {
+            throw $th;
+        }
+        return redirect()->back()->with('status', __('Moved to trash'));
+    }
+
+    /**
+     * Show deleted note (trash)
+     * 
+     */
+    public function trash(Request $request)
+    {
+        // page request
+        $page = $request->input('p') ?? 1;
+        // query
+        $query = Note::with('category')
+        ->where('status','=',9)
+        ->orderBy('id', 'DESC');
+        // data
+        $data = new \stdClass();
+        $data->count = $query->count();
+        $data->page = $page;
+        $data->limit = 25;
+        $data->totalPage = ceil($data->count/$data->limit);
+        // notes data
+        $notes = $query->skip($data->limit*($page - 1))
+        ->take($data->limit)
+        ->get();
+
+        return view('note.trash', ['Notes'=>$notes, 'Category'=>'Trash', 'Data'=>$data]);
+    }
+
+    public function remove($rq)
+    {
+        // get note data
+        if ($rq == 'all')
+        {
+            $Notes = Note::where('status','=',9)
+            ->where('user_id','=',Auth::id())
+            ->get();
+            // check data
+            if (count($Notes) == 0) {
+                return redirect()->route('trashNote')->with('error', __('There is no data').'!');
+            }
+        }
+        else
+        {
+            $Note = Note::find($rq);
+            // check data
+            if (empty($Note)) {
+                return redirect()->route('trashNote')->with('error', __('There is no data').'!');
+            }
+            if ($Note->user_id != Auth::id())
+            {
+                return redirect()->route('trashNote')->with('error', __('This action is unauthorized.'));
+            }
+            $Notes = [$Note];
+        }
+        
+        // Count deleted data
+        $countImg = 0;
+        $countNote = 0;
+        foreach ($Notes as $Note) {
+            // if has image
+            if ($Note->image) {
+                if(\File::exists(public_path($Note->image))) {
+                    \File::delete(public_path($Note->image));
+                    $countImg++;
+                }
+            }
+            try {
+                Note::destroy($Note->id);
+                $countNote++;
+            } catch (\Throwable $th) {
+                throw $th;
+            }    
+        }
+        // return notify
+        $notify = __('Deleted');
+        if ($countImg > 0) {
+            $notify .= ', '.$countImg.' '.__('Photo');
+        }
+        if ($countNote > 0) {
+            $notify .= ', '.$countNote.' '.__('Note');
+        }
+        return redirect()->route('trashNote')->with('status', $notify);
+    }
+
+    public function restore($rq)
+    {
+        // get note data
+        if ($rq == 'all')
+        {
+            $Notes = Note::where('status','=',9)
+            ->where('user_id','=',Auth::id())
+            ->get();
+            // check data
+            if (count($Notes) == 0) {
+                return redirect()->route('trashNote')->with('error', __('There is no data').'!');
+            }
+        }
+        else
+        {
+            $Note = Note::find($rq);
+            // check data
+            if (empty($Note)) {
+                return redirect()->route('trashNote')->with('error', __('There is no data').'!');
+            }
+            if ($Note->user_id != Auth::id())
+            {
+                return redirect()->route('trashNote')->with('error', __('This action is unauthorized.'));
+            }
+            $Notes = [$Note];
+        }
+        
+        // Count deleted data
+        $countNote = 0;
+        foreach ($Notes as $Note) {
+            // Change status (0: active, 9: deleted)
+            $Note->fill([
+                'status' => 0,
+            ]);
+            $Note->save();
+            $countNote++;
+        }
+
+        return redirect()->route('trashNote')->with('status', __('Restored').', '.$countNote.' '.__('Note'));
     }
 }

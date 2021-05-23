@@ -5,3 +5,10 @@ function checkDelete() {
         return false;
     }
 }
+
+var sidebarToggle = document.getElementById('sidebar-toggle');
+var wrapper = document.getElementById('app');
+sidebarToggle.addEventListener('click', function(e) {
+    e.preventDefault();
+    wrapper.classList.toggle('toggled');
+});

@@ -17,7 +17,7 @@ class Note extends Model
         'category_id',
         'audio',
         'image',
-        'created_at'
+        'status',
     ];
 
     // relationship
