@@ -45,7 +45,7 @@
                 @endguest
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="icon i-globe"></i>
+                        <i data-feather="globe"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="">
                     @foreach (Config::get('languages') as $lang => $language)

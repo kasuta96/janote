@@ -9,14 +9,14 @@
 @endphp
 <div class="d-flex justify-content-between mb-2">
     <a href="{{ route('categories') }}" class="btn btn-light">
-        <i class="icon i-back"></i> {{ __('Back') }}
+        <i data-feather="arrow-left"></i> {{ __('Back') }}
     </a>
     <h6 class="text-center"><strong>{{ $Category->title }}</strong></h6>
     <div>
         <span class="dropdown">
             <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
-                <i class="icon i-3dot"></i>
+                <i data-feather="more-horizontal"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-item disabled text-secondary">
@@ -49,7 +49,7 @@
             <td>{{ $Note->content }}</td>
             <td class="table-tool">
                 @if ($Note->image)
-                <button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#imageModal{{ $Note->id }}" title="{{ __('Photo') }}"><i class="icon i-image"></i></button>
+                <button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#imageModal{{ $Note->id }}" title="{{ __('Photo') }}"><i data-feather="image"></i></button>
                 <!-- Modal -->
                 <div class="modal fade" id="imageModal{{ $Note->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-xl">
@@ -69,16 +69,16 @@
                 @endif
                 <button type="button" class="btn btn-light btn-sm" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
-                    <i class="icon i-3dot"></i>
+                    <i data-feather="more-horizontal"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
                     <div class="dropdown-header">
-                        <button class="btn btn-light btn-sm"><i class="icon i-mic"></i></button>
-                        <a href="{{ route('editNote', $Note->id) }}" role="button" class="btn btn-light btn-sm" h><i class="icon i-pencil"></i></a>
+                        <button class="btn btn-light btn-sm"><i data-feather="mic"></i></button>
+                        <a href="{{ route('editNote', $Note->id) }}" role="button" class="btn btn-light btn-sm" h><i data-feather="edit"></i></a>
 
                         <form action="{{ route('deleteNote', $Note->id) }}" method="get" class="d-inline-block" onsubmit="return checkDelete()">
                         @csrf
-                            <button type="submit" class="btn btn-light btn-sm" title="{{ __('Delete') }}"><i class="icon i-trash"></i></button>
+                            <button type="submit" class="btn btn-light btn-sm" title="{{ __('Delete') }}"><i data-feather="trash"></i></button>
                         </form>
 
                     </div>

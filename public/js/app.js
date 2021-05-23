@@ -5,10 +5,13 @@ function checkDelete() {
         return false;
     }
 }
-
+// Sidebar
 var sidebarToggle = document.getElementById('sidebar-toggle');
 var wrapper = document.getElementById('app');
 sidebarToggle.addEventListener('click', function(e) {
     e.preventDefault();
     wrapper.classList.toggle('toggled');
 });
+
+// Feather icons
+feather.replace();

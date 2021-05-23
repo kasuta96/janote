@@ -9,14 +9,14 @@
 @endphp
 <div class="d-flex justify-content-between mb-2">
     <a href="{{ route('categories') }}" class="btn btn-light">
-        <i class="icon i-back"></i> {{ __('Back') }}
+        <i data-feather="arrow-left"></i> {{ __('Back') }}
     </a>
     <h6 class="text-center"><strong>{{ __('Trash') }}</strong></h6>
     <div>
         <span class="dropdown">
             <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
-                <i class="icon i-3dot"></i>
+                <i data-feather="more-horizontal"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-item disabled text-secondary">
@@ -26,7 +26,7 @@
                 <a class="dropdown-item" href="{{ route('restoreNote','all') }}"><i class="i-repeat icon"></i> {{ __('Restore all') }}</a>
                 <form action="{{ route('removeNote','all') }}" method="get" onsubmit="return checkDelete();">
                 @csrf
-                    <button type="submit" class="dropdown-item" ><i class="icon i-delete"></i> {{ __('Delete all') }}</button>
+                    <button type="submit" class="dropdown-item" ><i data-feather="delete"></i> {{ __('Delete all') }}</button>
                 </form>
 
             </div>
@@ -62,7 +62,7 @@
 
             <td class="table-tool">
                 @if ($Note->image)
-                <button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#imageModal{{ $Note->id }}" title="{{ __('Photo') }}"><i class="icon i-image"></i></button>
+                <button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#imageModal{{ $Note->id }}" title="{{ __('Photo') }}"><i data-feather="image"></i></button>
                 <!-- Modal -->
                 <div class="modal fade" id="imageModal{{ $Note->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-xl">
@@ -82,14 +82,14 @@
                 @endif
                 <button type="button" class="btn btn-light btn-sm" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
-                    <i class="icon i-3dot"></i>
+                    <i data-feather="more-horizontal"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
                     <div class="dropdown-header">
-                        <a class="btn btn-success btn-sm" href="{{ route('restoreNote',$Note->id) }}" role="button" title="{{ __('Restore')}}"><i class="icon i-repeat"></i></a>
+                        <a class="btn btn-success btn-sm" href="{{ route('restoreNote',$Note->id) }}" role="button" title="{{ __('Restore')}}"><i data-feather="repeat"></i></a>
                         <form action="{{ route('removeNote', $Note->id) }}" method="get" class="d-inline-block" onsubmit="return checkDelete()">
                         @csrf
-                            <button type="submit" class="btn btn-danger btn-sm" title="{{ __('Delete') }}"><i class="icon i-delete"></i></button>
+                            <button type="submit" class="btn btn-danger btn-sm" title="{{ __('Delete') }}"><i data-feather="delete"></i></button>
                         </form>
 
                     </div>

@@ -5,14 +5,14 @@
 
 <div class="d-flex justify-content-between mb-4">
     <a href="{{ route('categories') }}" class="btn btn-light">
-        <i class="icon i-back"></i> {{ __('Back') }}
+        <i data-feather="arrow-left"></i> {{ __('Back') }}
     </a>
     <h6 class="text-center"><strong>{{ __('Edit') }}</strong></h6>
     <div>
         <!-- <span class="dropdown">
             <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
-                <i class="icon i-3dot"></i>
+                <i data-feather="more-horizontal"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-right">
                 <a class="dropdown-item" href="#">some option</a>
@@ -66,8 +66,8 @@
         @endif
 
         <!-- <div class="w-100 text-center mb-3">
-            <button type="button" class="btn btn-light"><i class="icon i-mic"></i> {{ __('Recording') }}</button>
-            <button type="button" class="btn btn-light"><i class="icon i-image"></i> {{ __('Photo') }}</button>
+            <button type="button" class="btn btn-light"><i data-feather="mic"></i> {{ __('Recording') }}</button>
+            <button type="button" class="btn btn-light"><i data-feather="image"></i> {{ __('Photo') }}</button>
         </div> -->
 
     </div>

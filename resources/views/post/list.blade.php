@@ -20,14 +20,14 @@
             <div>
                 <div class="dropdown">
                     <button class="btn btn-link" data-toggle="dropdown" type="button" id="">
-                        <i class="icon i-3dot"></i>
+                        <i data-feather="more-horizontal"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="">
                         @auth
                         @if ($post->user_id == Auth::user()->id)
                         <form action="{{ route('deletePost', $post->id) }}" method="get" onsubmit="return checkDelete()">
                             @csrf
-                            <button class="dropdown-item" type="submit" class="btn btn-link"><i class="icon i-trash"></i> Delete</button>
+                            <button class="dropdown-item" type="submit" class="btn btn-link"><i data-feather="trash"></i> Delete</button>
                         </form>
                         @endif
                         <a class="dropdown-item" href="#">Save</a>
