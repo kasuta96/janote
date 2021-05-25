@@ -1,21 +1,20 @@
 @extends('layouts.app')
-@section('title', __('Notes'))
+@section('title', 'Search')
 
 @section('content')
 @php
-    $params = '?';
-    $route = route('notes', $Category->id);
+    $params = '?kw='.$Keyword;
+    $route = route('searchNote');
 
 @endphp
 <div class="d-flex justify-content-between mb-2">
     <a href="{{ route('categories') }}" class="btn btn-light">
         <i data-feather="arrow-left"></i> {{ __('Back') }}
     </a>
-    <h6 class="text-center"><strong>{{ $Category->title }}</strong></h6>
+    <h6 class="text-center"><strong>{{ __('Search').': '.$Keyword }}</strong></h6>
     <div>
         <span class="dropdown">
-            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
+            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i data-feather="more-horizontal"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-right">
@@ -23,7 +22,7 @@
                     <span>{{ __('Total').': '.$Data->count }}</span>
                 </div>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ route('createNote').'?category='.$Category->id }}"><i data-feather="plus"></i> {{ __('Add') }}</a>
+
             </div>
         </span>
     </div>
@@ -35,6 +34,7 @@
             <th scope="col">#</th>
             <th scope="col">{{ __('Title') }}</th>
             <th scope="col">{{ __('Content') }}</th>
+            <th scope="col">{{ __('Categories') }}</th>
             <!-- <th scope="col">タイプ</th> -->
             <th scope="col" class="table-tool"></th>
         </tr>
@@ -47,6 +47,7 @@
             <th scope="row" title="{{ $Note->created_at }}">{{ ($Data->page-1)*$Data->limit+$key+1 }}</th>
             <td>{{ $Note->title }}</td>
             <td>{{ $Note->content }}</td>
+            <td><a class="text-dark" href="{{ route('notes',$Note->category_id) }}">{{ $Note->category->title }}</a></td>
             <td class="table-tool">
                 @if ($Note->image)
                 <button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#imageModal{{ $Note->id }}" title="{{ __('Photo') }}"><i data-feather="image"></i></button>

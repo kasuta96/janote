@@ -54,7 +54,7 @@ class NoteController extends Controller
      */
     public function create(Request $request)
     {
-        if (!Auth::check()) // if login
+        if (!Auth::check()) // if not login
         {
             return redirect()->route('login');
         }
@@ -124,8 +124,17 @@ class NoteController extends Controller
     public function update(NoteRequest $request)
     {
         $input = $request->all();
+        $Note = Note::find($input['id']);
+        // check auth
+        if (empty($Note)) {
+            return redirect()->route('home')->with('error', __('There is no data').'!');
+        }
+        if ($Note->user_id != Auth::id()) {
+            return redirect()->route('home')->with('error', __('This action is unauthorized.'));
+        }
+
         try {
-            $Note = Note::find($input['id']);
+
             $Note->fill([
                 'title' => $input['title'],
                 'content' => $input['content'],
@@ -135,6 +144,19 @@ class NoteController extends Controller
         } catch (\Throwable $th) {
             throw $th;
         }
+        // photo
+        if (request()->has('photo')) {
+            $uploaded = request()->file('photo');
+            $filename = time().'.'.$uploaded->getClientOriginalName();
+            $path = public_path('/images/uploads/');
+            $uploaded->move($path,$filename);
+            // Save
+            $Note->fill([
+                'image' => '/images/uploads/'.$filename
+            ]);
+            $Note->save();
+        }
+
         return redirect()->route('notes', $input['category_id'])->with('status', __('Update successful'));
     }
 
@@ -172,6 +194,10 @@ class NoteController extends Controller
      */
     public function trash(Request $request)
     {
+        if (!Auth::check()) // if not login
+        {
+            return redirect()->route('login');
+        }
         // page request
         $page = $request->input('p') ?? 1;
         // query
@@ -288,4 +314,38 @@ class NoteController extends Controller
 
         return redirect()->route('trashNote')->with('status', __('Restored').', '.$countNote.' '.__('Note'));
     }
+
+    /**
+     * Show notes (search)
+     * 
+     */
+    public function search(Request $request)
+    {
+        if (!Auth::check()) // if not login
+        {
+            return redirect()->route('login');
+        }
+        // page request
+        $page = $request->input('p') ?? 1;
+        $kw = $request->input('kw');
+        // query
+        $query = Note::with('category')
+        ->where('title','LIKE',"%$kw%")
+        ->orWhere('content','LIKE',"%$kw%")
+        ->where('status','=',0)
+        ->orderBy('id', 'DESC');
+        // data
+        $data = new \stdClass();
+        $data->count = $query->count();
+        $data->page = $page;
+        $data->limit = 25;
+        $data->totalPage = ceil($data->count/$data->limit);
+        // notes data
+        $notes = $query->skip($data->limit*($page - 1))
+        ->take($data->limit)
+        ->get();
+
+        return view('note.search', ['Notes'=>$notes, 'Keyword'=>$kw, 'Data'=>$data]);
+    }
+
 }

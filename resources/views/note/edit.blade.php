@@ -21,7 +21,7 @@
     </div>
 </div>
 
-<form action="{{ route('updateNote') }}" method="post">
+<form action="{{ route('updateNote') }}" method="post" enctype="multipart/form-data">
 @csrf
     <div class="form-group">
         <input type="hidden" name="id" value="{{ $Note->id }}">
@@ -62,6 +62,18 @@
         @if ($Note->image)
         <div class="text-center my-4">
             <img src="{{ $Note->image }}" class="rounded thumb" alt="">
+        </div>
+
+        @else
+        <div class="w-100 text-center mb-3">
+            <i data-feather="image"></i> {{ __('Photo') }}
+            <input type="file" name="photo" class="ml-2">
+            @if ($errors->has('photo'))
+            <div class="text-danger">
+                {{ $errors->first('photo') }}
+            </div>
+            @endif
+            <button type="button" class="btn btn-light"><i data-feather="mic"></i> {{ __('Recording') }}</button>
         </div>
         @endif
 

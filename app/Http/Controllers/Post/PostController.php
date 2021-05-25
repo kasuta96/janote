@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
+use App\Classes\General;
 
 class PostController extends Controller
 {
@@ -29,7 +30,10 @@ class PostController extends Controller
             }
         })
         ->get();
-
+        // short time
+        foreach ($posts as $post) {
+            $post['shortTime'] = (new General())->shortTime($post['created_at']);
+        }
         // get more data
         $data = new \stdClass();
         $data->totalPost = DB::table('posts')->where('status','=',0)->count();

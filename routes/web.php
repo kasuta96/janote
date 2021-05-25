@@ -13,8 +13,7 @@
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/', 'Post\PostController@showPosts');
+Route::get('/{home}', 'HomeController@index')->name('home')->where('home','(home)?');
 
 // show Posts
 Route::get('/posts', 'Post\PostController@showPosts')->name('posts');
@@ -37,6 +36,8 @@ Route::post('/note/update', 'Note\NoteController@update')->name('updateNote');
 Route::get('/trash/notes', 'Note\NoteController@trash')->name('trashNote');
 Route::get('/trash/remove/{id}', 'Note\NoteController@remove')->name('removeNote');
 Route::get('/trash/restore/{id}', 'Note\NoteController@restore')->name('restoreNote');
+// Search
+Route::get('/search', 'Note\NoteController@search')->name('searchNote');
 
 
 // show Categories
