@@ -59,14 +59,24 @@
         @endif
 
         <div class="w-100 text-center mb-3">
-            <i data-feather="image"></i> {{ __('Photo') }}
-            <input type="file" name="photo" class="ml-2">
-            @if ($errors->has('photo'))
-            <div class="text-danger">
-                {{ $errors->first('photo') }}
+            <div class="mb-3">
+                <i data-feather="image"></i> {{ __('Photo') }}
+                <input type="file" name="photo">
+                @if ($errors->has('photo'))
+                <div class="text-danger">
+                    {{ $errors->first('photo') }}
+                </div>
+                @endif
             </div>
-            @endif
-            <button type="button" class="btn btn-light"><i data-feather="mic"></i> {{ __('Recording') }}</button>
+            <div class="mb-3">
+                <i data-feather="mic"></i> {{ __('Audio') }}
+                <input type="file" accept="audio/*" name="audio">
+                @if ($errors->has('photo'))
+                <div class="text-danger">
+                    {{ $errors->first('photo') }}
+                </div>
+                @endif
+            </div>
         </div>
 
     </div>

@@ -16,8 +16,11 @@
             <div class="pt-3 px-3">
                 <strong>{{ $Note->title }}</strong>
                 <p class="descr">{{ $Note->content }}</p>
-                <div class="text-muted text-right">
-                    <small>{{ $Note->shortTime }}</small>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        @include('note.mediaBtn')
+                    </div>
+                    <small class="text-muted">{{ $Note->shortTime }}</small>
                 </div>
             </div>
         </div>

@@ -73,9 +73,31 @@
                 {{ $errors->first('photo') }}
             </div>
             @endif
-            <button type="button" class="btn btn-light"><i data-feather="mic"></i> {{ __('Recording') }}</button>
         </div>
         @endif
+
+        @if ($Note->audio)
+        <div class="text-center my-4">
+            <figure>
+                <figcaption><i data-feather="mic"></i> {{ __('Listen') }}:</figcaption>
+                <audio controls src="{{ $Note->audio }}">
+                    Your browser does not support the <code>audio</code> element.
+                </audio>
+            </figure>
+        </div>
+
+        @else
+        <div class="text-center mb-3">
+            <i data-feather="mic"></i> {{ __('Audio') }}
+            <input type="file" accept="audio/*" name="audio">
+            @if ($errors->has('photo'))
+            <div class="text-danger">
+                {{ $errors->first('photo') }}
+            </div>
+            @endif
+        </div>
+        @endif
+
 
         <!-- <div class="w-100 text-center mb-3">
             <button type="button" class="btn btn-light"><i data-feather="mic"></i> {{ __('Recording') }}</button>
