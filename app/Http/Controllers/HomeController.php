@@ -33,7 +33,7 @@ class HomeController extends Controller
         $notes = Note::where('user_id',Auth::id())
         ->where('status',0)
         ->orderBy('updated_at', 'DESC')
-        ->take(12)
+        ->take(15)
         ->get();
         // short time
         foreach ($notes as $note) {

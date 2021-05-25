@@ -88,9 +88,17 @@ class NoteController extends Controller
         if (request()->has('photo')) {
             $uploaded = request()->file('photo');
             $filename = time().'.'.$uploaded->getClientOriginalName();
-            $path = public_path('/images/uploads/');
+            $path = public_path('/uploads/images/');
             $uploaded->move($path,$filename);
-            $input['image'] = '/images/uploads/'.$filename;
+            $input['image'] = '/uploads/images/'.$filename;
+        }
+        // Audio
+        if (request()->has('audio')) {
+            $uploaded = request()->file('audio');
+            $filename = time().'.'.$uploaded->getClientOriginalName();
+            $path = public_path('/uploads/audios/');
+            $uploaded->move($path,$filename);
+            $input['audio'] = '/uploads/audios/'.$filename;
         }
         // store data
         Note::create($input);
@@ -132,9 +140,7 @@ class NoteController extends Controller
         if ($Note->user_id != Auth::id()) {
             return redirect()->route('home')->with('error', __('This action is unauthorized.'));
         }
-
         try {
-
             $Note->fill([
                 'title' => $input['title'],
                 'content' => $input['content'],
@@ -148,14 +154,26 @@ class NoteController extends Controller
         if (request()->has('photo')) {
             $uploaded = request()->file('photo');
             $filename = time().'.'.$uploaded->getClientOriginalName();
-            $path = public_path('/images/uploads/');
+            $path = public_path('/uploads/images/');
             $uploaded->move($path,$filename);
             // Save
             $Note->fill([
-                'image' => '/images/uploads/'.$filename
+                'image' => '/uploads/images/'.$filename
             ]);
             $Note->save();
         }
+        // Audio
+        if (request()->has('audio')) {
+            $uploaded = request()->file('audio');
+            $filename = time().'.'.$uploaded->getClientOriginalName();
+            $path = public_path('/uploads/audios/');
+            $uploaded->move($path,$filename);
+            // Save
+            $Note->fill([
+                'audio' => '/uploads/audios/'.$filename
+            ]);
+            $Note->save();
+        }        
 
         return redirect()->route('notes', $input['category_id'])->with('status', __('Update successful'));
     }
@@ -247,6 +265,7 @@ class NoteController extends Controller
         
         // Count deleted data
         $countImg = 0;
+        $countAudio = 0;
         $countNote = 0;
         foreach ($Notes as $Note) {
             // if has image
@@ -254,6 +273,13 @@ class NoteController extends Controller
                 if(\File::exists(public_path($Note->image))) {
                     \File::delete(public_path($Note->image));
                     $countImg++;
+                }
+            }
+            // if has audio
+            if ($Note->image) {
+                if(\File::exists(public_path($Note->audio))) {
+                    \File::delete(public_path($Note->audio));
+                    $countAudio++;
                 }
             }
             try {
@@ -267,6 +293,9 @@ class NoteController extends Controller
         $notify = __('Deleted');
         if ($countImg > 0) {
             $notify .= ', '.$countImg.' '.__('Photo');
+        }
+        if ($countAudio > 0) {
+            $notify .= ', '.$countAudio.' '.__('Audio');
         }
         if ($countNote > 0) {
             $notify .= ', '.$countNote.' '.__('Note');
@@ -330,9 +359,7 @@ class NoteController extends Controller
         $kw = $request->input('kw');
         // query
         $query = Note::with('category')
-        ->where('title','LIKE',"%$kw%")
-        ->orWhere('content','LIKE',"%$kw%")
-        ->where('status','=',0)
+        ->whereRaw("status = 0 AND (title LIKE '%$kw%' OR content LIKE '%$kw%')")
         ->orderBy('id', 'DESC');
         // data
         $data = new \stdClass();
