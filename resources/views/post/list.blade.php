@@ -4,7 +4,6 @@
 @section('list')
 
 @foreach($posts as $post)
-<!--- \\\\\\\Post-->
 <div class="card mb-3" data-post="{{ $post->id }}">
     <div class="card-header">
         <div class="d-flex justify-content-between align-items-center">
@@ -30,8 +29,8 @@
                             <button class="dropdown-item" type="submit" class="btn btn-link"><i data-feather="trash"></i> Delete</button>
                         </form>
                         @endif
-                        <a class="dropdown-item" href="#">Save</a>
-                        <a class="dropdown-item" href="#">Report</a>
+                        <!-- <a class="dropdown-item" href="#">Save</a>
+                        <a class="dropdown-item" href="#">Report</a> -->
 
                         @else
                         <h7 class="dropdown-header">Login to use more</h7>
@@ -49,11 +48,11 @@
             {{ $post->content }}
         </p>
     </div>
-    <div class="card-footer bg-white">
+    <!-- <div class="card-footer bg-white">
         <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
         <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
         <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
-    </div>
+    </div> -->
 </div>
 <!-- Post /////-->
 @endforeach

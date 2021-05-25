@@ -54,7 +54,7 @@ class NoteController extends Controller
      */
     public function create(Request $request)
     {
-        if (!Auth::check()) // if login
+        if (!Auth::check()) // if not login
         {
             return redirect()->route('login');
         }
@@ -172,6 +172,10 @@ class NoteController extends Controller
      */
     public function trash(Request $request)
     {
+        if (!Auth::check()) // if not login
+        {
+            return redirect()->route('login');
+        }
         // page request
         $page = $request->input('p') ?? 1;
         // query

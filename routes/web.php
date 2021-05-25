@@ -13,8 +13,7 @@
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/', 'Post\PostController@showPosts');
+Route::get('/{home}', 'HomeController@index')->name('home')->where('home','(home)?');
 
 // show Posts
 Route::get('/posts', 'Post\PostController@showPosts')->name('posts');

@@ -14,8 +14,7 @@
     <h6 class="text-center"><strong>{{ __('Trash') }}</strong></h6>
     <div>
         <span class="dropdown">
-            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
+            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i data-feather="more-horizontal"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-right">
@@ -23,7 +22,7 @@
                     <span>{{ __('Total').': '.$Data->count }}</span>
                 </div>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ route('restoreNote','all') }}"><i class="i-repeat icon"></i> {{ __('Restore all') }}</a>
+                <a class="dropdown-item" href="{{ route('restoreNote','all') }}"><i data-feather="repeat"></i> {{ __('Restore all') }}</a>
                 <form action="{{ route('removeNote','all') }}" method="get" onsubmit="return checkDelete();">
                 @csrf
                     <button type="submit" class="dropdown-item" ><i data-feather="delete"></i> {{ __('Delete all') }}</button>

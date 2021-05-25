@@ -23,7 +23,7 @@
                     <span>{{ __('Total').': '.$Data->count }}</span>
                 </div>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ route('createNote').'?category='.$Category->id }}"><i class="i-plus icon"></i> {{ __('Add') }}</a>
+                <a class="dropdown-item" href="{{ route('createNote').'?category='.$Category->id }}"><i data-feather="plus"></i> {{ __('Add') }}</a>
             </div>
         </span>
     </div>

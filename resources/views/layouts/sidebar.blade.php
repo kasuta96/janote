@@ -1,4 +1,4 @@
-<div class="bg-light border-right vh-100" id="sidebar-wrapper">
+<div class="border-right vh-100" id="sidebar-wrapper">
     <!-- <div class="sidebar-heading">Start Bootstrap </div> -->
     <div class="overflow-auto h-100 pt-3">
 
@@ -9,13 +9,15 @@
         </form>
 
         <!-- Add button -->
-        <a class="btn btn-success btn-sm btn-block mb-2" href="{{ route('createNote') }}"><i data-feather="plus"></i> {{ __('Note') }}</a>
-        <a class="btn btn-success btn-sm btn-block mb-2" href=""><i data-feather="plus"></i> {{ __('Categories') }}</a>
+        <div class="p-2">
+            <a class="btn btn-success btn-sm btn-block mb-2" href="{{ route('createNote') }}"><i data-feather="plus"></i> {{ __('Note') }}</a>
+            <a class="btn btn-success btn-sm btn-block mb-2" href=""><i data-feather="plus"></i> {{ __('Categories') }}</a>
+        </div>
 
         <div class="list-group list-group-flush">
-            <a href="{{ route('categories') }}" class="list-group-item list-group-item-action bg-light"><i data-feather="folder"></i> {{ __('Categories') }}</a>
-            <a href="{{ route('posts') }}" class="list-group-item list-group-item-action bg-light"><i data-feather="twitch"></i> {{ __('Community') }}</a>
-            <a href="{{ route('trashNote') }}" class="list-group-item list-group-item-action bg-light"><i data-feather="trash-2"></i> {{ __('Trash') }}</a>
+            <a href="{{ route('categories') }}" data-menu="categories" class="list-group-item list-group-item-action"><i data-feather="folder"></i> {{ __('Categories') }}</a>
+            <a href="{{ route('posts') }}" data-menu="posts" class="list-group-item list-group-item-action"><i data-feather="twitch"></i> {{ __('Community') }}</a>
+            <a href="{{ route('trashNote') }}" data-menu="trashNote" class="list-group-item list-group-item-action"><i data-feather="trash-2"></i> {{ __('Trash') }}</a>
         </div>
 
         @if(Route::is('posts') )
@@ -26,5 +28,11 @@
             <a class="btn btn-light @if($data->currentPage >= $data->totalPage)disabled @endif" href="{{ route('posts').'/?p='.($data->currentPage+1) }}" role="button">Next</a>
         </div>
         @endif
+
     </div>
 </div>
+
+<script>
+    var sidebar = document.getElementById('sidebar-wrapper');
+    sidebar.querySelector('[data-menu="{{ Route::currentRouteName() }}"]').classList.add('active');
+</script>
