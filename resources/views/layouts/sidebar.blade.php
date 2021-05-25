@@ -3,9 +3,9 @@
     <div class="overflow-auto h-100 pt-3">
 
         <!-- Search Form -->
-        <form id="" class="search-form mb-3">
-            <input type="text" placeholder="Search">
-            <button type="button"><i data-feather="search"></i></button>
+        <form action="{{ route('searchNote') }}" method="get" class="search-form mb-3">
+            <input type="text" placeholder="Search" name="kw">
+            <button type="submit"><i data-feather="search"></i></button>
         </form>
 
         <!-- Add button -->

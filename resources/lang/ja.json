@@ -24,6 +24,9 @@
     "Post":"投稿",
     "Posts":"投稿",
     "Recent":"最近",
+    "Birthday":"お誕生日",
+    "Job":"職業",
+    "Search":"検索",
 
 
     "A new verification link has been sent to the email address you provided during registration.": "登録時に提供されたメールアドレスに新しい検証リンクが送信されました。",

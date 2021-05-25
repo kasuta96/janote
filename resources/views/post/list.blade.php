@@ -13,7 +13,7 @@
                 </div>
                 <div class="ml-2">
                     <div class="h5 m-0" data-user="{{ $post->user_id }}">{{ $post->user->name }}</div>
-                    <div class="h7 text-muted">{{ $post->created_at }}</div>
+                    <div class="h7 text-muted">{{ $post->shortTime }}</div>
                 </div>
             </div>
             <div>

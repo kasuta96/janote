@@ -1,17 +1,17 @@
 @extends('layouts.app')
-@section('title', __('Trash'))
+@section('title', 'Search')
 
 @section('content')
 @php
-    $params = '?';
-    $route = route('trashNote');
+    $params = '?kw='.$Keyword;
+    $route = route('searchNote');
 
 @endphp
 <div class="d-flex justify-content-between mb-2">
     <a href="{{ route('categories') }}" class="btn btn-light">
         <i data-feather="arrow-left"></i> {{ __('Back') }}
     </a>
-    <h6 class="text-center"><strong>{{ __('Trash') }}</strong></h6>
+    <h6 class="text-center"><strong>{{ __('Search').': '.$Keyword }}</strong></h6>
     <div>
         <span class="dropdown">
             <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -22,11 +22,6 @@
                     <span>{{ __('Total').': '.$Data->count }}</span>
                 </div>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ route('restoreNote','all') }}"><i data-feather="repeat"></i> {{ __('Restore all') }}</a>
-                <form action="{{ route('removeNote','all') }}" method="get" onsubmit="return checkDelete();">
-                @csrf
-                    <button type="submit" class="dropdown-item" ><i data-feather="delete"></i> {{ __('Delete all') }}</button>
-                </form>
 
             </div>
         </span>
@@ -52,8 +47,7 @@
             <th scope="row" title="{{ $Note->created_at }}">{{ ($Data->page-1)*$Data->limit+$key+1 }}</th>
             <td>{{ $Note->title }}</td>
             <td>{{ $Note->content }}</td>
-            <td>{{ $Note->category->title }}</td>
-
+            <td><a class="text-dark" href="{{ route('notes',$Note->category_id) }}">{{ $Note->category->title }}</a></td>
             <td class="table-tool">
                 @if ($Note->image)
                 <button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#imageModal{{ $Note->id }}" title="{{ __('Photo') }}"><i data-feather="image"></i></button>
@@ -80,10 +74,12 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
                     <div class="dropdown-header">
-                        <a class="btn btn-success btn-sm" href="{{ route('restoreNote',$Note->id) }}" role="button" title="{{ __('Restore')}}"><i data-feather="repeat"></i></a>
-                        <form action="{{ route('removeNote', $Note->id) }}" method="get" class="d-inline-block" onsubmit="return checkDelete()">
+                        <button class="btn btn-light btn-sm"><i data-feather="mic"></i></button>
+                        <a href="{{ route('editNote', $Note->id) }}" role="button" class="btn btn-light btn-sm" h><i data-feather="edit"></i></a>
+
+                        <form action="{{ route('deleteNote', $Note->id) }}" method="get" class="d-inline-block" onsubmit="return checkDelete()">
                         @csrf
-                            <button type="submit" class="btn btn-danger btn-sm" title="{{ __('Delete') }}"><i data-feather="delete"></i></button>
+                            <button type="submit" class="btn btn-light btn-sm" title="{{ __('Delete') }}"><i data-feather="trash"></i></button>
                         </form>
 
                     </div>
