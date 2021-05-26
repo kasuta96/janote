@@ -5,36 +5,76 @@ namespace App\Http\Controllers\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
+
 
 class CategoryController extends Controller
 {
-    //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function show()
     {
-        $categories = Category::all();
+        $categories = Category::where('status', 0)
+            ->where('user_id',Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->take(10)
+            ->get();
 
-        return view('category.lists',['categories'=>$categories]);
+        return view('category.lists', compact('categories'));
     }
 
-    public function create(Request $request)
-{
-    $input = $request->all();
-    if (Auth::check()) // if login
+    public function store()
     {
-        if ($input['content']) {
-            $input['user_id'] = Auth::id();
-            Post::create($input);
-            return redirect()->route('posts')->with('status', 'push success!');;
-        }
-        else // with('status', '質問を編集しました')
-        {
-            return redirect()->route('posts')->with('error', 'Input data first!');
-        }
-    }
-    else // if not login
-    {
-        return redirect()->route('login');
+        $data = request()->validate([
+            'title' => 'required',
+        ]);
+
+        auth()->user()->categories()->create([
+            'title' => $data['title'],
+        ]);
+
+        return redirect(route('categories'));
     }
 
-}
+    public function create()
+    {
+        return view('category/create');
+    }
+
+    public function delete($id)
+    {
+        $categories = Category::find($id);
+        if (empty($categories)) {
+            return redirect()->route('categories')->with('error', 'データがありません！');
+        }
+        if ($categories->user_id != Auth::user()->id) {
+            return redirect()->route('categories')->with('error', '削除できません');
+        }
+        try {
+            Category::destroy($id);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+        return redirect()->route('categories')->with('status', '削除しました');
+    }
+
+    public function edit(Category $categories)
+    {
+        return view('category/edit', compact('categories'));
+    }
+
+    public function update(Category $categories) 
+    {
+        $data = request()->validate([
+            'title' => 'required'
+        ]);
+
+        $categories->update($data);
+
+        return redirect(route('categories'));
+    }
+
 }
