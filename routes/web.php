@@ -43,5 +43,17 @@ Route::get('/search', 'Note\NoteController@search')->name('searchNote');
 // show Categories
 Route::get('/categories', 'Category\CategoryController@show')->name('categories');
 
+//create Categories
+Route::get('/categories/create', 'Category\CategoryController@create');
+Route::post('/categories', 'Category\CategoryController@store')->name('createCategory');
+
+//delete Category
+Route::get('/categories/delete/{id}', 'Category\CategoryController@delete')->name('deleteCategory');
+
+//edit & update Category
+Route::get('/categories/edit/{id}', 'Category\CategoryController@edit')->name('editCategory');
+Route::post('/categories/{id}', 'Category\CategoryController@update')->name('updateCategory');
+
 // change language
 Route::get('lang/{lang}', 'LanguageController@switchLang')->name('lang.switch');
+
