@@ -41,4 +41,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Post');
     }
+
+    public function categories()
+    {
+        return $this->hasMany('App\Models\Category')->orderBy('id', 'DESC');
+    }
 }

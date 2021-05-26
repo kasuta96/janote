@@ -15,4 +15,9 @@ class Category extends Model
         'user_id',
         'created_at'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id');
+    }
 }
