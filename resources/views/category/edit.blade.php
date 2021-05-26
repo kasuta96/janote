@@ -21,9 +21,9 @@
         </div>
     </div>
 
-    <form action="{{ route('updateCategory') }}" method="POST">
+    <form action="{{ route('updateCategory', $categories->id) }}" method="POST">
     @csrf
-    @method('PATCH')
+    <!-- method('PATCH') -->
 
         <div class="form-group">
 

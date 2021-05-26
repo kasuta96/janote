@@ -26,9 +26,9 @@
         <tbody>
             @foreach($categories as $category)
             <tr>
-                <td><a href="{{ route('categories') }}">{{ $category->title }}</a></td>
+                <td><a href="{{ route('notes', $category->id) }}">{{ $category->title }}</a></td>
                 <td>
-                    <button class="btn-link btn-sm" data-edit="0"><a href="{{ route('editCategory') }}">edit</button>
+                    <button class="btn-link btn-sm" data-edit="0"><a href="{{ route('editCategory', $category->id) }}">edit</button>
                     @if ($category->user_id == Auth::user()->id)
                         <form action="{{ route('deleteCategory', $category->id) }}" method="get" onsubmit="return checkDelete()">
                             @csrf
