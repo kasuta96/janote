@@ -51,8 +51,8 @@ Route::post('/categories', 'Category\CategoryController@store')->name('createCat
 Route::get('/categories/delete/{id}', 'Category\CategoryController@delete')->name('deleteCategory');
 
 //edit & update Category
-Route::get('/categories/edit', 'Category\CategoryController@edit')->name('editCategory');
-Route::patch('/categories', 'Category\CategoryController@update')->name('updateCategory');
+Route::get('/categories/edit/{id}', 'Category\CategoryController@edit')->name('editCategory');
+Route::post('/categories/{id}', 'Category\CategoryController@update')->name('updateCategory');
 
 // change language
 Route::get('lang/{lang}', 'LanguageController@switchLang')->name('lang.switch');

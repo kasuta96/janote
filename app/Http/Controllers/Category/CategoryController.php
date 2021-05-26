@@ -61,18 +61,22 @@ class CategoryController extends Controller
         return redirect()->route('categories')->with('status', '削除しました');
     }
 
-    public function edit(Category $categories)
+    public function edit($id)
     {
+        $categories = Category::find($id);
+
         return view('category/edit', compact('categories'));
     }
 
-    public function update(Category $categories) 
+    public function update(Request $request, $id) 
     {
-        $data = request()->validate([
-            'title' => 'required'
+        $data = $request->validate([
+            'title' => 'required',
         ]);
 
-        $categories->update($data);
+        $categories = Category::where('id',$id)->update([
+            'title' => $data['title'],
+        ]);
 
         return redirect(route('categories'));
     }
