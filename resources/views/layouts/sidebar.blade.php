@@ -11,7 +11,7 @@
         <!-- Add button -->
         <div class="p-2">
             <a class="btn btn-success btn-sm btn-block mb-2" href="{{ route('createNote') }}"><i data-feather="plus"></i> {{ __('Note') }}</a>
-            <a class="btn btn-success btn-sm btn-block mb-2" href=""><i data-feather="plus"></i> {{ __('Categories') }}</a>
+            <a class="btn btn-success btn-sm btn-block mb-2" href="/categories/create"><i data-feather="plus"></i> {{ __('Categories') }}</a>
         </div>
 
         <div class="list-group list-group-flush">
