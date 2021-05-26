@@ -11,11 +11,10 @@
 |
 */
 
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/', 'Post\PostController@showPosts');
+Route::get('/{home}', 'HomeController@index')->name('home')->where('home','(home)?');
+
 // show Posts
 Route::get('/posts', 'Post\PostController@showPosts')->name('posts');
 // Create new post
@@ -25,6 +24,21 @@ Route::get('/post/delete/{id}', 'Post\PostController@delete')->name('deletePost'
 
 // show category's Notes
 Route::get('/category/{id}', 'Note\NoteController@index')->name('notes');
+// Create note
+Route::get('/note/create', 'Note\NoteController@create')->name('createNote');
+Route::post('/note/store', 'Note\NoteController@store')->name('storeNote');
+// delete Note
+Route::get('/note/delete/{id}', 'Note\NoteController@delete')->name('deleteNote');
+// Edit Note
+Route::get('/note/edit/{id}', 'Note\NoteController@edit')->name('editNote');
+Route::post('/note/update', 'Note\NoteController@update')->name('updateNote');
+// Trash
+Route::get('/trash/notes', 'Note\NoteController@trash')->name('trashNote');
+Route::get('/trash/remove/{id}', 'Note\NoteController@remove')->name('removeNote');
+Route::get('/trash/restore/{id}', 'Note\NoteController@restore')->name('restoreNote');
+// Search
+Route::get('/search', 'Note\NoteController@search')->name('searchNote');
+
 
 // show Categories
 Route::get('/categories', 'Category\CategoryController@show')->name('categories');
@@ -39,3 +53,7 @@ Route::get('/categories/delete/{id}', 'Category\CategoryController@delete')->nam
 //edit & update Category
 Route::get('/categories/edit', 'Category\CategoryController@edit')->name('editCategory');
 Route::patch('/categories', 'Category\CategoryController@update')->name('updateCategory');
+
+// change language
+Route::get('lang/{lang}', 'LanguageController@switchLang')->name('lang.switch');
+

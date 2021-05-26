@@ -9,7 +9,7 @@ $factory->define(App\Models\Note::class, function ($faker) {
         'title' => $faker->city,
         'content' => $faker->word,
         'user_id' => \App\User::first()->id,
-        'category_id' => \App\Models\Category::inRandomOrder()->first()->id
+        'category_id' => \App\Models\Category::first()->id
         // 'audio',
         // 'image'
     ];

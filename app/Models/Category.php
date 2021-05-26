@@ -16,8 +16,15 @@ class Category extends Model
         'created_at'
     ];
 
+
     public function user()
     {
         return $this->belongsTo('App\User', 'user_id');
+    }
+
+    // relationship
+    public function notes()
+    {
+        return $this->hasMany('App\Models\Note');
     }
 }

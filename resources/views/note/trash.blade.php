@@ -1,21 +1,20 @@
 @extends('layouts.app')
-@section('title', __('Notes'))
+@section('title', __('Trash'))
 
 @section('content')
 @php
     $params = '?';
-    $route = route('notes', $Category->id);
+    $route = route('trashNote');
 
 @endphp
 <div class="d-flex justify-content-between mb-2">
     <a href="{{ route('categories') }}" class="btn btn-light">
         <i data-feather="arrow-left"></i> {{ __('Back') }}
     </a>
-    <h6 class="text-center"><strong>{{ $Category->title }}</strong></h6>
+    <h6 class="text-center"><strong>{{ __('Trash') }}</strong></h6>
     <div>
         <span class="dropdown">
-            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
+            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i data-feather="more-horizontal"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-right">
@@ -23,7 +22,12 @@
                     <span>{{ __('Total').': '.$Data->count }}</span>
                 </div>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ route('createNote').'?category='.$Category->id }}"><i data-feather="plus"></i> {{ __('Add') }}</a>
+                <a class="dropdown-item" href="{{ route('restoreNote','all') }}"><i data-feather="repeat"></i> {{ __('Restore all') }}</a>
+                <form action="{{ route('removeNote','all') }}" method="get" onsubmit="return checkDelete();">
+                @csrf
+                    <button type="submit" class="dropdown-item" ><i data-feather="delete"></i> {{ __('Delete all') }}</button>
+                </form>
+
             </div>
         </span>
     </div>
@@ -35,6 +39,7 @@
             <th scope="col">#</th>
             <th scope="col">{{ __('Title') }}</th>
             <th scope="col">{{ __('Content') }}</th>
+            <th scope="col">{{ __('Categories') }}</th>
             <!-- <th scope="col">タイプ</th> -->
             <th scope="col" class="table-tool"></th>
         </tr>
@@ -47,6 +52,8 @@
             <th scope="row" title="{{ $Note->created_at }}">{{ ($Data->page-1)*$Data->limit+$key+1 }}</th>
             <td>{{ $Note->title }}</td>
             <td>{{ $Note->content }}</td>
+            <td>{{ $Note->category->title }}</td>
+
             <td class="table-tool">
 
                 @include('note.mediaBtn')
@@ -57,11 +64,10 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
                     <div class="dropdown-header">
-                        <a href="{{ route('editNote', $Note->id) }}" role="button" class="btn btn-light btn-sm" h><i data-feather="edit"></i></a>
-
-                        <form action="{{ route('deleteNote', $Note->id) }}" method="get" class="d-inline-block" onsubmit="return checkDelete()">
+                        <a class="btn btn-success btn-sm" href="{{ route('restoreNote',$Note->id) }}" role="button" title="{{ __('Restore')}}"><i data-feather="repeat"></i></a>
+                        <form action="{{ route('removeNote', $Note->id) }}" method="get" class="d-inline-block" onsubmit="return checkDelete()">
                         @csrf
-                            <button type="submit" class="btn btn-light btn-sm" title="{{ __('Delete') }}"><i data-feather="trash"></i></button>
+                            <button type="submit" class="btn btn-danger btn-sm" title="{{ __('Delete') }}"><i data-feather="delete"></i></button>
                         </form>
 
                     </div>

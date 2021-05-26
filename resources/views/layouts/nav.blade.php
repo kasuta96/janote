@@ -1,32 +1,28 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-    <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}">
-            {{ config('app.name', 'Laravel') }}
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+<nav class="navbar navbar-light bg-white shadow-sm sticky-top">
+    <div class="container-fluid px-0">
+        <div>
+            <button class="btn btn-light btn-sm mr-2" id="sidebar-toggle"><span class="navbar-toggler-icon"></span></button>
+            <a class="navbar-brand" href="{{ url('/') }}">
+                {{ config('app.name', 'Laravel') }}
+            </a>
+        </div>
+
+        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Left Side Of Navbar -->
-            <ul class="navbar-nav mr-auto">
-                <form id="" class="form-inline search-form">
-                    <input type="text" placeholder="Search">
-                    <button type="button"><i class="icon i-search"></i></button>
-                </form>
-            </ul>
-
+        <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
             <!-- Right Side Of Navbar -->
-            <ul class="navbar-nav ml-auto">
 
+            <ul class="nav">
                 <!-- Authentication Links -->
                 @guest
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                    <a class="nav-link text-secondary" href="{{ route('login') }}">{{ __('Login') }}</a>
                 </li>
                 @if (Route::has('register'))
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                    <a class="nav-link text-secondary" href="{{ route('register') }}">{{ __('Register') }}</a>
                 </li>
                 @endif
                 @else
@@ -37,7 +33,7 @@
                     <a class="nav-link" href="{{ route('categories') }}">Categories</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    <a id="navbarDropdown" class="nav-link text-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->name }} <span class="caret"></span>
                     </a>
 
@@ -52,8 +48,19 @@
                         </form>
                     </div>
                 </li>
+                
                 @endguest
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i data-feather="globe"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="">
+                    @foreach (Config::get('languages') as $lang => $language)
+                        <a class="dropdown-item @if ($lang == App::getLocale())active @endif" href="{{ route('lang.switch', $lang) }}"> {{$language}}</a>
+                    @endforeach
+                    </div>
+                </li>
             </ul>
-        </div>
+        <!-- </div> -->
     </div>
 </nav>

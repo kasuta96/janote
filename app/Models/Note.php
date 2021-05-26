@@ -17,6 +17,12 @@ class Note extends Model
         'category_id',
         'audio',
         'image',
-        'created_at'
+        'status',
     ];
+
+    // relationship
+    public function category()
+    {
+        return $this->belongsTo('App\Models\Category', 'category_id');
+    }
 }

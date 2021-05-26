@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
+use App\Classes\General;
 
 class PostController extends Controller
 {
@@ -29,7 +30,10 @@ class PostController extends Controller
             }
         })
         ->get();
-
+        // short time
+        foreach ($posts as $post) {
+            $post['shortTime'] = (new General())->shortTime($post['created_at']);
+        }
         // get more data
         $data = new \stdClass();
         $data->totalPost = DB::table('posts')->where('status','=',0)->count();
@@ -42,21 +46,18 @@ class PostController extends Controller
     public function create(Request $request)
     {
         $input = $request->all();
-        if (Auth::check()) // if login
-        {
-            if ($input['content']) {
-                $input['user_id'] = Auth::id();
-                Post::create($input);
-                return redirect()->route('posts')->with('status', 'push success!');;
-            }
-            else // with('status', '質問を編集しました')
-            {
-                return redirect()->route('posts')->with('error', 'Input data first!');
-            }
-        }
-        else // if not login
+        if (!Auth::check()) // if login
         {
             return redirect()->route('login');
+        }
+        if ($input['content']) {
+            $input['user_id'] = Auth::id();
+            Post::create($input);
+            return redirect()->route('posts')->with('status', 'push success!');
+        }
+        else
+        {
+            return redirect()->route('posts')->with('error', 'Input data first!');
         }
     }
 

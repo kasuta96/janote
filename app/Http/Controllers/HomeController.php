@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Note;
+use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
+use App\Classes\General;
 
 class HomeController extends Controller
 {
@@ -23,6 +27,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        /**
+         * Get recent note
+         */
+        $notes = Note::where('user_id',Auth::id())
+        ->where('status',0)
+        ->orderBy('updated_at', 'DESC')
+        ->take(15)
+        ->get();
+        // short time
+        foreach ($notes as $note) {
+            $note['shortTime'] = (new General())->shortTime($note['updated_at']);
+        }
+        return view('home',['Notes'=>$notes]);
     }
 }
