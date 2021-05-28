@@ -220,6 +220,7 @@ class NoteController extends Controller
         $page = $request->input('p') ?? 1;
         // query
         $query = Note::with('category')
+        ->where('user_id','=',Auth::id())
         ->where('status','=',9)
         ->orderBy('id', 'DESC');
         // data
