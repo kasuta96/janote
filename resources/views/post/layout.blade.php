@@ -3,7 +3,7 @@
 @section('title', 'Page Title')
 @section('content')
 
-<div class="mx-auto posts-main">
+<div class="">
     @include('post.create')
     @yield('list')
 </div>

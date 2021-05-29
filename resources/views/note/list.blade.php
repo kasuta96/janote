@@ -8,12 +8,18 @@
 
 @endphp
 <div class="d-flex justify-content-between mb-2">
-    <a href="{{ route('categories') }}" class="btn btn-light">
-        <i data-feather="arrow-left"></i> {{ __('Back') }}
-    </a>
-    <h6 class="text-center"><strong>{{ $Category->title }}</strong></h6>
     <div>
-        <span class="dropdown">
+        <a href="{{ route('categories') }}" class="btn btn-light">
+            <i data-feather="arrow-left"></i> {{ __('Back') }}
+        </a>
+    </div>
+    <div class="text-center">
+        <div class="h5 font-weight-bold mb-0">{{ $Category->title }}</div>
+        <small class="text-muted">{{ __('Total').': '.$Data->count }}</small>
+    </div>
+    <div>
+        <a class="btn btn-primary" href="{{ route('createNote').'?category='.$Category->id }}"><i data-feather="plus"></i> {{ __('Add') }}</a>
+        <!-- <span class="dropdown">
             <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
                 <i data-feather="more-horizontal"></i>
@@ -25,7 +31,7 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{ route('createNote').'?category='.$Category->id }}"><i data-feather="plus"></i> {{ __('Add') }}</a>
             </div>
-        </span>
+        </span> -->
     </div>
 </div>
 

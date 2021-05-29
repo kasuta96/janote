@@ -7,6 +7,11 @@
             </a>
         </div>
 
+        <!-- Search Form -->
+        <form action="{{ route('searchNote') }}" method="get" class="search-form">
+            <input type="text" placeholder="Search" name="kw">
+            <button type="submit"><i data-feather="search"></i></button>
+        </form>
         <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
         </button>
