@@ -3,12 +3,13 @@
     <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true">Make
-                    a post</a>
+                <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true">
+                    {{__('Post') }}
+                </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" id="images-tab" data-toggle="tab" role="tab" aria-controls="images" aria-selected="false" href="#images">Images</a>
-            </li>
+            </li> -->
         </ul>
     </div>
     <div class="card-body">
@@ -37,11 +38,11 @@
                 <div class="btn-group">
                     @guest
                     <div>
-                        <a class="btn btn-primary" href="{{ route('login') }}" role="button">{{ __('Login') }}</a> to push
+                        <a class="btn btn-primary" href="{{ route('login') }}" role="button">{{ __('Login') }}</a>
                     </div>
                     @endguest
                     @auth
-                    <button type="submit" class="btn btn-primary">Push</button>
+                    <button type="submit" class="btn btn-primary">{{ __('Push') }}</button>
                     @endauth
                 </div>
                 <div class="btn-group">

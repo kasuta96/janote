@@ -2,12 +2,6 @@
     <!-- <div class="sidebar-heading">Start Bootstrap </div> -->
     <div class="overflow-auto h-100 pt-3">
 
-        <!-- Search Form -->
-        <form action="{{ route('searchNote') }}" method="get" class="search-form mb-3">
-            <input type="text" placeholder="Search" name="kw">
-            <button type="submit"><i data-feather="search"></i></button>
-        </form>
-
         <!-- Add button -->
         <div class="p-2">
             <a class="btn btn-success btn-sm btn-block mb-2" href="{{ route('createNote') }}"><i data-feather="plus"></i> {{ __('Note') }}</a>
@@ -15,7 +9,19 @@
         </div>
 
         <div class="list-group list-group-flush">
-            <a href="{{ route('categories') }}" data-menu="categories" class="list-group-item list-group-item-action"><i data-feather="folder"></i> {{ __('Categories') }}</a>
+            <div class="btn-group">
+                <a href="{{ route('categories') }}" data-menu="categories" class="list-group-item list-group-item-action"><i data-feather="folder"></i> {{ __('Categories') }}</a>
+                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="collapse" data-target="#collapseCate" aria-expanded="true" aria-controls="collapseCate">
+                    <span class="sr-only">v</span>
+                </button>
+            </div>
+            <div class="collapse show border" id="collapseCate">
+                <div class="list-group list-group-flush">
+                    @foreach ( App\Http\Controllers\Category\CategoryController::CategoriesData() as $Category)
+                    <a href="{{ route('notes', $Category->id) }}" data-menu-cate="{{ $Category->id }}" class="list-group-item list-group-item-action text-nowrap text-truncate py-1 pl-4 list-group-item-dark">{{ $Category->title }}</a>
+                    @endforeach
+                </div>
+            </div>
             <a href="{{ route('posts') }}" data-menu="posts" class="list-group-item list-group-item-action"><i data-feather="twitch"></i> {{ __('Community') }}</a>
             <a href="{{ route('trashNote') }}" data-menu="trashNote" class="list-group-item list-group-item-action"><i data-feather="trash-2"></i> {{ __('Trash') }}</a>
         </div>

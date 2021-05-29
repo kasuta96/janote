@@ -81,4 +81,14 @@ class CategoryController extends Controller
         return redirect(route('categories'));
     }
 
+    // get categories raw data
+    public static function CategoriesData()
+    {
+        $categories = Category::where('status', 0)
+        ->where('user_id',Auth::id())
+        ->orderBy('updated_at', 'desc')
+        ->get();
+        return $categories;
+    }
+
 }

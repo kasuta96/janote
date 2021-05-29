@@ -27,10 +27,5 @@
         @endforeach
     </div>
 </div>
-<div class="card text-white bg-secondary mb-3">
-    <div class="card-header">{{ __('Categories') }}</div>
-    <div class="card-body">
-      <p class="card-text">...</p>
-    </div>
-  </div>
+
 @endsection

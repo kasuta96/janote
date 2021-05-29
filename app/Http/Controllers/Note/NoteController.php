@@ -12,6 +12,16 @@ use Illuminate\Support\Facades\Validator;
 
 class NoteController extends Controller
 {
+    // function
+    public function pagination($rq, $query)
+    {
+        $data = new \stdClass();
+        $data->page = $rq->input('p') ?? 1;
+        $data->count = $query->count() ?? 0;
+        $data->limit = 25;
+        $data->totalPage = ceil($data->count/$data->limit);
+        return $data;
+    }
     /**
      * Show notes list
      * 
@@ -29,23 +39,18 @@ class NoteController extends Controller
             return redirect()->route('categories')->with('error', __('This action is unauthorized.'));
         }
         // page request
-        $page = $request->input('p') ?? 1;
         // query
         $query = Note::where('category_id','=',$id)
         ->where('status','=',0)
         ->orderBy('id', 'DESC');
-        // Count
-        $data = new \stdClass();
-        $data->count = $query->count();
-        $data->page = $page;
-        $data->limit = 25;
-        $data->totalPage = ceil($data->count/$data->limit);
+        // pagination data
+        $pagination = $this->pagination($request, $query);
         // notes data
-        $notes = $query->skip($data->limit*($page - 1))
-        ->take($data->limit)
+        $notes = $query->skip($pagination->limit*($pagination->page - 1))
+        ->take($pagination->limit)
         ->get();
 
-        return view('note.list', ['Notes'=>$notes, 'Category'=>$Category, 'Data'=>$data]);
+        return view('note.list', ['Notes'=>$notes, 'Category'=>$Category, 'Data'=>$pagination]);
     }
 
     /**
@@ -102,6 +107,18 @@ class NoteController extends Controller
         }
         // store data
         Note::create($input);
+
+        // check if word exist
+        $sameWordQuery = Note::with('category')
+        ->where('user_id',Auth::id())
+        ->where('title',$input['title'])
+        ->where('status',0);
+
+        $sameWord = $sameWordQuery->get();
+        if (count($sameWord) > 0) {
+            return redirect(route('searchNote').'?kw='.$input['title'])->with('status', __('Saved').' & '.__('Found some duplicate word'));
+        }
+
         return redirect()->route('notes', $input['category_id'] ?? 0)->with('status', 'push success!');
     }
 
@@ -223,18 +240,14 @@ class NoteController extends Controller
         ->where('user_id','=',Auth::id())
         ->where('status','=',9)
         ->orderBy('id', 'DESC');
-        // data
-        $data = new \stdClass();
-        $data->count = $query->count();
-        $data->page = $page;
-        $data->limit = 25;
-        $data->totalPage = ceil($data->count/$data->limit);
+        // pagination data
+        $pagination = $this->pagination($request, $query);
         // notes data
-        $notes = $query->skip($data->limit*($page - 1))
-        ->take($data->limit)
+        $notes = $query->skip($pagination->limit*($pagination->page - 1))
+        ->take($pagination->limit)
         ->get();
 
-        return view('note.trash', ['Notes'=>$notes, 'Category'=>'Trash', 'Data'=>$data]);
+        return view('note.trash', ['Notes'=>$notes, 'Category'=>'Trash', 'Data'=>$pagination]);
     }
 
     public function remove($rq)
@@ -360,20 +373,18 @@ class NoteController extends Controller
         $kw = $request->input('kw');
         // query
         $query = Note::with('category')
+        ->where('user_id',Auth::id())
         ->whereRaw("status = 0 AND (title LIKE '%$kw%' OR content LIKE '%$kw%')")
         ->orderBy('id', 'DESC');
-        // data
-        $data = new \stdClass();
-        $data->count = $query->count();
-        $data->page = $page;
-        $data->limit = 25;
-        $data->totalPage = ceil($data->count/$data->limit);
+        // pagination data
+        $pagination = $this->pagination($request, $query);
+
         // notes data
-        $notes = $query->skip($data->limit*($page - 1))
-        ->take($data->limit)
+        $notes = $query->skip($pagination->limit*($pagination->page - 1))
+        ->take($pagination->limit)
         ->get();
 
-        return view('note.search', ['Notes'=>$notes, 'Keyword'=>$kw, 'Data'=>$data]);
+        return view('note.search', ['Notes'=>$notes, 'Keyword'=>$kw, 'Data'=>$pagination]);
     }
 
 }

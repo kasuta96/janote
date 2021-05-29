@@ -1,9 +1,6 @@
 /* design by kasuta */
 
 main.container-fluid {
-    max-width: 1440px;
-}
-.posts-main {
     max-width: 960px;
 }
 .z-index-fix {
@@ -44,6 +41,11 @@ body {
 @media (min-width: 1440px) {
     .card-columns {
         column-count: 5;
+    }
+}
+@media (max-width: 768px) {
+    .navbar-brand {
+        display: none;
     }
 }
 /**********************/
@@ -91,6 +93,10 @@ body {
     #app.toggled #sidebar-wrapper {
         margin-left: -200px;
     }
+}
+#collapseCate {
+    max-height: 300px;
+    overflow: auto;
 }
 /**********************/
 /*    Search form
