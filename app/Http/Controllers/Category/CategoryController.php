@@ -64,7 +64,17 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $categories = Category::find($id);
-
+        if (empty($categories)) {
+            return redirect()->route('categories')->with('error', 'データがありません！');
+        }
+        if ($categories->user_id != Auth::user()->id) {
+            return redirect()->route('categories')->with('error', '編集できません');
+        }
+        try {
+            Category::destroy($id);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
         return view('category/edit', compact('categories'));
     }
 
@@ -79,6 +89,16 @@ class CategoryController extends Controller
         ]);
 
         return redirect(route('categories'));
+    }
+
+    // get categories raw data
+    public static function CategoriesData()
+    {
+        $categories = Category::where('status', 0)
+        ->where('user_id',Auth::id())
+        ->orderBy('updated_at', 'desc')
+        ->get();
+        return $categories;
     }
 
 }
