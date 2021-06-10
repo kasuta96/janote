@@ -64,7 +64,17 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $categories = Category::find($id);
-
+        if (empty($categories)) {
+            return redirect()->route('categories')->with('error', 'データがありません！');
+        }
+        if ($categories->user_id != Auth::user()->id) {
+            return redirect()->route('categories')->with('error', '編集できません');
+        }
+        try {
+            Category::destroy($id);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
         return view('category/edit', compact('categories'));
     }
 
