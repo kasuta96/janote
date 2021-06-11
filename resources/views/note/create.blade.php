@@ -58,6 +58,16 @@
         </div>
         @endif
 
+        <div class="my-4">
+            <p>{{ __('Hashtag') }}:</p>
+            @foreach (Config::get('hashtag') as $key => $tag)
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="hashtag[]" type="checkbox" value="{{ $key }}">
+                <label class="form-check-label" for="inlineCheckbox1">{{ $tag }}</label>
+            </div>
+            @endforeach
+        </div>
+
         <div class="w-100 text-center mb-3">
             <div class="mb-3">
                 <i data-feather="image"></i> {{ __('Photo') }}
