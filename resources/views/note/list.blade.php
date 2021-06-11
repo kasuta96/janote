@@ -69,9 +69,10 @@
                         @csrf
                             <button type="submit" class="btn btn-light btn-sm" title="{{ __('Delete') }}"><i data-feather="trash"></i></button>
                         </form>
-
                         <p>
-                            {{ $Note->hashtag }}
+                        @foreach ($arr = explode(',',$Note->hashtag) as $val)
+                            <span>{{ Config::get('hashtag')[$val] }}, </span>
+                        @endforeach
                         </p>
                     </div>
                 </div>
