@@ -62,7 +62,7 @@
             <p>{{ __('Hashtag') }}:</p>
             @foreach (Config::get('hashtag') as $key => $tag)
             <div class="form-check form-check-inline">
-                <input class="form-check-input" name="hashtag[]" type="checkbox" value="{{ $key }}">
+                <input class="form-check-input" name="tagArr[]" type="checkbox" value="{{ $key }}">
                 <label class="form-check-label" for="inlineCheckbox1">{{ $tag }}</label>
             </div>
             @endforeach

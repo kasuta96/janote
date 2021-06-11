@@ -70,6 +70,9 @@
                             <button type="submit" class="btn btn-light btn-sm" title="{{ __('Delete') }}"><i data-feather="trash"></i></button>
                         </form>
 
+                        <p>
+                            {{ $Note->hashtag }}
+                        </p>
                     </div>
                 </div>
             </td>
