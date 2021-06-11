@@ -9,6 +9,7 @@ use App\Http\Requests\NoteRequest;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Classes\Hashtag;
 
 class NoteController extends Controller
 {
@@ -87,6 +88,7 @@ class NoteController extends Controller
         }
 
         $input = $request->all();
+        $input['hashtag'] = implode(',',$input['tagArr']);
         $input['user_id'] = Auth::id();
 
         // photo
