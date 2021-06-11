@@ -18,6 +18,7 @@ class Note extends Model
         'audio',
         'image',
         'status',
+        'hashtag',
     ];
 
     // relationship

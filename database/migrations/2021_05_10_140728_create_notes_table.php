@@ -24,6 +24,7 @@ class CreateNotesTable extends Migration
             $table->string('audio')->nullable(); // audio link
             $table->string('image')->nullable(); // image link
             $table->integer('status')->default(0);
+            $table->string('hashtag')->nullable();
             $table->timestamps();
         });
     }
