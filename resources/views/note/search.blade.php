@@ -51,22 +51,8 @@
             <td class="table-tool">
 
                 @include('note.mediaBtn')
+                @include('note.noteDropdownBtn')
 
-                <button type="button" class="btn btn-light btn-sm" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-                    <i data-feather="more-horizontal"></i>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <div class="dropdown-header">
-                        <a href="{{ route('editNote', $Note->id) }}" role="button" class="btn btn-light btn-sm" h><i data-feather="edit"></i></a>
-
-                        <form action="{{ route('deleteNote', $Note->id) }}" method="get" class="d-inline-block" onsubmit="return checkDelete()">
-                        @csrf
-                            <button type="submit" class="btn btn-light btn-sm" title="{{ __('Delete') }}"><i data-feather="trash"></i></button>
-                        </form>
-
-                    </div>
-                </div>
             </td>
         </tr>
 
