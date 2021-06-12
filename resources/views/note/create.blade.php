@@ -59,11 +59,11 @@
         @endif
 
         <div class="my-4">
-            <p>{{ __('Hashtag') }}:</p>
-            @foreach (Config::get('hashtag') as $key => $tag)
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" name="tagArr[]" type="checkbox" value="{{ $key }}">
-                <label class="form-check-label" for="inlineCheckbox1">{{ $tag }}</label>
+            <p>{{ __('Hashtag') }}</p>
+            @foreach (Config::get('hashtag')[App::getLocale()] as $key => $tag)
+            <div class="form-check-inline" onclick="checkboxToggle(this)">
+                <input hidden name="tagArr[]" type="checkbox" value="{{ $key }}">
+                <label class="badge rounded-pill p-2 bg-secondary text-white" for="inlineCheckbox1">{{ $tag }}</label>
             </div>
             @endforeach
         </div>

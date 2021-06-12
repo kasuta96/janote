@@ -59,6 +59,32 @@
         </div>
         @endif
 
+        <div class="my-4">
+            <p>{{ __('Hashtag') }}</p>
+            @php
+                $tagArr = explode(',',$Note->hashtag);
+            @endphp
+            @foreach (Config::get('hashtag')[App::getLocale()] as $key => $tag)
+            <div class="form-check-inline" onclick="checkboxToggle(this)">
+                <input hidden name="tagArr[]" type="checkbox" value="{{ $key }}"
+                @if(in_array($key,$tagArr))
+                    checked
+                @endif
+                >
+                <label
+                    @if(in_array($key,$tagArr))
+                        class="badge rounded-pill p-2 bg-info text-white"
+                    @else
+                        class="badge rounded-pill p-2 bg-secondary text-white"
+                    @endif
+                >
+                    {{ $tag }}
+                </label>
+            </div>
+            @endforeach
+        </div>
+
+
         @if ($Note->image)
         <div class="text-center my-4">
             <img src="{{ $Note->image }}" class="rounded thumb" alt="">

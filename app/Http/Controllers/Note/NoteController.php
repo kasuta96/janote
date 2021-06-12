@@ -155,6 +155,10 @@ class NoteController extends Controller
     public function update(NoteRequest $request)
     {
         $input = $request->all();
+        // if has Hashtag: array -> string
+        if (isset($input['tagArr'])) {
+            $input['hashtag'] = implode(',',$input['tagArr']);
+        }
         $Note = Note::find($input['id']);
         // check auth
         if (empty($Note)) {
@@ -167,7 +171,8 @@ class NoteController extends Controller
             $Note->fill([
                 'title' => $input['title'],
                 'content' => $input['content'],
-                'category_id' => $input['category_id']
+                'category_id' => $input['category_id'],
+                'hashtag' => $input['hashtag'],
             ]);
             $Note->save();
         } catch (\Throwable $th) {
