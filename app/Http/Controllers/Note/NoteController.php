@@ -172,7 +172,7 @@ class NoteController extends Controller
                 'title' => $input['title'],
                 'content' => $input['content'],
                 'category_id' => $input['category_id'],
-                'hashtag' => $input['hashtag'],
+                'hashtag' => $input['hashtag'] ?? NULL,
             ]);
             $Note->save();
         } catch (\Throwable $th) {
