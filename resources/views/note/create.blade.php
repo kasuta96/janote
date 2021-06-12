@@ -3,26 +3,17 @@
 
 @section('content')
 
-<div class="d-flex justify-content-between mb-4">
-    <a href="{{ route('categories') }}" class="btn btn-light">
-        <i data-feather="arrow-left"></i> {{ __('Back') }}
-    </a>
-    <h6 class="text-center"><strong>{{ __('Add') }}</strong></h6>
-    <div>
-        <!-- <span class="dropdown">
-            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
-                <i data-feather="more-horizontal"></i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="#">some option</a>
-            </div>
-        </span> -->
-    </div>
-</div>
 
 <form action="{{ route('storeNote') }}" method="post" enctype="multipart/form-data">
 @csrf
+    <div class="d-flex justify-content-between mb-4">
+        <a href="{{ route('categories') }}" class="btn btn-light">
+            <i data-feather="arrow-left"></i> {{ __('Back') }}
+        </a>
+        <h6 class="text-center"><strong>{{ __('Add') }}</strong></h6>
+        <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+    </div>
+
     <div class="form-group">
         <div class="input-group mb-3">
             <div class="input-group-prepend">
