@@ -47,15 +47,14 @@ class ProfileController extends Controller
         if($request->hasFile('avatar'))
         {
             $uploaded = $request->file('avatar');
-            $filename = time().'.'.$user->id;
+            $filename = $user->id.'.'.$uploaded->getClientOriginalName();
             $path = public_path('/uploads/avatars/');
             $uploaded->move($path,$filename);
 
             // if has old avatar
-            if ($Note->image) {
-                if(\File::exists(public_path($Note->image))) {
-                    \File::delete(public_path($Note->image));
-                    $countImg++;
+            if ($user->avatar != '/images/default-avatar.jpg') {
+                if(\File::exists(public_path($user->avatar))) {
+                    \File::delete(public_path($user->avatar));
                 }
             }
 
