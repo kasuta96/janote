@@ -29,3 +29,8 @@ function checkboxToggle(e) {
         label.classList.add('bg-info');
     }
 }
+// auto resize textarea
+function autoGrow(e) {
+    e.style.height = 'auto';
+    e.style.height = (e.scrollHeight+2) + "px";
+}
