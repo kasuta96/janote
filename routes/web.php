@@ -57,3 +57,6 @@ Route::post('/categories/{id}', 'Category\CategoryController@update')->name('upd
 // change language
 Route::get('lang/{lang}', 'LanguageController@switchLang')->name('lang.switch');
 
+// profile
+Route::get('profile/edit', 'Auth\ProfileController@edit')->name('editProfile');
+Route::post('profile/update', 'Auth\ProfileController@update')->name('updateProfile');

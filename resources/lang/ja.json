@@ -1,5 +1,9 @@
 {
     "Found some duplicate word": "似てるデータが見つかりました",
+    "Description": "説明",
+    "Introduce yourself": "自己紹介",
+    "Change Password": "パスワード変更",
+    "Skip if you don't want to change your password": "パスワードを変更しない場合はスキップしてください",
 
     "Add": "追加",
     "Added": "追加中",
