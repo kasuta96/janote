@@ -32,16 +32,39 @@
                 @endif
                 @else
                 <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link text-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->name }} <span class="caret"></span>
+                    <a id="navbarDropdown" class="d-flex align-items-center text-secondary dropdown-toggle py-2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <span class="avatar-sm">
+                            <img src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->name }}">
+                        </span>
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                        <div class="d-flex align-items-center p-2">
+                            <div class="avatar">
+                                <img
+                                alt="{{ Auth::user()->name }}"
+                                src="{{ Auth::user()->avatar }}"
+                                />
+                            </div>
+                            <div
+                                class="flex-column pl-2 text-nowrap text-truncate"
+                                style="width: calc(100% - 40px); max-width: 300px"
+                            >
+                                <a href="{{ route('editProfile') }}">
+                                    <h5 class="mb-0 text-dark">{{ Auth::user()->name }}</h5>
+                                </a>
+                                <small>{{ Auth::user()->email }}</small>
+                            </div>
+                        </div>
+                        <hr class="dropdown-divider">
+                        <a href="{{ route('editProfile') }}" class="dropdown-item">{{ __('Profile') }}</a>
+                        <a
+                            class="dropdown-item"
+                            href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
                         </a>
-
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>

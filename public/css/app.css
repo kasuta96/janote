@@ -1,5 +1,19 @@
 /* design by kasuta */
-
+html {
+    --bg-blue: #63ccff;
+    --bg-teal: #4ebaaa;
+    --bg-pink: #ff5c8d;
+    --bg-orange: #ffbd45;
+    --bg-indigo: #8e99f3;
+    --text-blue: #005cb2;
+    --text-teal: #005b4f;
+    --text-pink: #a00037;
+    --text-orange: #c25e00;
+    --text-indigo: #26418f;
+}
+.bg-teal {
+    background-color: var(--bg-teal);
+}
 main.container-fluid {
     max-width: 960px;
 }
@@ -108,6 +122,11 @@ body {
     position: relative;
     height: 35px;
 }
+@media (max-width: 768px) {
+    .search-form {
+        width: 140px;
+    }
+}
 .search-form input {
     width: 100%;
     height: 100%;
@@ -134,7 +153,15 @@ body {
     height: 48px;
     /* overflow: hidden; */
 }
-.avatar img {
+.avatar-sm {
+    width: 24px;
+    height: 24px;
+}
+.avatar-lg {
+    width: 80px;
+    height: 80px;
+}
+.avatar img, .avatar-lg img, .avatar-sm img {
     border-radius: 50%;
     height: 100%;
     width: 100%;

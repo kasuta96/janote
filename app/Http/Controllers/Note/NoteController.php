@@ -13,6 +13,11 @@ use App\Classes\Hashtag;
 
 class NoteController extends Controller
 {
+    // Check login
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     // function
     public function pagination($rq, $query)
     {
@@ -60,11 +65,6 @@ class NoteController extends Controller
      */
     public function create(Request $request)
     {
-        if (!Auth::check()) // if not login
-        {
-            return redirect()->route('login');
-        }
-
         // get categories list
         $Categories = Category::where('user_id','=',Auth::id())->get();
         if ($request['category']) {
@@ -82,11 +82,6 @@ class NoteController extends Controller
      */
     public function store(NoteRequest $request)
     {
-        if (!Auth::check()) // if login
-        {
-            return redirect()->route('login');
-        }
-
         $input = $request->all();
         // if has Hashtag
         if (isset($input['tagArr'])) {
@@ -240,10 +235,6 @@ class NoteController extends Controller
      */
     public function trash(Request $request)
     {
-        if (!Auth::check()) // if not login
-        {
-            return redirect()->route('login');
-        }
         // page request
         $page = $request->input('p') ?? 1;
         // query
@@ -375,10 +366,6 @@ class NoteController extends Controller
      */
     public function search(Request $request)
     {
-        if (!Auth::check()) // if not login
-        {
-            return redirect()->route('login');
-        }
         // page request
         $page = $request->input('p') ?? 1;
         $kw = $request->input('kw');
