@@ -13,6 +13,7 @@ return [
   10 => 'Cảm xúc & Cảm giác',
   11 => 'Thời trang',
   12 => 'Công nghệ',
+  13 => 'Thời sự'
 ];
 
 // cach goi danh dach hashtag:

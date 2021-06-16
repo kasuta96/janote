@@ -57,3 +57,5 @@ Route::post('/categories/{id}', 'Category\CategoryController@update')->name('upd
 // change language
 Route::get('lang/{lang}', 'LanguageController@switchLang')->name('lang.switch');
 
+//show Hashtag
+Route::get('/hashtag', 'Hashtag\HashtagController@show')->name('hashtag');
