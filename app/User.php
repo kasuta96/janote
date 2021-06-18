@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Category');
     }
+
+    public function notes()
+    {
+        return $this->hasMany('App\Models\Note');
+    }
 }

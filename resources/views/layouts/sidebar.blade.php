@@ -23,6 +23,7 @@
                 </div>
             </div>
             <a href="{{ route('posts') }}" data-menu="posts" class="list-group-item list-group-item-action"><i data-feather="twitch"></i> {{ __('Community') }}</a>
+            <a href="{{ route('hashtag') }}" data-menu="hashtags" class="list-group-item list-group-item-action"><i data-feather="twitch"></i> {{ __('Word Tag') }}</a>
             <a href="{{ route('trashNote') }}" data-menu="trashNote" class="list-group-item list-group-item-action"><i data-feather="trash-2"></i> {{ __('Trash') }}</a>
         </div>
 
