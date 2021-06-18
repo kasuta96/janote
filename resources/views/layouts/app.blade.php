@@ -20,8 +20,9 @@
 </head>
 <body>
     <div class="d-flex" id="app">
+        @auth
         @include('layouts.sidebar')
-
+        @endauth
         <div id="page-content-wrapper">
             @include('layouts.nav')
 

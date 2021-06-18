@@ -1,42 +1,28 @@
 @extends('layouts.app')
-@section('title', 'Search')
 
-@section('content')
+@section('title', 'Wordtag')
 @php
-    $params = '?kw='.$Keyword;
-    $route = route('searchNote');
+    $params = '?';
+    $route = route('hashtag', $Id);
 
 @endphp
+@section('content')
 <div class="d-flex justify-content-between mb-2">
-    <a href="{{ route('categories') }}" class="btn btn-light">
-        <i data-feather="arrow-left"></i> {{ __('Back') }}
-    </a>
-    <h6 class="text-center"><strong>{{ __('Search').': '.$Keyword }}</strong></h6>
     <div>
-        <span class="dropdown">
-            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i data-feather="more-horizontal"></i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right">
-                <div class="dropdown-item disabled text-secondary">
-                    <span>{{ __('Total').': '.$Data->count }}</span>
-                </div>
-                <div class="dropdown-divider"></div>
-
-            </div>
-        </span>
+        <a href="{{ route('hashtag') }}" class="btn btn-light">
+            <i data-feather="arrow-left"></i> {{ __('Back') }}
+        </a>
     </div>
+    
 </div>
-
+<div class="h4 font-weight-bold mb-0">#{{ Config::get('hashtag')[App::getLocale()][$Id] }}</div>
 <table class="table table-striped">
     <thead>
         <tr>
-            <th scope="col">#</th>
             <th scope="col">{{ __('Title') }}</th>
             <th scope="col">{{ __('Content') }}</th>
-            <th scope="col">{{ __('Categories') }}</th>
-            <!-- <th scope="col">タイプ</th> -->
-            <th scope="col" class="table-tool"></th>
+            <th scope="col">{{ __('User') }}</th>
+            <th scope="col">{{ __('Updated at') }}</th>
         </tr>
     </thead>
     <tbody>
@@ -44,16 +30,10 @@
 @foreach($Notes as $key => $Note)
 
         <tr>
-            <th scope="row" title="{{ $Note->created_at }}">{{ ($Data->page-1)*$Data->limit+$key+1 }}</th>
             <td>{{ $Note->title }}</td>
             <td>{{ $Note->content }}</td>
-            <td><a class="text-dark" href="{{ route('notes',$Note->category_id) }}">{{ $Note->category->title }}</a></td>
-            <td class="table-tool">
-
-                @include('note.mediaBtn')
-                @include('note.noteDropdownBtn')
-
-            </td>
+            <td>{{ $Note->user->name }}</td>
+            <td>{{ $Note->updated_at }}</td>
         </tr>
 
 @endforeach
@@ -81,4 +61,5 @@
         </li>
     </ul>
 </nav>
+
 @endsection

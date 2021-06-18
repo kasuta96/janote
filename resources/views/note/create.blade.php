@@ -3,26 +3,17 @@
 
 @section('content')
 
-<div class="d-flex justify-content-between mb-4">
-    <a href="{{ route('categories') }}" class="btn btn-light">
-        <i data-feather="arrow-left"></i> {{ __('Back') }}
-    </a>
-    <h6 class="text-center"><strong>{{ __('Add') }}</strong></h6>
-    <div>
-        <!-- <span class="dropdown">
-            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
-                <i data-feather="more-horizontal"></i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="#">some option</a>
-            </div>
-        </span> -->
-    </div>
-</div>
 
 <form action="{{ route('storeNote') }}" method="post" enctype="multipart/form-data">
 @csrf
+    <div class="d-flex justify-content-between mb-4">
+        <a href="{{ route('categories') }}" class="btn btn-light">
+            <i data-feather="arrow-left"></i> {{ __('Back') }}
+        </a>
+        <h6 class="text-center"><strong>{{ __('Add') }}</strong></h6>
+        <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+    </div>
+
     <div class="form-group">
         <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -59,11 +50,11 @@
         @endif
 
         <div class="my-4">
-            <p>{{ __('Hashtag') }}:</p>
-            @foreach (Config::get('hashtag') as $key => $tag)
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" name="tagArr[]" type="checkbox" value="{{ $key }}">
-                <label class="form-check-label" for="inlineCheckbox1">{{ $tag }}</label>
+            <p>{{ __('Hashtag') }}</p>
+            @foreach (Config::get('hashtag')[App::getLocale()] as $key => $tag)
+            <div class="form-check-inline" onclick="checkboxToggle(this)">
+                <input hidden name="tagArr[]" type="checkbox" value="{{ $key }}">
+                <label class="badge rounded-pill p-2 bg-secondary text-white" for="inlineCheckbox1">{{ $tag }}</label>
             </div>
             @endforeach
         </div>

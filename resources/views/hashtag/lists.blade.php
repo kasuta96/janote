@@ -8,9 +8,9 @@
         <h5 class="text-center"><strong>言葉にタグを付けましょう！</strong></h5>
         
     </div>
-    @foreach (Config::get('hashtag') as $key => $tag)
+    @foreach (Config::get('hashtag')[App::getLocale()] as $key => $tag)
         <div>
-            <a href="#">#{{ $tag }}</a>
+            <a href="{{ route('wordtag', $key) }}">#{{ $tag }}</a>
         </div>
     @endforeach
 </div>

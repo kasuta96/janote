@@ -13,6 +13,11 @@ use App\Classes\Hashtag;
 
 class NoteController extends Controller
 {
+    // Check login
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     // function
     public function pagination($rq, $query)
     {
@@ -60,11 +65,6 @@ class NoteController extends Controller
      */
     public function create(Request $request)
     {
-        if (!Auth::check()) // if not login
-        {
-            return redirect()->route('login');
-        }
-
         // get categories list
         $Categories = Category::where('user_id','=',Auth::id())->get();
         if ($request['category']) {
@@ -82,13 +82,11 @@ class NoteController extends Controller
      */
     public function store(NoteRequest $request)
     {
-        if (!Auth::check()) // if login
-        {
-            return redirect()->route('login');
-        }
-
         $input = $request->all();
-        $input['hashtag'] = implode(',',$input['tagArr']);
+        // if has Hashtag
+        if (isset($input['tagArr'])) {
+            $input['hashtag'] = implode(',',$input['tagArr']);
+        }
         $input['user_id'] = Auth::id();
 
         // photo
@@ -107,21 +105,22 @@ class NoteController extends Controller
             $uploaded->move($path,$filename);
             $input['audio'] = '/uploads/audios/'.$filename;
         }
-        // store data
-        Note::create($input);
 
         // check if word exist
         $sameWordQuery = Note::with('category')
         ->where('user_id',Auth::id())
         ->where('title',$input['title'])
         ->where('status',0);
-
         $sameWord = $sameWordQuery->get();
+
+        // store data
+        Note::create($input);
+
         if (count($sameWord) > 0) {
             return redirect(route('searchNote').'?kw='.$input['title'])->with('status', __('Saved').' & '.__('Found some duplicate word'));
         }
 
-        return redirect()->route('notes', $input['category_id'] ?? 0)->with('status', 'push success!');
+        return redirect()->route('notes', $input['category_id'] ?? 0)->with('status', __('lang.savedto',['name' => Category::find($input['category_id'])->title ]));
     }
 
     /**
@@ -151,6 +150,10 @@ class NoteController extends Controller
     public function update(NoteRequest $request)
     {
         $input = $request->all();
+        // if has Hashtag: array -> string
+        if (isset($input['tagArr'])) {
+            $input['hashtag'] = implode(',',$input['tagArr']);
+        }
         $Note = Note::find($input['id']);
         // check auth
         if (empty($Note)) {
@@ -163,7 +166,8 @@ class NoteController extends Controller
             $Note->fill([
                 'title' => $input['title'],
                 'content' => $input['content'],
-                'category_id' => $input['category_id']
+                'category_id' => $input['category_id'],
+                'hashtag' => $input['hashtag'] ?? NULL,
             ]);
             $Note->save();
         } catch (\Throwable $th) {
@@ -231,10 +235,6 @@ class NoteController extends Controller
      */
     public function trash(Request $request)
     {
-        if (!Auth::check()) // if not login
-        {
-            return redirect()->route('login');
-        }
         // page request
         $page = $request->input('p') ?? 1;
         // query
@@ -366,10 +366,6 @@ class NoteController extends Controller
      */
     public function search(Request $request)
     {
-        if (!Auth::check()) // if not login
-        {
-            return redirect()->route('login');
-        }
         // page request
         $page = $request->input('p') ?? 1;
         $kw = $request->input('kw');

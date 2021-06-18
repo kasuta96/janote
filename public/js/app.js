@@ -15,3 +15,22 @@ sidebarToggle.addEventListener('click', function(e) {
 
 // Feather icons
 feather.replace();
+
+function checkboxToggle(e) {
+    var input = e.getElementsByTagName('input')[0];
+    var label = e.getElementsByTagName('label')[0];
+    if (input.checked == true) {
+        input.checked = false;
+        label.classList.remove('bg-info');
+        label.classList.add('bg-secondary');
+    } else {
+        input.checked = true;
+        label.classList.remove('bg-secondary');
+        label.classList.add('bg-info');
+    }
+}
+// auto resize textarea
+function autoGrow(e) {
+    e.style.height = 'auto';
+    e.style.height = (e.scrollHeight+2) + "px";
+}
