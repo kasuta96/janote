@@ -6,18 +6,10 @@
 <div class="container my-3">
     <div class="d-flex justify-content-between mb-4">
         <a href="/categories" class="btn btn-light">
-            <i class="icon i-back"></i> 戻る
+            <i class="icon i-back"></i>{{ __('Back') }}
         </a>
-        <h6 class="text-center"><strong>カテゴリ編集</strong></h6>
+        <h6 class="text-center"><strong>{{ __('Edit Category')}}</strong></h6>
         <div>
-            <span class="dropbown">
-                <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="icon i-3dot"></i>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a href="#">some option</a>
-                </div>
-            </span>
         </div>
     </div>
 
@@ -27,7 +19,7 @@
 
         <div class="form-group">
 
-            <label for="title">カテゴリ名</label>
+            <label for="title">{{ __('Name')}}</label>
             <input type="text" name="title" id="title" class="form-control mb-3" value="{{ $categories->title }}" aria-describedby="helpId">
             
 
@@ -38,7 +30,7 @@
             @enderror
             
         </div>
-        <button type="submit" class="btn btn-primary w-100 text-center">保存</button>
+        <button type="submit" class="btn btn-primary w-100 text-center">{{ __('Save') }}</button>
     </form>
 </div>
 @endsection
