@@ -15,7 +15,7 @@
     <div class="dropdown-divider"></div>
     <div class="px-3" style="max-width: 300px;">
     @foreach ($arr = explode(',',$Note->hashtag) as $val)
-        <a href="#" class="badge rounded-pill my-1 p-2 bg-info text-white">{{ Config::get('hashtag')[App::getLocale()][$val] }}</a>
+        <a href="{{ route('wordtag', $val) }}" class="badge rounded-pill my-1 p-2 bg-info text-white">{{ Config::get('hashtag')[App::getLocale()][$val] ?? '' }}</a>
     @endforeach
     </div>
     @endif
