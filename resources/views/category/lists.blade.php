@@ -20,7 +20,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">{{  __('Title')}}</th>
+                <th scope="col">{{  __('Title') }}</th>
             </tr>
         </thead>
         <tbody>

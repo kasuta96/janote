@@ -5,7 +5,7 @@
 @section('content')
 <div class="container my-3">
     <div class="d-flex justify-content-between mb-2">
-        <h5 class="text-center"><strong>言葉にタグを付けましょう！</strong></h5>
+        <h5 class="text-center"><strong>{{ __('Let\'s get a Word Tag')}}！</strong></h5>
         
     </div>
     @foreach (Config::get('hashtag')[App::getLocale()] as $key => $tag)
