@@ -15,15 +15,31 @@ class CategoryController extends Controller
         $this->middleware('auth');
     }
 
-    public function show()
+    public function pagination($rq, $query)
     {
-        $categories = Category::where('status', 0)
-            ->where('user_id',Auth::id())
-            ->orderBy('created_at', 'desc')
-            ->take(10)
-            ->get();
+        $data = new \stdClass();
+        $data->page = $rq->input('p') ?? 1;
+        $data->count = $query->count() ?? 0;
+        $data->limit = 10;
+        $data->totalPage = ceil($data->count/$data->limit);
+        return $data;
+    }
 
-        return view('category.lists', compact('categories'));
+    public function show(Request $request)
+    {
+        // page request
+        // query
+        $query = Category::where('user_id',Auth::id())
+        ->where('status','=',0)
+        ->orderBy('id', 'DESC');
+        // pagination data
+        $pagination = $this->pagination($request, $query);
+        // notes data
+        $categories = $query->skip($pagination->limit*($pagination->page - 1))
+        ->take($pagination->limit)
+        ->get();
+
+        return view('category.lists', compact('categories', 'pagination'));
     }
 
     public function store()
@@ -64,9 +80,6 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $categories = Category::find($id);
-        if (empty($categories)) {
-            return redirect()->route('categories')->with('error', 'データがありません！');
-        }
         if ($categories->user_id != Auth::user()->id) {
             return redirect()->route('categories')->with('error', '編集できません');
         }

@@ -1,9 +1,14 @@
 @extends('layouts.app')
 
 @section('title', 'Categories')
+@php
+    $params = '?';
+    $route = route('categories');
+
+@endphp
 
 @section('content')
-<div class="container my-3">
+
     <div class="d-flex justify-content-between mb-2">
         <h6 class="text-center"><strong>{{ __('Category') }}</strong></h6>
         <div>
@@ -40,5 +45,26 @@
             @endforeach
         </tbody>
     </table>
-</div>
+    <nav aria-label="">
+    <ul class="pagination justify-content-center">
+        <li class="page-item" title="page: 1">
+            <a class="page-link" href="{{ $route.$params.'&p=1' }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">First</span>
+            </a>
+        </li>
+        @for($i=$pagination->page-2; $i<$pagination->page+3; $i++)
+            @if($i>0 && $i<=$pagination->totalPage)
+            <li class="page-item @if($pagination->page==$i)active @endif"><a class="page-link" href="{{ $route.$params.'&p='.$i }}">{{ $i }}</a></li>
+            @endif
+        @endfor
+        <li class="page-item" title="page: {{ $pagination->totalPage }}">
+            <a class="page-link" href="{{ $route.$params.'&p='.$pagination->totalPage }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Last</span>
+            </a>
+        </li>
+    </ul>
+    </nav>
+
 @endsection

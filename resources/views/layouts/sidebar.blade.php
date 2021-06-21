@@ -10,7 +10,7 @@
 
         <div class="list-group list-group-flush">
             <div class="btn-group">
-                <a href="{{ route('categories') }}" data-menu="categories" class="list-group-item list-group-item-action"><i data-feather="folder"></i> {{ __('Categories') }}</a>
+                <a href="{{ route('categories', 'id') }}" data-menu="categories" class="list-group-item list-group-item-action"><i data-feather="folder"></i> {{ __('Categories') }}</a>
                 <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="collapse" data-target="#collapseCate" aria-expanded="true" aria-controls="collapseCate">
                     <span class="sr-only">v</span>
                 </button>
