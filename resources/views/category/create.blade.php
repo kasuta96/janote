@@ -3,8 +3,8 @@
 @section('content')
 <div class="container my-3">
     <div class="d-flex justify-content-between mb-4">
-        <a href="/categories" class="btn btn-light">
-            <i class="icon i-back"></i> {{ __('Back') }}
+        <a href="{{ route('categories') }}" class="btn btn-light">
+            <i data-feather="arrow-left"></i> {{ __('Back') }}
         </a>
         <h6 class="text-center"><strong>{{ __('Add new category')}}</strong></h6>
         <div>
