@@ -48,12 +48,19 @@
             {{ $post->content }}
         </p>
     </div>
-    <!-- <div class="card-footer bg-white">
-        <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
-        <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
-        <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
-    </div> -->
+    <div class="card-footer bg-white">
+        <button class="btn btn-light"><i class="fa fa-gittip"></i> Like</button>
+        <a class="btn btn-light" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-comment"></i> Comment</a>
+        <div class="collapse mt-2" id="collapseExample">
+            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+        </div>
+    </div>
 </div>
 <!-- Post /////-->
 @endforeach
+
+<script>
+
+</script>
+
 @endsection

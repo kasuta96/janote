@@ -36,7 +36,7 @@
                 </div>
             </li>
             <li class="nav-item mx-2">
-                <select class="form-control" name="c">
+                <select class="form-control" name="c" onchange="javascript:this.form.submit()">
                     <option value="" selected>{{ __('Categories').': '.__('All') }}</option>
                     @foreach( App\Http\Controllers\Category\CategoryController::CategoriesData() as $Category)
                     <option
@@ -55,7 +55,7 @@
                 </select>
             </li>
             <li class="nav-item mx-2">
-                <select class="form-control" name="s">
+                <select class="form-control" name="s" onchange="javascript:this.form.submit()">
                     <option value="DESC">{{ __('Newest') }}</option>
                     <option
                         value="ASC"

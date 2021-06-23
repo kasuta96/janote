@@ -4,33 +4,44 @@
 @section('content')
 @php
     $params = '?';
-    $route = route('trashNote');
+    $route = route('trash');
 
 @endphp
+
 <div class="d-flex justify-content-between mb-2">
-    <a href="{{ route('categories') }}" class="btn btn-light">
-        <i data-feather="arrow-left"></i> {{ __('Back') }}
-    </a>
+    <div></div>
     <h6 class="text-center"><strong>{{ __('Trash') }}</strong></h6>
     <div>
-        <span class="dropdown">
-            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i data-feather="more-horizontal"></i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right">
-                <div class="dropdown-item disabled text-secondary">
-                    <span>{{ __('Total').': '.$Data->count }}</span>
-                </div>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ route('restoreNote','all') }}"><i data-feather="repeat"></i> {{ __('Restore all') }}</a>
-                <form action="{{ route('removeNote','all') }}" method="get" onsubmit="return checkDelete();">
-                @csrf
-                    <button type="submit" class="dropdown-item" ><i data-feather="delete"></i> {{ __('Delete all') }}</button>
-                </form>
-
-            </div>
-        </span>
     </div>
+</div>
+
+<div class="d-flex mb-3">
+@foreach ($Categories as $key => $Category)
+<div class="card bg-gray-400 m-2" style="width:150px">
+    <div class="pt-3 px-3">
+        <strong>{{ $Category->title }}</strong>
+        <div class="d-flex justify-content-between align-items-center my-2">
+            <small class="text-muted">{{ __('Total').': '.$Category->count }}</small>
+            <div>
+                <button type="button" class="btn btn-light btn-sm" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    <i data-feather="more-horizontal"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <div class="dropdown-header">
+                        <a class="btn btn-success btn-sm" href="#" role="button" title="{{ __('Restore')}}"><i data-feather="repeat"></i></a>
+                        <form action="" method="get" class="d-inline-block" onsubmit="return checkDelete()">
+                        @csrf
+                            <button type="submit" class="btn btn-danger btn-sm" title="{{ __('Delete') }}"><i data-feather="delete"></i></button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
 </div>
 
 <table class="table table-striped">
@@ -41,7 +52,25 @@
             <th scope="col">{{ __('Content') }}</th>
             <th scope="col">{{ __('Categories') }}</th>
             <!-- <th scope="col">タイプ</th> -->
-            <th scope="col" class="table-tool"></th>
+            <th scope="col" class="table-tool">
+                <span class="dropdown">
+                    <button class="btn btn-light btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i data-feather="more-horizontal"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div class="dropdown-item disabled text-secondary">
+                            <span>{{ __('Total').': '.$Data->count }}</span>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ route('restoreNote','all') }}"><i data-feather="repeat"></i> {{ __('Restore all') }}</a>
+                        <form action="{{ route('removeNote','all') }}" method="get" onsubmit="return checkDelete();">
+                        @csrf
+                            <button type="submit" class="dropdown-item" ><i data-feather="delete"></i> {{ __('Delete all') }}</button>
+                        </form>
+
+                    </div>
+                </span>
+            </th>
         </tr>
     </thead>
     <tbody>

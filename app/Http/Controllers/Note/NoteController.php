@@ -269,25 +269,6 @@ class NoteController extends Controller
      * Show deleted note (trash)
      * 
      */
-    public function trash(Request $request)
-    {
-        // page request
-        $page = $request->input('p') ?? 1;
-        // query
-        $query = Note::with('category')
-        ->where('user_id','=',Auth::id())
-        ->where('status','=',9)
-        ->orderBy('id', 'DESC');
-        // pagination data
-        $pagination = $this->pagination($request, $query);
-        // notes data
-        $notes = $query->skip($pagination->limit*($pagination->page - 1))
-        ->take($pagination->limit)
-        ->get();
-
-        return view('note.trash', ['Notes'=>$notes, 'Category'=>'Trash', 'Data'=>$pagination]);
-    }
-
     public function remove($rq)
     {
         // get note data
@@ -298,7 +279,7 @@ class NoteController extends Controller
             ->get();
             // check data
             if (count($Notes) == 0) {
-                return redirect()->route('trashNote')->with('error', __('There is no data').'!');
+                return redirect()->route('trash')->with('error', __('There is no data').'!');
             }
         }
         else
@@ -306,11 +287,11 @@ class NoteController extends Controller
             $Note = Note::find($rq);
             // check data
             if (empty($Note)) {
-                return redirect()->route('trashNote')->with('error', __('There is no data').'!');
+                return redirect()->route('trash')->with('error', __('There is no data').'!');
             }
             if ($Note->user_id != Auth::id())
             {
-                return redirect()->route('trashNote')->with('error', __('This action is unauthorized.'));
+                return redirect()->route('trash')->with('error', __('This action is unauthorized.'));
             }
             $Notes = [$Note];
         }
@@ -352,7 +333,7 @@ class NoteController extends Controller
         if ($countNote > 0) {
             $notify .= ', '.$countNote.' '.__('Note');
         }
-        return redirect()->route('trashNote')->with('status', $notify);
+        return redirect()->route('trash')->with('status', $notify);
     }
 
     public function restore($rq)
@@ -365,7 +346,7 @@ class NoteController extends Controller
             ->get();
             // check data
             if (count($Notes) == 0) {
-                return redirect()->route('trashNote')->with('error', __('There is no data').'!');
+                return redirect()->route('trash')->with('error', __('There is no data').'!');
             }
         }
         else
@@ -373,11 +354,11 @@ class NoteController extends Controller
             $Note = Note::find($rq);
             // check data
             if (empty($Note)) {
-                return redirect()->route('trashNote')->with('error', __('There is no data').'!');
+                return redirect()->route('trash')->with('error', __('There is no data').'!');
             }
             if ($Note->user_id != Auth::id())
             {
-                return redirect()->route('trashNote')->with('error', __('This action is unauthorized.'));
+                return redirect()->route('trash')->with('error', __('This action is unauthorized.'));
             }
             $Notes = [$Note];
         }
@@ -393,7 +374,7 @@ class NoteController extends Controller
             $countNote++;
         }
 
-        return redirect()->route('trashNote')->with('status', __('Restored').', '.$countNote.' '.__('Note'));
+        return redirect()->route('trash')->with('status', __('Restored').', '.$countNote.' '.__('Note'));
     }
 
 }

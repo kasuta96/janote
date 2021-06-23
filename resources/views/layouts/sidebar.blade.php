@@ -25,7 +25,7 @@
             </div>
             <a href="{{ route('posts') }}" data-menu="posts" class="list-group-item list-group-item-action"><i data-feather="twitch"></i> {{ __('Community') }}</a>
             <a href="{{ route('hashtag') }}" data-menu="hashtag" class="list-group-item list-group-item-action"><i data-feather="tag"></i> {{ __('Word Tag') }}</a>
-            <a href="{{ route('trashNote') }}" data-menu="trashNote" class="list-group-item list-group-item-action"><i data-feather="trash-2"></i> {{ __('Trash') }}</a>
+            <a href="{{ route('trash') }}" data-menu="trash" class="list-group-item list-group-item-action"><i data-feather="trash-2"></i> {{ __('Trash') }}</a>
         </div>
 
         @if(Route::is('posts') )
