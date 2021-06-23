@@ -26,7 +26,7 @@
                         @if ($post->user_id == Auth::user()->id)
                         <form action="{{ route('deletePost', $post->id) }}" method="get" onsubmit="return checkDelete()">
                             @csrf
-                            <button class="dropdown-item" type="submit" class="btn btn-link"><i data-feather="trash"></i> Delete</button>
+                            <button class="dropdown-item" type="submit" class="btn btn-link"><i data-feather="trash"></i> {{ __('Delete') }}</button>
                         </form>
                         @endif
                         <!-- <a class="dropdown-item" href="#">Save</a>

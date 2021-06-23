@@ -28,6 +28,10 @@ main.container-fluid {
 .z-index-fix {
     z-index: 900;
 }
+/* notes navbar */
+#navbarTogglerSearch input, #navbarTogglerSearch select {
+    max-width: 200px;
+}
 body {
     overflow-x: hidden;
 }

@@ -37,7 +37,7 @@
             </li>
             <li class="nav-item mx-2">
                 <select class="form-control" name="c" aria-describedby="basic-addon1">
-                    <option value="" selected>{{ __('Categories') }}</option>
+                    <option value="" selected>{{ __('Categories').': '.__('All') }}</option>
                     @foreach( App\Http\Controllers\Category\CategoryController::CategoriesData() as $Category)
                     <option
                         value="{{ $Category->id }}"
@@ -66,7 +66,9 @@
             <th scope="col">#</th>
             <th scope="col">{{ __('Title') }}</th>
             <th scope="col">{{ __('Content') }}</th>
-            <th scope="col">{{ __('Categories') }}</th>
+            @if(!isset($Data->category))
+            <th scope="col" class="d-none d-lg-block">{{ __('Categories') }}</th>
+            @endif
             <!-- <th scope="col">タイプ</th> -->
             <th scope="col" class="table-tool"></th>
         </tr>
@@ -79,7 +81,9 @@
             <th scope="row" title="{{ $Note->created_at }}">{{ ($Data->page-1)*$Data->limit+$key+1 }}</th>
             <td>{{ $Note->title }}</td>
             <td>{{ $Note->content }}</td>
-            <td><a class="text-dark" href="{{ route('notes',['c'=>$Note->category_id ?? 'other']) }}">{{ $Note->category->title ?? __('Other') }}</a></td>
+            @if(!isset($Data->category))
+            <td class="d-none d-lg-block"><a class="text-dark" href="{{ route('notes',['c'=>$Note->category_id ?? 'other']) }}">{{ $Note->category->title ?? __('Other') }}</a></td>
+            @endif
             <td class="table-tool">
 
                 @include('note.mediaBtn')
