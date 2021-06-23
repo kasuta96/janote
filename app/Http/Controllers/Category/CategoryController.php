@@ -63,14 +63,20 @@ class CategoryController extends Controller
     public function delete($id)
     {
         $categories = Category::find($id);
-        if (empty($categories)) {
+        if (empty($categories)) 
+        {
             return redirect()->route('categories')->with('error', 'データがありません！');
         }
         if ($categories->user_id != Auth::user()->id) {
             return redirect()->route('categories')->with('error', '削除できません');
         }
-        try {
-            Category::destroy($id);
+        try 
+        {
+            $categories->fill([
+                'status' => 9,
+            ]);
+            $categories->save();
+            // Category::destroy($id);
         } catch (\Throwable $th) {
             throw $th;
         }

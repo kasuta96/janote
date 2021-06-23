@@ -13,7 +13,8 @@ class Category extends Model
     [
         'title',
         'user_id',
-        'created_at'
+        'created_at',
+        'status'
     ];
 
 

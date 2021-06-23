@@ -8,9 +8,10 @@
 @endphp
 
 @section('content')
-
-    <div class="d-flex justify-content-between mb-2">
+    
+    <div class="d-flex justify-content-between mb-2"> 
         <h6 class="text-center"><strong>{{ __('Category') }}</strong></h6>
+        <span class="text-muted">{{ __('Total').': '.$pagination->count }}</span>
         <div>
             <span class="dropdown">
                 <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
