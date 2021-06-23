@@ -34,3 +34,19 @@ function autoGrow(e) {
     e.style.height = 'auto';
     e.style.height = (e.scrollHeight+2) + "px";
 }
+
+// // axios
+// axios.get('/user', {
+//     params: {
+//       ID: 12345
+//     }
+//   })
+//   .then(function (response) {
+//     console.log(response);
+//   })
+//   .catch(function (error) {
+//     console.log(error);
+//   })
+//   .then(function () {
+//     // always executed
+//   });  

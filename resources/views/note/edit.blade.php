@@ -20,7 +20,7 @@
                 <span class="input-group-text" id="basic-addon1">{{ __('Categories') }}</span>
             </div>
             <select class="form-control" name="category_id" aria-describedby="basic-addon1">
-                <option value="" disabled selected>{{ __('Select') }}</option>
+                <option value="" selected>{{ __('Select') }}</option>
                 @foreach( $Categories as $Category)
                 <option value="{{ $Category->id }}" @if($Note->category_id==$Category->id)selected @endif>{{ $Category->title }}</option>
                 @endforeach
