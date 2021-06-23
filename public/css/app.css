@@ -195,7 +195,7 @@ body {
 /**********************/
 /*    Table
 /**********************/
-td.table-tool {
+.table-tool {
     text-align: right;
 }
 
