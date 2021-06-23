@@ -7,6 +7,7 @@
     <!-- <a href="{{ route('categories') }}" class="btn btn-light">
         <i data-feather="arrow-left"></i> {{ __('Back') }}
     </a> -->
+    <span class="text-muted">{{ __('Total').': '.$Data->count }}</span>
     <button
         class="navbar-toggler"
         type="button"
