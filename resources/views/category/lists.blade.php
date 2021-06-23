@@ -31,7 +31,7 @@
         <tbody>
             @foreach($categories as $category)
             <tr>
-                <td><a href="{{ route('notes', $category->id) }}">{{ $category->title }}</a></td>
+                <td><a href="{{ route('notes', ['c'=>$category->id]) }}">{{ $category->title }}</a></td>
                 <td>
                     <button class="btn-link btn-sm" data-edit="0"><a href="{{ route('editCategory', $category->id) }}">{{ __('Edit')}}</button>
                     @if ($category->user_id == Auth::user()->id)

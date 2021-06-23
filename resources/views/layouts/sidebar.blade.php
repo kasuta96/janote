@@ -9,21 +9,22 @@
         </div>
 
         <div class="list-group list-group-flush">
+            <a href="{{ route('notes') }}" data-menu="posts" class="list-group-item list-group-item-action"><i data-feather="pen-tool"></i> {{ __('Notes') }}</a>
             <div class="btn-group">
-                <a href="{{ route('categories', 'id') }}" data-menu="categories" class="list-group-item list-group-item-action"><i data-feather="folder"></i> {{ __('Categories') }}</a>
+                <a href="{{ route('categories') }}" data-menu="categories" class="list-group-item list-group-item-action"><i data-feather="folder"></i> {{ __('Categories') }}</a>
                 <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="collapse" data-target="#collapseCate" aria-expanded="true" aria-controls="collapseCate">
                     <span class="sr-only">v</span>
                 </button>
             </div>
-            <div class="collapse show border" id="collapseCate">
+            <div class="collapse border" id="collapseCate">
                 <div class="list-group list-group-flush">
                     @foreach ( App\Http\Controllers\Category\CategoryController::CategoriesData() as $Category)
-                    <a href="{{ route('notes', $Category->id) }}" data-menu-cate="{{ $Category->id }}" class="list-group-item list-group-item-action text-nowrap text-truncate py-1 pl-4 list-group-item-dark">{{ $Category->title }}</a>
+                    <a href="{{ route('notes', ['c'=>$Category->id]) }}" data-menu-cate="{{ $Category->id }}" class="list-group-item list-group-item-action text-nowrap text-truncate py-1 pl-4 list-group-item-dark">{{ $Category->title }}</a>
                     @endforeach
                 </div>
             </div>
             <a href="{{ route('posts') }}" data-menu="posts" class="list-group-item list-group-item-action"><i data-feather="twitch"></i> {{ __('Community') }}</a>
-            <a href="{{ route('hashtag') }}" data-menu="hashtags" class="list-group-item list-group-item-action"><i data-feather="twitch"></i> {{ __('Word Tag') }}</a>
+            <a href="{{ route('hashtag') }}" data-menu="hashtag" class="list-group-item list-group-item-action"><i data-feather="twitch"></i> {{ __('Word Tag') }}</a>
             <a href="{{ route('trashNote') }}" data-menu="trashNote" class="list-group-item list-group-item-action"><i data-feather="trash-2"></i> {{ __('Trash') }}</a>
         </div>
 
@@ -41,5 +42,5 @@
 
 <script>
     var sidebar = document.getElementById('sidebar-wrapper');
-    sidebar.querySelector('[data-menu="{{ Route::currentRouteName() }}"]').classList.add('active');
+    sidebar.querySelector('[data-menu="{{ Route::currentRouteName() }}"]')?.classList.add('active');
 </script>

@@ -23,7 +23,7 @@ Route::post('/post/create', 'Post\PostController@create')->name('createPost');
 Route::get('/post/delete/{id}', 'Post\PostController@delete')->name('deletePost');
 
 // show category's Notes
-Route::get('/category/{id}', 'Note\NoteController@index')->name('notes');
+Route::get('/notes', 'Note\NoteController@index')->name('notes');
 // Create note
 Route::get('/note/create', 'Note\NoteController@create')->name('createNote');
 Route::post('/note/store', 'Note\NoteController@store')->name('storeNote');
@@ -36,9 +36,6 @@ Route::post('/note/update', 'Note\NoteController@update')->name('updateNote');
 Route::get('/trash/notes', 'Note\NoteController@trash')->name('trashNote');
 Route::get('/trash/remove/{id}', 'Note\NoteController@remove')->name('removeNote');
 Route::get('/trash/restore/{id}', 'Note\NoteController@restore')->name('restoreNote');
-// Search
-Route::get('/search', 'Note\NoteController@search')->name('searchNote');
-
 
 // show Categories
 Route::get('/categories', 'Category\CategoryController@show')->name('categories');

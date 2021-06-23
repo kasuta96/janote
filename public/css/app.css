@@ -10,9 +10,17 @@ html {
     --text-pink: #a00037;
     --text-orange: #c25e00;
     --text-indigo: #26418f;
+    --gray-50: #FAFAFA;
+    --gray-100: #F5F5F5;
+    --gray-200: #EEEEEE;
+    --gray-300: #E0E0E0;
+    --gray-400: #BDBDBD;
 }
 .bg-teal {
     background-color: var(--bg-teal);
+}
+.bg-gray {
+    background-color: var(--gray-200);
 }
 main.container-fluid {
     max-width: 960px;

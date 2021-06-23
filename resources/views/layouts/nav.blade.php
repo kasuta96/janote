@@ -7,11 +7,13 @@
             </a>
         </div>
 
+        @if(!Route::is('notes') )
         <!-- Search Form -->
-        <form action="{{ route('searchNote') }}" method="get" class="search-form">
+        <form action="{{ route('notes') }}" method="get" class="search-form">
             <input type="text" placeholder="Search" name="kw">
             <button type="submit"><i data-feather="search"></i></button>
         </form>
+        @endif
         <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
         </button>

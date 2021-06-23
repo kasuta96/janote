@@ -25,7 +25,7 @@ class NoteRequest extends FormRequest
     {
         return [
             'title' => 'required|max:50',
-            'category_id' => 'required',
+            // 'category_id' => 'required',
             'image' => 'sometimes|image|mimes:jpg,jpeg,png,gif,svg,bmp|max:5000'
         ];
     }

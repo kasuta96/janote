@@ -9,7 +9,10 @@
 @endif
 <h5>Hi! {{ Auth::user()->name }}</h5>
 <div class="card bg-info mb-4">
-    <div class="card-header text-white">{{ __('Recent') }}</div>
+    <div class="card-header text-white d-flex justify-content-between">
+        <span>{{ __('Recent') }}</span>
+        <a class="btn btn-light" href="{{ route('notes') }}" role="button">{{ __('More') }} <i data-feather="chevrons-right"></i></a>
+    </div>
     <div class="card-body card-columns">
         @foreach($Notes as $Note)
         <div class="card bg-light mb-3">

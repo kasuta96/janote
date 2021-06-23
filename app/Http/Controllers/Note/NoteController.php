@@ -32,31 +32,65 @@ class NoteController extends Controller
      * Show notes list
      * 
      */
-    public function index($id, Request $request)
+    public function index(Request $request)
     {
-        $Category = Category::find($id);
-        // exits
-        if (empty($Category)) {
-            return redirect()->route('categories')->with('error', __('There is no data').'!');
-        }
-        // if user's category
-        if (Auth::id() != $Category->user_id)
-        {
-            return redirect()->route('categories')->with('error', __('This action is unauthorized.'));
-        }
         // page request
-        // query
-        $query = Note::where('category_id','=',$id)
-        ->where('status','=',0)
-        ->orderBy('id', 'DESC');
-        // pagination data
-        $pagination = $this->pagination($request, $query);
+        $params = [];
+        if ($kw = $request->input('kw')) {
+            $params['kw'] = $kw;
+        }
+        if ($request->input('c')) {
+            $params['c'] = $request->input('c'); // Category id
+        }
+        if ($request->input('o')) {
+            $params['o'] = $request->input('o'); // Order by
+        }
+        if ($request->input('s') == 'ASC' || $request->input('s') == 'DESC') {
+            $params['s'] = $request->input('s');
+        }
+
+        if (isset($params['c']) && $params['c'] == 'other')
+        {
+            $query = Note::where('category_id',NULL);
+            $Category = Category::find(1)->other;
+        }
+        else if (isset($params['c']))
+        {
+            $Category = Category::find($params['c']);
+            // exits
+            if (empty($Category)) {
+                return redirect()->route('categories')->with('error', __('There is no data').'!');
+            }
+            // if user's category
+            if (Auth::id() != $Category->user_id)
+            {
+                return redirect()->route('categories')->with('error', __('This action is unauthorized.'));
+            }
+            // query
+            $query = Note::where('category_id',$params['c']);
+        }
+        else
+        {
+            // query
+            $query = Note::with('category');
+        }
+        
+        $query = $query->where('user_id',Auth::id())
+        ->whereRaw("status = 0 AND (title LIKE '%$kw%' OR content LIKE '%$kw%')")
+        ->orderBy($params['o'] ?? 'id', $params['s'] ?? 'DESC');
+        // data
+        $data = $this->pagination($request, $query);
+        if (isset($Category)) {
+            $data->category = $Category;
+        }
+
         // notes data
-        $notes = $query->skip($pagination->limit*($pagination->page - 1))
-        ->take($pagination->limit)
+        $notes = $query->skip($data->limit*($data->page - 1))
+        ->take($data->limit)
         ->get();
 
-        return view('note.list', ['Notes'=>$notes, 'Category'=>$Category, 'Data'=>$pagination]);
+        return view('note.list', ['Notes'=>$notes, 'Params'=>$params, 'Data'=>$data]);
+
     }
 
     /**
@@ -117,10 +151,12 @@ class NoteController extends Controller
         Note::create($input);
 
         if (count($sameWord) > 0) {
-            return redirect(route('searchNote').'?kw='.$input['title'])->with('status', __('Saved').' & '.__('Found some duplicate word'));
+            return redirect(route('notes','kw='.$input['title']))->with('status', __('Saved').' & '.__('Found some duplicate word'));
         }
 
-        return redirect()->route('notes', $input['category_id'] ?? 0)->with('status', __('lang.savedto',['name' => Category::find($input['category_id'])->title ]));
+        // get Category info
+        $category = Category::find($input['category_id']) ?? Category::find(1)->other;
+        return redirect()->route('notes', ['c'=>$category->id] )->with('status', __('lang.savedto',['name' => $category->title ]));
     }
 
     /**
@@ -198,7 +234,7 @@ class NoteController extends Controller
             $Note->save();
         }        
 
-        return redirect()->route('notes', $input['category_id'])->with('status', __('Update successful'));
+        return redirect()->route('notes', ['c'=>($input['category_id'] ?? 'other')])->with('status', __('Update successful'));
     }
 
     /**
@@ -358,31 +394,6 @@ class NoteController extends Controller
         }
 
         return redirect()->route('trashNote')->with('status', __('Restored').', '.$countNote.' '.__('Note'));
-    }
-
-    /**
-     * Show notes (search)
-     * 
-     */
-    public function search(Request $request)
-    {
-        // page request
-        $page = $request->input('p') ?? 1;
-        $kw = $request->input('kw');
-        // query
-        $query = Note::with('category')
-        ->where('user_id',Auth::id())
-        ->whereRaw("status = 0 AND (title LIKE '%$kw%' OR content LIKE '%$kw%')")
-        ->orderBy('id', 'DESC');
-        // pagination data
-        $pagination = $this->pagination($request, $query);
-
-        // notes data
-        $notes = $query->skip($pagination->limit*($pagination->page - 1))
-        ->take($pagination->limit)
-        ->get();
-
-        return view('note.search', ['Notes'=>$notes, 'Keyword'=>$kw, 'Data'=>$pagination]);
     }
 
 }

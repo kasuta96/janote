@@ -52,7 +52,7 @@
             <th scope="row" title="{{ $Note->created_at }}">{{ ($Data->page-1)*$Data->limit+$key+1 }}</th>
             <td>{{ $Note->title }}</td>
             <td>{{ $Note->content }}</td>
-            <td>{{ $Note->category->title }}</td>
+            <td>{{ $Note->category->title ?? __('Other') }}</td>
 
             <td class="table-tool">
 

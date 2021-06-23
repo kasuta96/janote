@@ -1,39 +1,63 @@
 @extends('layouts.app')
-@section('title', __('Notes'))
+@section('title', 'Search')
 
 @section('content')
-@php
-    $params = '?';
-    $route = route('notes', $Category->id);
 
-@endphp
-<div class="d-flex justify-content-between mb-2">
-    <div>
-        <a href="{{ route('categories') }}" class="btn btn-light">
-            <i data-feather="arrow-left"></i> {{ __('Back') }}
-        </a>
-    </div>
-    <div class="text-center">
-        <div class="h5 font-weight-bold mb-0">{{ $Category->title }}</div>
-        <small class="text-muted">{{ __('Total').': '.$Data->count }}</small>
-    </div>
-    <div>
-        <a class="btn btn-primary" href="{{ route('createNote').'?category='.$Category->id }}"><i data-feather="plus"></i> {{ __('Add') }}</a>
-        <!-- <span class="dropdown">
-            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
-                <i data-feather="more-horizontal"></i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right">
-                <div class="dropdown-item disabled text-secondary">
-                    <span>{{ __('Total').': '.$Data->count }}</span>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!-- <a href="{{ route('categories') }}" class="btn btn-light">
+        <i data-feather="arrow-left"></i> {{ __('Back') }}
+    </a> -->
+    <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarTogglerSearch"
+        aria-controls="navbarTogglerSearch"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+    >
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerSearch">
+        <form action="{{ route('notes') }}" method="get" class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+                <div class="form-inline mx-2">
+                    <input
+                        class="form-control"
+                        type="search"
+                        placeholder="{{ __('Keywords') }}"
+                        name="kw" 
+                        @if(isset($Params['kw']))
+                            value="{{ $Params['kw'] }}"
+                        @endif
+                    >
                 </div>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ route('createNote').'?category='.$Category->id }}"><i data-feather="plus"></i> {{ __('Add') }}</a>
-            </div>
-        </span> -->
+            </li>
+            <li class="nav-item mx-2">
+                <select class="form-control" name="c" aria-describedby="basic-addon1">
+                    <option value="" selected>{{ __('Categories') }}</option>
+                    @foreach( App\Http\Controllers\Category\CategoryController::CategoriesData() as $Category)
+                    <option
+                        value="{{ $Category->id }}"
+                        @if(isset($Data->category) && $Data->category->id==$Category->id)
+                            selected 
+                        @endif
+                    >
+                        {{ $Category->title }}
+                    </option>
+                    @endforeach
+                    <option value="other">
+                        {{ __('Other') }}
+                    </option>
+
+                </select>
+            </li>
+            <button class="btn btn-outline-success mx-2" type="submit">{{ __('Search') }}</button>
+        </form>
     </div>
-</div>
+</nav>
+
 
 <table class="table table-striped">
     <thead>
@@ -41,6 +65,7 @@
             <th scope="col">#</th>
             <th scope="col">{{ __('Title') }}</th>
             <th scope="col">{{ __('Content') }}</th>
+            <th scope="col">{{ __('Categories') }}</th>
             <!-- <th scope="col">タイプ</th> -->
             <th scope="col" class="table-tool"></th>
         </tr>
@@ -53,9 +78,12 @@
             <th scope="row" title="{{ $Note->created_at }}">{{ ($Data->page-1)*$Data->limit+$key+1 }}</th>
             <td>{{ $Note->title }}</td>
             <td>{{ $Note->content }}</td>
+            <td><a class="text-dark" href="{{ route('notes',['c'=>$Note->category_id ?? 'other']) }}">{{ $Note->category->title ?? __('Other') }}</a></td>
             <td class="table-tool">
+
                 @include('note.mediaBtn')
                 @include('note.noteDropdownBtn')
+
             </td>
         </tr>
 
@@ -66,18 +94,27 @@
 <nav aria-label="">
     <ul class="pagination justify-content-center">
         <li class="page-item" title="page: 1">
-            <a class="page-link" href="{{ $route.$params.'&p=1' }}" aria-label="Previous">
+            @php
+                $Params['p'] = 1;
+            @endphp
+            <a class="page-link" href="{{ route('notes', $Params) }}" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
                 <span class="sr-only">First</span>
             </a>
         </li>
         @for($i=$Data->page-2; $i<$Data->page+3; $i++)
             @if($i>0 && $i<=$Data->totalPage)
-            <li class="page-item @if($Data->page==$i)active @endif"><a class="page-link" href="{{ $route.$params.'&p='.$i }}">{{ $i }}</a></li>
+            @php
+                $Params['p'] = $i;
+            @endphp
+            <li class="page-item @if($Data->page==$i)active @endif"><a class="page-link" href="{{ route('notes',$Params) }}">{{ $i }}</a></li>
             @endif
         @endfor
         <li class="page-item" title="page: {{ $Data->totalPage }}">
-            <a class="page-link" href="{{ $route.$params.'&p='.$Data->totalPage }}" aria-label="Next">
+            @php
+                $Params['p'] = $Data->totalPage;
+            @endphp
+            <a class="page-link" href="{{ route('notes',$Params) }}" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
                 <span class="sr-only">Last</span>
             </a>

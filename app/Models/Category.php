@@ -27,4 +27,14 @@ class Category extends Model
     {
         return $this->hasMany('App\Models\Note');
     }
+
+    // Category other
+    public function getOtherAttribute()
+    {
+        return (object) array(
+            "id" => "other",
+            "title" => __("Other"),
+            "status" => 0,
+        );
+    }
 }
