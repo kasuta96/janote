@@ -60,5 +60,6 @@ Route::get('/hashtag/{id}', 'Hashtag\HashtagController@wordtag')->name('wordtag'
 
 
 // profile
+Route::get('profile', 'Auth\ProfileController@index')->name('profile');
 Route::get('profile/edit', 'Auth\ProfileController@edit')->name('editProfile');
 Route::post('profile/update', 'Auth\ProfileController@update')->name('updateProfile');

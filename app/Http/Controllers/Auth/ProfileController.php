@@ -14,10 +14,15 @@ class ProfileController extends Controller
     {
         $this->middleware('auth');
     }
+
+    public function index()
+    {
+        return view('auth.profile', ['Auth' => Auth::user()]);
+    }
     
     public function edit()
     {
-        return view('auth.profile', ['Auth' => Auth::user()]);
+        return view('auth.edit', ['Auth' => Auth::user()]);
     }
 
     public function update(Request $request)
@@ -61,6 +66,6 @@ class ProfileController extends Controller
             $user->avatar = '/uploads/avatars/'.$filename;
         }
         $user->save();
-        return redirect()->route('editProfile')->with('status', __('Saved'));
+        return redirect()->route('profile')->with('status', __('Saved'));
     }
 }

@@ -36,7 +36,7 @@
                 </div>
             </li>
             <li class="nav-item mx-2">
-                <select class="form-control" name="c" aria-describedby="basic-addon1">
+                <select class="form-control" name="c">
                     <option value="" selected>{{ __('Categories').': '.__('All') }}</option>
                     @foreach( App\Http\Controllers\Category\CategoryController::CategoriesData() as $Category)
                     <option
@@ -52,6 +52,17 @@
                         {{ __('Other') }}
                     </option>
 
+                </select>
+            </li>
+            <li class="nav-item mx-2">
+                <select class="form-control" name="s">
+                    <option value="DESC">{{ __('Newest') }}</option>
+                    <option
+                        value="ASC"
+                        @if(isset($Params['s']) && $Params['s'] == 'ASC')
+                            selected
+                        @endif
+                    >{{ __('Oldest') }}</option>
                 </select>
             </li>
             <button class="btn btn-outline-success mx-2" type="submit">{{ __('Search') }}</button>

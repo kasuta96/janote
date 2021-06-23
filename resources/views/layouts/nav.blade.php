@@ -52,14 +52,14 @@
                                 class="flex-column pl-2 text-nowrap text-truncate"
                                 style="width: calc(100% - 40px); max-width: 300px"
                             >
-                                <a href="{{ route('editProfile') }}">
+                                <a href="{{ route('profile') }}">
                                     <h5 class="mb-0 text-dark">{{ Auth::user()->name }}</h5>
                                 </a>
                                 <small>{{ Auth::user()->email }}</small>
                             </div>
                         </div>
                         <hr class="dropdown-divider">
-                        <a href="{{ route('editProfile') }}" class="dropdown-item">{{ __('Profile') }}</a>
+                        <a href="{{ route('profile') }}" class="dropdown-item">{{ __('Profile') }}</a>
                         <a
                             class="dropdown-item"
                             href="{{ route('logout') }}"
