@@ -19,4 +19,6 @@
     @endforeach
     </div>
     @endif
+    <div class="dropdown-divider"></div>
+    <div class="text-muted px-3">{{ (new App\Classes\General())->shortTime($Note->updated_at) }}</div>
 </div>

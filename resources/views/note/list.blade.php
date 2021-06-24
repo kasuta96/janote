@@ -70,7 +70,22 @@
     </div>
 </nav>
 
-
+@if (!isset($Notes[0]))
+<div class="alert alert-info mt-3 text-center" role="alert">
+    {{ __('There is no data') }}
+    <hr>
+    <a
+        class="btn btn-success"
+        @if(isset($Data->category))
+        href="{{ route('createNote',['category'=>$Data->category->id]) }}"
+        @else
+        href="{{ route('createNote') }}"
+        @endif
+    >
+        <i data-feather="plus"></i> {{ __('Add') }}
+    </a>
+</div>
+@else
 <table class="table table-striped">
     <thead>
         <tr>
@@ -79,15 +94,19 @@
             <th scope="col">{{ __('Content') }}</th>
             @if(!isset($Data->category))
             <th scope="col" class="d-none d-lg-block">{{ __('Categories') }}</th>
+            <th scope="col" class="table-tool py-2">
+                <a class="btn btn-success btn-sm" href="{{ route('createNote') }}"><i data-feather="plus"></i> {{ __('Add') }}</a>
+            </th>
+            @else
+            <th scope="col" class="table-tool">
+                <a class="btn btn-success btn-sm" href="{{ route('createNote',['category'=>$Data->category->id]) }}"><i data-feather="plus"></i> {{ __('Add') }}</a>
+            </th>
             @endif
-            <!-- <th scope="col">タイプ</th> -->
-            <th scope="col" class="table-tool"></th>
         </tr>
     </thead>
     <tbody>
 
-@foreach($Notes as $key => $Note)
-
+    @foreach($Notes as $key => $Note)
         <tr>
             <th scope="row" title="{{ $Note->created_at }}">{{ ($Data->page-1)*$Data->limit+$key+1 }}</th>
             <td>{{ $Note->title }}</td>
@@ -102,11 +121,11 @@
 
             </td>
         </tr>
+    @endforeach
 
-@endforeach
-
-</tbody>
+    </tbody>
 </table>
+
 <nav aria-label="">
     <ul class="pagination justify-content-center">
         <li class="page-item" title="page: 1">
@@ -137,4 +156,7 @@
         </li>
     </ul>
 </nav>
+
+@endif
+
 @endsection

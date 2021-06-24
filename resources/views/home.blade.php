@@ -23,7 +23,7 @@
                     <div>
                         @include('note.mediaBtn')
                     </div>
-                    <small class="text-muted">{{ $Note->shortTime }}</small>
+                    <small class="text-muted">{{ (new App\Classes\General())->shortTime($Note->updated_at) }}</small>
                 </div>
             </div>
         </div>

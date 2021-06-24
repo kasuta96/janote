@@ -31,13 +31,19 @@
             <main class="py-4 container-fluid">
 
                 @if (session('status'))
-                <div class="alert alert-success text-center">
+                <div class="alert alert-success text-center alert-dismissible fade show" role="alert">
                     {{ session('status') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 @endif
                 @if (session('error'))
-                <div class="alert alert-danger text-center">
+                <div class="alert alert-danger text-center alert-dismissible fade show" role="alert">
                     {{ session('error') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 @endif
 
