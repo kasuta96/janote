@@ -41,7 +41,6 @@ Route::get('/trash/restore/{id}', 'Note\NoteController@restore')->name('restoreN
 Route::get('/categories', 'Category\CategoryController@show')->name('categories');
 
 //create Categories
-Route::get('/categories/create', 'Category\CategoryController@create');
 Route::post('/categories', 'Category\CategoryController@store')->name('createCategory');
 
 //delete Category

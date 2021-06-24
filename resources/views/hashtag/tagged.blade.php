@@ -9,7 +9,7 @@
 @section('content')
 <div class="d-flex justify-content-between mb-2">
     <div>
-        <a href="{{ route('hashtag') }}" class="btn btn-light">
+        <a href="javascript:history.go(-1)" class="btn btn-light">
             <i data-feather="arrow-left"></i> {{ __('Back') }}
         </a>
     </div>
