@@ -54,12 +54,7 @@ class CategoryController extends Controller
 
         return redirect(route('categories'));
     }
-
-    public function create()
-    {
-        return view('category/create');
-    }
-
+    
     public function delete($id)
     {
         $categories = Category::find($id);
@@ -81,6 +76,47 @@ class CategoryController extends Controller
             throw $th;
         }
         return redirect()->route('categories')->with('status', '削除しました');
+    }
+
+    public function restore($rq)
+    {
+        // get note data
+        if ($rq == 'all')
+        {
+            $Notes = Note::where('status','=',9)
+            ->where('user_id','=',Auth::id())
+            ->get();
+            // check data
+            if (count($Notes) == 0) {
+                return redirect()->route('trash')->with('error', __('There is no data').'!');
+            }
+        }
+        else
+        {
+            $Note = Note::find($rq);
+            // check data
+            if (empty($Note)) {
+                return redirect()->route('trash')->with('error', __('There is no data').'!');
+            }
+            if ($Note->user_id != Auth::id())
+            {
+                return redirect()->route('trash')->with('error', __('This action is unauthorized.'));
+            }
+            $Notes = [$Note];
+        }
+        
+        // Count deleted data
+        $countNote = 0;
+        foreach ($Notes as $Note) {
+            // Change status (0: active, 9: deleted)
+            $Note->fill([
+                'status' => 0,
+            ]);
+            $Note->save();
+            $countNote++;
+        }
+
+        return redirect()->route('trash')->with('status', __('Restored').', '.$countNote.' '.__('Note'));
     }
 
     public function edit($id)
