@@ -36,6 +36,8 @@ Route::post('/note/update', 'Note\NoteController@update')->name('updateNote');
 Route::get('/trash', 'TrashController@index')->name('trash');
 Route::get('/trash/remove/{id}', 'Note\NoteController@remove')->name('removeNote');
 Route::get('/trash/restore/{id}', 'Note\NoteController@restore')->name('restoreNote');
+Route::get('/trash/restore2/{id}', 'Category\CategoryController@restore')->name('restoreCategory');
+Route::get('/trash/remove2/{id}', 'Category\CategoryController@remove')->name('removeCategory');
 
 // show Categories
 Route::get('/categories', 'Category\CategoryController@show')->name('categories');
