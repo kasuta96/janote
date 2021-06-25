@@ -7,7 +7,7 @@
 <form action="{{ route('storeNote') }}" method="post" enctype="multipart/form-data">
 @csrf
     <div class="d-flex justify-content-between mb-4">
-        <a href="{{ route('categories') }}" class="btn btn-light">
+        <a href="{{ route('notes') }}" class="btn btn-light">
             <i data-feather="arrow-left"></i> {{ __('Back') }}
         </a>
         <h6 class="text-center"><strong>{{ __('Add') }}</strong></h6>

@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Note;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
-use App\Classes\General;
 
 class HomeController extends Controller
 {
@@ -35,10 +34,7 @@ class HomeController extends Controller
         ->orderBy('updated_at', 'DESC')
         ->take(15)
         ->get();
-        // short time
-        foreach ($notes as $note) {
-            $note['shortTime'] = (new General())->shortTime($note['updated_at']);
-        }
+
         return view('home',['Notes'=>$notes]);
     }
 }
