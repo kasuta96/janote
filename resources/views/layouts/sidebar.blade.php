@@ -1,17 +1,19 @@
 <div class="border-right vh-100" id="sidebar-wrapper">
     <!-- <div class="sidebar-heading">Start Bootstrap </div> -->
-    <div class="overflow-auto h-100 pt-3">
+    <div class="overflow-auto h-100">
 
         <!-- Add button -->
-        <div class="p-2">
-            <a class="btn btn-success btn-sm btn-block mb-2" href="{{ route('createNote') }}"><i data-feather="plus"></i> {{ __('Note') }}</a>
+        <div class="px-2 py-4">
+            <a class="btn btn-success btn-block mb-2" data-toggle="modal" data-target="#createNoteModal">
+                <i data-feather="plus"></i> {{ __('Note') }}
+            </a>
             <!-- Button trigger modal -->
-        <button type="button" class="btn btn-success btn-sm btn-block mb-2" data-toggle="modal" data-target="#createCategories">
-            <i data-feather="plus"></i>{{ __('Categories')}}
-        </button>
-        <button type="button" class="btn btn-info btn-lg btn-block mb-2" data-toggle="modal" data-target="#showHashtag">
-            <i data-feather="tag"></i>{{ __('Word Tag')}}
-        </button>
+            <button type="button" class="btn btn-success btn-block mb-2" data-toggle="modal" data-target="#createCategories">
+                <i data-feather="plus"></i>{{ __('Categories')}}
+            </button>
+            <button type="button" class="btn btn-info btn-block mb-2" data-toggle="modal" data-target="#showHashtag">
+                <i data-feather="tag"></i> {{ __('Word Tag')}}
+            </button>
         </div>
 
         <div class="list-group list-group-flush">
@@ -99,6 +101,96 @@
             </div>
             <div class="modal-footer">
                 
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- create note model -->
+<div class="modal fade" id="createNoteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{ __('Add') }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('storeNote') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">{{ __('Categories') }}</span>
+                            </div>
+                            <select class="form-control" name="category_id" aria-describedby="basic-addon1">
+                                <option value="" selected>{{ __('Select') }}</option>
+                                @foreach( App\Http\Controllers\Category\CategoryController::CategoriesData() as $Category)
+                                <option value="{{ $Category->id }}">{{ $Category->title }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @if ($errors->has('category_id'))
+                        <div class="text-danger">
+                            {{ $errors->first('category_id') }}
+                        </div>
+                        @endif
+
+                        <label for="">{{ __('Title') }}</label>
+                        <input type="text" name="title" class="form-control mb-3" placeholder="" value="{{ old('title') }}" aria-describedby="">
+                        <small class="text-muted"></small>
+                        @if ($errors->has('title'))
+                        <div class="text-danger">
+                            {{ $errors->first('title') }}
+                        </div>
+                        @endif
+
+                        <label for="">{{ __('Content') }}</label>
+                        <textarea class="form-control mb-3" name="content" rows="3">{{ old('content') }}</textarea>
+                        @if ($errors->has('content'))
+                        <div class="text-danger">
+                            {{ $errors->first('content') }}
+                        </div>
+                        @endif
+
+                        <div class="my-4">
+                            <p>{{ __('Hashtag') }}</p>
+                            @foreach (Config::get('hashtag')[App::getLocale()] as $key => $tag)
+                            <div class="form-check-inline" onclick="checkboxToggle(this)">
+                                <input hidden name="tagArr[]" type="checkbox" value="{{ $key }}">
+                                <label class="badge rounded-pill p-2 bg-secondary text-white" for="inlineCheckbox1">{{ $tag }}</label>
+                            </div>
+                            @endforeach
+                        </div>
+
+                        <div class="w-100 text-center mb-3">
+                            <div class="mb-3">
+                                <i data-feather="image"></i> {{ __('Photo') }}
+                                <input type="file" name="photo">
+                                @if ($errors->has('photo'))
+                                <div class="text-danger">
+                                    {{ $errors->first('photo') }}
+                                </div>
+                                @endif
+                            </div>
+                            <div class="mb-3">
+                                <i data-feather="mic"></i> {{ __('Audio') }}
+                                <input type="file" accept="audio/*" name="audio">
+                                @if ($errors->has('photo'))
+                                <div class="text-danger">
+                                    {{ $errors->first('photo') }}
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
+                        <button type="button" class="btn btn-primary">{{ __('Save') }}</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
