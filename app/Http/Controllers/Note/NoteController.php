@@ -46,8 +46,11 @@ class NoteController extends Controller
         if ($request->input('o')) {
             $params['o'] = $request->input('o'); // Order by
         }
-        if ($request->input('s') == 'ASC' || $request->input('s') == 'DESC') {
-            $params['s'] = $request->input('s');
+        if ($request->input('s') == 'asc' || $request->input('s') == 'desc') {
+            $params['s'] = $request->input('s'); // Sort
+        }
+        if ($request->input('d')) {
+            $params['d'] = $request->input('d'); // Display style
         }
 
         if (isset($params['c']) && $params['c'] == 'other')
@@ -92,7 +95,11 @@ class NoteController extends Controller
         ->take($data->limit)
         ->get();
 
-        return view('note.list', ['Notes'=>$notes, 'Params'=>$params, 'Data'=>$data]);
+        if (isset($params['d']) && $params['d'] == 'fcard') {
+            return view('note.fcard', ['Notes'=>$notes, 'Params'=>$params, 'Data'=>$data]);
+        } else {
+            return view('note.list', ['Notes'=>$notes, 'Params'=>$params, 'Data'=>$data]);
+        }
 
     }
 
