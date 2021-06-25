@@ -18,7 +18,6 @@
                     <i class="icon i-3dot"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="/categories/create">{{ __('Add new category') }}</a>
                 </div>
             </span>
         </div>
@@ -26,7 +25,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">{{  __('Title') }}</th>
+                <th scope="col">{{  __('Title') }}</th><th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -36,7 +35,7 @@
                 <td>
                     <button class="btn-link btn-sm" data-edit="0"><a href="{{ route('editCategory', $category->id) }}">{{ __('Edit')}}</button>
                     @if ($category->user_id == Auth::user()->id)
-                        <form action="{{ route('deleteCategory', $category->id) }}" method="get" onsubmit="return checkDelete()">
+                        <form action="{{ route('deleteCategory', $category->id) }}" method="get">
                             @csrf
                             <button class="btn-link btn-sm" type="submit"><i class="icon i-trash"></i>{{ __('Delete')}}</button>
                         </form>
@@ -67,5 +66,4 @@
         </li>
     </ul>
     </nav>
-
 @endsection

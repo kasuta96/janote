@@ -5,7 +5,7 @@
 @section('content')
 <div class="container my-3">
     <div class="d-flex justify-content-between mb-4">
-        <a href="/categories" class="btn btn-light">
+        <a href="javascript:history.go(-1)" class="btn btn-light">
             <i class="icon i-back"></i>{{ __('Back') }}
         </a>
         <h6 class="text-center"><strong>{{ __('Edit Category')}}</strong></h6>

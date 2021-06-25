@@ -7,12 +7,14 @@
             <a class="btn btn-success btn-sm btn-block mb-2" href="{{ route('createNote') }}"><i data-feather="plus"></i> {{ __('Note') }}</a>
             <!-- Button trigger modal -->
         <button type="button" class="btn btn-success btn-sm btn-block mb-2" data-toggle="modal" data-target="#createCategories">
-        <i data-feather="plus"></i>{{ __('Categories')}}
+            <i data-feather="plus"></i>{{ __('Categories')}}
+        </button>
+        <button type="button" class="btn btn-info btn-lg btn-block mb-2" data-toggle="modal" data-target="#showHashtag">
+            <i data-feather="tag"></i>{{ __('Word Tag')}}
         </button>
         </div>
 
         <div class="list-group list-group-flush">
-            <a href="{{ route('notes') }}" data-menu="notes" class="list-group-item list-group-item-action"><i data-feather="pen-tool"></i> {{ __('Notes') }}</a>
             <div class="btn-group">
                 <a href="{{ route('categories') }}" data-menu="categories" class="list-group-item list-group-item-action"><i data-feather="folder"></i> {{ __('Categories') }}</a>
                 <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="collapse" data-target="#collapseCate" aria-expanded="true" aria-controls="collapseCate">
@@ -26,10 +28,8 @@
                     @endforeach
                 </div>
             </div>
+            <a href="{{ route('notes') }}" data-menu="notes" class="list-group-item list-group-item-action"><i data-feather="pen-tool"></i> {{ __('Notes') }}</a>
             <a href="{{ route('posts') }}" data-menu="posts" class="list-group-item list-group-item-action"><i data-feather="twitch"></i> {{ __('Community') }}</a>
-            <button class="list-group-item list-group-item-action" data-toggle="modal" data-target="#showHashtag">
-            <i data-feather="tag"></i>{{ __('Word Tag')}}
-            </button>
             <!-- <a href="{{ route('hashtag') }}" data-menu="hashtag" class="list-group-item list-group-item-action"><i data-feather="tag"></i> {{ __('Word Tag') }}</a> -->
             <a href="{{ route('trash') }}" data-menu="trash" class="list-group-item list-group-item-action"><i data-feather="trash-2"></i> {{ __('Trash') }}</a>
         </div>
@@ -50,7 +50,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">{{ __('Add new category')}}</h5>
+                <h4 class="modal-title" id="exampleModalLabel">{{ __('Add new category')}}</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -60,8 +60,8 @@
                 @csrf
                     <div class="form-group">
 
-                        <label for="title">{{ __('Name')}}</label>
-                        <input type="text" name="title" id="title" class="form-control mb-3" placeholder="挨拶..." aria-describedby="helpId">
+                        <label for="title"><h5>{{ __('Name')}}</h5></label>
+                        <input type="text" name="title" id="title" class="form-control mb-3" placeholder="{{ __('Categories') }}" aria-describedby="helpId">
                         
 
                         @error('title')
@@ -72,8 +72,7 @@
                         
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">{{ __('Add')}}</button>
+                        <button type="submit" class="btn btn-info btn-block">{{ __('Add')}}</button>
                     </div>
                 </form>
             </div>
@@ -82,11 +81,11 @@
 </div>
 
 <!-- Hashtag Modal -->
-<div class="modal fade" id="showHashtag" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="false">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
+<div class="modal fade"  id="showHashtag" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="false">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content" style="background-image:url('/images/152535.png')">
             <div class="modal-header">
-                <h5 class="modal-title text-center" id="exampleModalLabel">{{ __('Let\'s get a Word Tag')}}！</h5>
+                <h4 class="modal-title text-center" id="exampleModalLabel">{{ __('Let\'s get a Word Tag')}}！</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -94,9 +93,12 @@
             <div class="modal-body">
             @foreach (Config::get('hashtag')[App::getLocale()] as $key => $tag)
                 <div>
-                    <a href="{{ route('wordtag', $key) }}">#{{ $tag }}</a>
+                    <a href="{{ route('wordtag', $key) }}" style="color: #000;"><strong>#{{ $tag }}</strong></a>
                 </div>
             @endforeach
+            </div>
+            <div class="modal-footer">
+                
             </div>
         </div>
     </div>

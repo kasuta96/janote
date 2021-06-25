@@ -28,8 +28,8 @@
             </button>
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-header">
-                    <a class="btn btn-success btn-sm" href="#" role="button" title="{{ __('Restore')}}"><i data-feather="repeat"></i></a>
-                    <form action="" method="get" class="d-inline-block" onsubmit="return checkDelete()">
+                    <a class="btn btn-success btn-sm" href="{{ route('restoreCategory', $Category->id) }}" role="button" title="{{ __('Restore')}}"><i data-feather="repeat"></i></a>
+                    <form action="{{ route('removeCategory',$Category->id) }}" method="get" class="d-inline-block">
                     @csrf
                         <button type="submit" class="btn btn-danger btn-sm" title="{{ __('Delete') }}"><i data-feather="delete"></i></button>
                     </form>
