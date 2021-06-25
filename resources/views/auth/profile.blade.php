@@ -10,7 +10,7 @@
     <h3 class="">{{ $Auth->name }}</h3>
     <div class="text-muted">{{ $Auth->email }}</div>
     <a href="{{ route('editProfile') }}" class="btn btn-primary mb-3">{{ __('Edit') }}</a>
-    <h5>{{ $Auth->job }}</h5>
+    <h5><i data-feather="briefcase" style="width: 1.25rem; height: 1.25rem"></i> {{ $Auth->job }}</h5>
     <p>{{ $Auth->description }}</p>
 </div>
 

@@ -10,6 +10,7 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Classes\Hashtag;
+use Illuminate\Database\Eloquent\Builder;
 
 class NoteController extends Controller
 {
@@ -72,7 +73,9 @@ class NoteController extends Controller
         else
         {
             // query
-            $query = Note::with('category');
+            $query = Note::whereHas('category', function (Builder $queryb) {
+                $queryb->where('status', '=', 0);
+            });
         }
         
         $query = $query->where('user_id',Auth::id())
