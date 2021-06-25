@@ -10,6 +10,7 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Classes\Hashtag;
+use Illuminate\Database\Eloquent\Builder;
 
 class NoteController extends Controller
 {
@@ -45,8 +46,11 @@ class NoteController extends Controller
         if ($request->input('o')) {
             $params['o'] = $request->input('o'); // Order by
         }
-        if ($request->input('s') == 'ASC' || $request->input('s') == 'DESC') {
-            $params['s'] = $request->input('s');
+        if ($request->input('s') == 'asc' || $request->input('s') == 'desc') {
+            $params['s'] = $request->input('s'); // Sort
+        }
+        if ($request->input('d')) {
+            $params['d'] = $request->input('d'); // Display style
         }
 
         if (isset($params['c']) && $params['c'] == 'other')
@@ -72,7 +76,9 @@ class NoteController extends Controller
         else
         {
             // query
-            $query = Note::with('category');
+            $query = Note::whereHas('category', function (Builder $queryb) {
+                $queryb->where('status', '=', 0);
+            });
         }
         
         $query = $query->where('user_id',Auth::id())
@@ -89,7 +95,11 @@ class NoteController extends Controller
         ->take($data->limit)
         ->get();
 
-        return view('note.list', ['Notes'=>$notes, 'Params'=>$params, 'Data'=>$data]);
+        if (isset($params['d']) && $params['d'] == 'fcard') {
+            return view('note.fcard', ['Notes'=>$notes, 'Params'=>$params, 'Data'=>$data]);
+        } else {
+            return view('note.list', ['Notes'=>$notes, 'Params'=>$params, 'Data'=>$data]);
+        }
 
     }
 

@@ -15,27 +15,25 @@
     </div>
 </div>
 
-<div class="d-flex mb-3">
+<div class="d-flex mb-3 flex-wrap">
 @foreach ($Categories as $key => $Category)
-<div class="card bg-gray-400 m-2" style="width:150px">
-    <div class="pt-3 px-3">
-        <strong>{{ $Category->title }}</strong>
-        <div class="d-flex justify-content-between align-items-center my-2">
-            <small class="text-muted">{{ __('Total').': '.$Category->count }}</small>
-            <div>
-                <button type="button" class="btn btn-light btn-sm" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-                    <i data-feather="more-horizontal"></i>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <div class="dropdown-header">
-                        <a class="btn btn-success btn-sm" href="{{ route('restoreCategory', $Category->id) }}" role="button" title="{{ __('Restore')}}"><i data-feather="repeat"></i></a>
-                        <form action="{{ route('removeCategory',$Category->id) }}" method="get" class="d-inline-block">
-                        @csrf
-                            <button type="submit" class="btn btn-danger btn-sm" title="{{ __('Delete') }}"><i data-feather="delete"></i></button>
-                        </form>
+<div class="card bg-gray-400 m-2 p-3" style="width:150px">
+    <strong><i data-feather="folder"></i> {{ $Category->title }}</strong>
+    <div class="d-flex justify-content-between align-items-center mt-auto">
+        <small class="text-muted">{{ __('Total').': '.$Category->count }}</small>
+        <div>
+            <button type="button" class="btn btn-light btn-sm" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <i data-feather="more-horizontal"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+                <div class="dropdown-header">
+                    <a class="btn btn-success btn-sm" href="{{ route('restoreCategory', $Category->id) }}" role="button" title="{{ __('Restore')}}"><i data-feather="repeat"></i></a>
+                    <form action="{{ route('removeCategory',$Category->id) }}" method="get" class="d-inline-block">
+                    @csrf
+                        <button type="submit" class="btn btn-danger btn-sm" title="{{ __('Delete') }}"><i data-feather="delete"></i></button>
+                    </form>
 
-                    </div>
                 </div>
             </div>
         </div>
@@ -43,6 +41,9 @@
 </div>
 @endforeach
 </div>
+
+<!-- Note -->
+@if (isset($Notes[0]))
 
 <table class="table table-striped">
     <thead>
@@ -129,4 +130,12 @@
         </li>
     </ul>
 </nav>
+@endif
+
+@if (!isset($Notes[0]) && !isset($Categories[0]))
+<div class="alert alert-info mt-3 text-center" role="alert">
+    {{ __('There is no data') }}
+</div>
+@endif
+
 @endsection

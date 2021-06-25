@@ -24,6 +24,7 @@
         <form action="{{ route('notes') }}" method="get" class="navbar-nav ml-auto mt-2 mt-lg-0">
             <li class="nav-item">
                 <div class="form-inline mx-2">
+                <input type="hidden" name="d" value="fcard">
                     <input
                         class="form-control"
                         type="search"
@@ -86,45 +87,24 @@
     </a>
 </div>
 @else
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">{{ __('Title') }}</th>
-            <th scope="col">{{ __('Content') }}</th>
-            @if(!isset($Data->category))
-            <th scope="col" class="d-none d-lg-block">{{ __('Categories') }}</th>
-            <th scope="col" class="table-tool py-2">
-                <a class="btn btn-success btn-sm" href="{{ route('createNote') }}"><i data-feather="plus"></i> {{ __('Add') }}</a>
-            </th>
-            @else
-            <th scope="col" class="table-tool">
-                <a class="btn btn-success btn-sm" href="{{ route('createNote',['category'=>$Data->category->id]) }}"><i data-feather="plus"></i> {{ __('Add') }}</a>
-            </th>
-            @endif
-        </tr>
-    </thead>
-    <tbody>
+<div class="card-columns mt-3">
+    @foreach($Notes as $Note)
+    <div class="card mb-3 p-3">
+            <strong>{{ $Note->title }}</strong>
+            <p class="descr">{{ $Note->content }}</p>
 
-    @foreach($Notes as $key => $Note)
-        <tr>
-            <th scope="row" title="{{ $Note->created_at }}">{{ ($Data->page-1)*$Data->limit+$key+1 }}</th>
-            <td>{{ $Note->title }}</td>
-            <td>{{ $Note->content }}</td>
-            @if(!isset($Data->category))
-            <td class="d-none d-lg-block"><a class="text-dark" href="{{ route('notes',['c'=>$Note->category_id ?? 'other']) }}">{{ $Note->category->title ?? __('Other') }}</a></td>
-            @endif
-            <td class="table-tool">
+            @include('note.mediaBtn')
 
-                @include('note.mediaBtn')
-                @include('note.noteDropdownBtn')
-
-            </td>
-        </tr>
+            <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">{{ (new App\Classes\General())->shortTime($Note->updated_at) }}</small>
+                <div>
+                    @include('note.noteDropdownBtn')
+                </div>
+            </div>
+    </div>
     @endforeach
 
-    </tbody>
-</table>
+</div>
 
 <nav aria-label="">
     <ul class="pagination justify-content-center">
