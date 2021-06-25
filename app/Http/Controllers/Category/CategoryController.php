@@ -60,10 +60,10 @@ class CategoryController extends Controller
         $categories = Category::find($id);
         if (empty($categories)) 
         {
-            return redirect()->route('categories')->with('error', 'データがありません！');
+            return redirect()->route('categories')->with('error', __('There is no data').'!');
         }
         if ($categories->user_id != Auth::user()->id) {
-            return redirect()->route('categories')->with('error', '削除できません');
+            return redirect()->route('categories')->with('error', __('This action is unauthorized.'));
         }
         try 
         {
@@ -75,7 +75,7 @@ class CategoryController extends Controller
         } catch (\Throwable $th) {
             throw $th;
         }
-        return redirect()->route('categories')->with('status', '削除しました');
+        return redirect()->route('categories')->with('status', __('Moved to trash'));
     }
 
     public function restore($rq)
@@ -83,40 +83,71 @@ class CategoryController extends Controller
         // get note data
         if ($rq == 'all')
         {
-            $Notes = Note::where('status','=',9)
+            $categories = Category::where('status','=',9)
             ->where('user_id','=',Auth::id())
             ->get();
             // check data
-            if (count($Notes) == 0) {
+            if (count($categories) == 0) {
                 return redirect()->route('trash')->with('error', __('There is no data').'!');
             }
         }
         else
         {
-            $Note = Note::find($rq);
+            $categories = Category::find($rq);
             // check data
-            if (empty($Note)) {
+            if (empty($categories)) {
                 return redirect()->route('trash')->with('error', __('There is no data').'!');
             }
-            if ($Note->user_id != Auth::id())
+            if ($categories->user_id != Auth::id())
             {
                 return redirect()->route('trash')->with('error', __('This action is unauthorized.'));
             }
-            $Notes = [$Note];
+            // $categoriess = [$categories];
         }
-        
-        // Count deleted data
-        $countNote = 0;
-        foreach ($Notes as $Note) {
             // Change status (0: active, 9: deleted)
-            $Note->fill([
-                'status' => 0,
-            ]);
-            $Note->save();
-            $countNote++;
+        $categories->fill([
+            'status' => 0,
+        ]);
+        $categories->save();
+
+        return redirect()->route('trash')->with('status', __('Restored'));
+    }
+
+    public function remove($rq)
+    {
+        // get note data
+        if ($rq == 'all')
+        {
+            $categories = Category::where('status','=',9)
+            ->where('user_id','=',Auth::id())
+            ->get();
+            // check data
+            if (count($categories) == 0) {
+                return redirect()->route('trash')->with('error', __('There is no data').'!');
+            }
+        }
+        else
+        {
+            $categories = Category::find($rq);
+            // check data
+            if (empty($categories)) {
+                return redirect()->route('trash')->with('error', __('There is no data').'!');
+            }
+            if ($categories->user_id != Auth::id())
+            {
+                return redirect()->route('trash')->with('error', __('This action is unauthorized.'));
+            }
         }
 
-        return redirect()->route('trash')->with('status', __('Restored').', '.$countNote.' '.__('Note'));
+        try {
+            Category::destroy($categories->id);
+        } catch (\Throwable $th) {
+            throw $th;
+        }    
+        
+        // return notify
+        $notify = __('Deleted');
+        return redirect()->route('trash')->with('status', $notify);
     }
 
     public function edit($id)
