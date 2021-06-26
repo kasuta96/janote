@@ -21,8 +21,8 @@
         <tr>
             <th scope="col">{{ __('Title') }}</th>
             <th scope="col">{{ __('Content') }}</th>
-            <th scope="col">{{ __('User') }}</th>
-            <th scope="col">{{ __('Updated at') }}</th>
+            <th scope="col">{{ __('Author') }}</th>
+            <th scope="col">{{ __('Updated') }}</th>
         </tr>
     </thead>
     <tbody>
@@ -33,7 +33,7 @@
             <td>{{ $Note->title }}</td>
             <td>{{ $Note->content }}</td>
             <td>{{ $Note->user->name }}</td>
-            <td>{{ $Note->updated_at }}</td>
+            <td>{{ (new App\Classes\General())->shortTime($Note->updated_at) }}</td>
         </tr>
 
 @endforeach

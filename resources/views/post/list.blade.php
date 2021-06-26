@@ -33,7 +33,7 @@
                         <a class="dropdown-item" href="#">Report</a> -->
 
                         @else
-                        <h7 class="dropdown-header">Login to use more</h7>
+                        <h7 class="dropdown-header">{{ __('Login to use more') }}</h7>
                         <a class="dropdown-item" href="{{ route('login') }}">{{ __('Login') }}</a>
                         <a class="dropdown-item" href="{{ route('register') }}">{{ __('Register') }}</a>
                         @endauth
@@ -49,10 +49,12 @@
         </p>
     </div>
     <div class="card-footer bg-white">
-        <button class="btn btn-light"><i class="fa fa-gittip"></i> Like</button>
-        <a class="btn btn-light" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-comment"></i> Comment</a>
-        <div class="collapse mt-2" id="collapseExample">
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+        <div class="">
+            <button class="btn btn-light"><i class="fa fa-gittip"></i> Like</button>
+            <a class="btn btn-light" data-toggle="collapse" href="#postCmt{{ $post->id }}" aria-expanded="false"><i class="fa fa-comment"></i> Comment</a>
+            <div class="collapse" id="postCmt{{ $post->id }}">
+
+            </div>
         </div>
     </div>
 </div>

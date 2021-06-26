@@ -6,7 +6,7 @@
     <div class="dropdown-header">
         <a href="{{ route('editNote', $Note->id) }}" role="button" class="btn btn-primary btn-sm" title="{{ __('Edit') }}"><i data-feather="edit"></i></a>
 
-        <form action="{{ route('deleteNote', $Note->id) }}" method="get" class="d-inline-block" onsubmit="return checkDelete()">
+        <form action="{{ route('deleteNote', $Note->id) }}" method="get" class="d-inline-block">
         @csrf
             <button type="submit" class="btn btn-primary btn-sm" title="{{ __('Delete') }}"><i data-feather="trash"></i></button>
         </form>
