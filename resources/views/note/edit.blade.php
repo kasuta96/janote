@@ -50,7 +50,7 @@
         @endif
 
         <div class="my-4">
-            <p>{{ __('Hashtag') }}</p>
+            <p>{{ __('Hashtag').' ('.__('Share your notes with the world').')' }}</p>
             @php
                 $tagArr = explode(',',$Note->hashtag);
             @endphp

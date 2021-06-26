@@ -156,7 +156,7 @@
                         @endif
 
                         <div class="my-4">
-                            <p>{{ __('Hashtag') }}</p>
+                            <p>{{ __('Hashtag').' ('.__('Share your notes with the world').')' }}</p>
                             @foreach (Config::get('hashtag')[App::getLocale()] as $key => $tag)
                             <div class="form-check-inline" onclick="checkboxToggle(this)">
                                 <input hidden name="tagArr[]" type="checkbox" value="{{ $key }}">
