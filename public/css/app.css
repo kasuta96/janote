@@ -24,6 +24,7 @@ html {
 }
 .bg-card {
     background-color: #e1f5fe;
+}
 .bg-orange {
     background-color: var(--bg-orange);
 }
