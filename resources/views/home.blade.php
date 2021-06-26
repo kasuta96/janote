@@ -18,7 +18,7 @@
         <div class="card bg-light mb-3">
             <div class="pt-3 px-3">
                 <strong>{{ $Note->title }}</strong>
-                <p class="descr">{{ $Note->content }}</p>
+                <p class="content">{{ $Note->content }}</p>
                 <div class="d-flex justify-content-between">
                     <div>
                         @include('note.mediaBtn')

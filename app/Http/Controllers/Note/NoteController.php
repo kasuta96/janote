@@ -25,7 +25,7 @@ class NoteController extends Controller
         $data = new \stdClass();
         $data->page = $rq->input('p') ?? 1;
         $data->count = $query->count() ?? 0;
-        $data->limit = 25;
+        $data->limit = 24;
         $data->totalPage = ceil($data->count/$data->limit);
         return $data;
     }
@@ -52,13 +52,15 @@ class NoteController extends Controller
         if ($request->input('d')) {
             $params['d'] = $request->input('d'); // Display style
         }
+        $params['mark'] = $request->input('mark') ?? 1; // Mark
 
-        if (isset($params['c']) && $params['c'] == 'other')
+
+        if (isset($params['c']) && $params['c'] == 'other') // note haven't catagory
         {
             $query = Note::where('category_id',NULL);
             $Category = Category::find(1)->other;
         }
-        else if (isset($params['c']))
+        else if (isset($params['c'])) // note have category
         {
             $Category = Category::find($params['c']);
             // exits
@@ -73,12 +75,16 @@ class NoteController extends Controller
             // query
             $query = Note::where('category_id',$params['c']);
         }
-        else
+        else // all
         {
             // query
-            $query = Note::whereHas('category', function (Builder $queryb) {
-                $queryb->where('status', '=', 0);
+            $query = Note::whereHas('category', function (Builder $query) {
+                $query->where('status', 0);
             });
+        }
+        // mark ()
+        if ($params['mark'] == 1 || $params['mark'] == 2) {
+            $query = $query->where('mark',$params['mark']);
         }
         
         $query = $query->where('user_id',Auth::id())
@@ -95,8 +101,8 @@ class NoteController extends Controller
         ->take($data->limit)
         ->get();
 
-        if (isset($params['d']) && $params['d'] == 'fcard') {
-            return view('note.fcard', ['Notes'=>$notes, 'Params'=>$params, 'Data'=>$data]);
+        if (isset($params['d']) && $params['d'] == 'fcards') {
+            return view('note.fcards', ['Notes'=>$notes, 'Params'=>$params, 'Data'=>$data]);
         } else {
             return view('note.list', ['Notes'=>$notes, 'Params'=>$params, 'Data'=>$data]);
         }
