@@ -16,7 +16,7 @@ Auth::routes();
 // Route::get('/{home}', 'HomeController@index')->name('home')->where('home','(home)?');
 Route::get('/{home}', function ()
 {
-  return redirect()->route('fcards',['d'=>'fcards']);
+  return redirect()->route('fcards',['d'=>'fcards','mark'=>1]);
 })->name('home')->where('home','(home)?');
 
 // show Posts
