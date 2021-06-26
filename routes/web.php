@@ -24,6 +24,7 @@ Route::get('/post/delete/{id}', 'Post\PostController@delete')->name('deletePost'
 
 // show category's Notes
 Route::get('/notes', 'Note\NoteController@index')->name('notes');
+Route::get('/fcards', 'Note\NoteController@index')->name('fcards');
 // Create note
 Route::get('/note/create', 'Note\NoteController@create')->name('createNote');
 Route::post('/note/store', 'Note\NoteController@store')->name('storeNote');

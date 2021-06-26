@@ -35,6 +35,19 @@ function autoGrow(e) {
     e.style.height = (e.scrollHeight+2) + "px";
 }
 
+// show fcard conntent
+function showFcards(target) {
+    $(target).collapse('show');
+}
+// hide fcard conntent
+function hideFcards(target) {
+    $(target).collapse('hide');
+}
+// remembered
+function remembered(id) {
+    console.log(id);
+}
+
 // // axios
 // axios.get('/user', {
 //     params: {

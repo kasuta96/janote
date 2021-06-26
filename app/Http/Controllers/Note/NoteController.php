@@ -25,7 +25,7 @@ class NoteController extends Controller
         $data = new \stdClass();
         $data->page = $rq->input('p') ?? 1;
         $data->count = $query->count() ?? 0;
-        $data->limit = 25;
+        $data->limit = 24;
         $data->totalPage = ceil($data->count/$data->limit);
         return $data;
     }
@@ -95,8 +95,8 @@ class NoteController extends Controller
         ->take($data->limit)
         ->get();
 
-        if (isset($params['d']) && $params['d'] == 'fcard') {
-            return view('note.fcard', ['Notes'=>$notes, 'Params'=>$params, 'Data'=>$data]);
+        if (isset($params['d']) && $params['d'] == 'fcards') {
+            return view('note.fcards', ['Notes'=>$notes, 'Params'=>$params, 'Data'=>$data]);
         } else {
             return view('note.list', ['Notes'=>$notes, 'Params'=>$params, 'Data'=>$data]);
         }
