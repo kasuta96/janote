@@ -3,9 +3,12 @@
 
 @section('content')
 
-@include('note.noteNavbar',['RouteName'=>'notes'])
-<small class="text-muted ml-3">{{ $Data->count.' '.__('results') }}</small>
-
+@include('note.noteNavbar',['RouteName'=>'fcards'])
+<div class="pt-3">
+    <small class="text-muted ml-3">{{ $Data->count.' '.__('results') }}</small>
+    <button class="btn btn-light btn-sm" type="button" onclick="showFcards('.content')">{{ __('Show') }}</button>
+    <button class="btn btn-light btn-sm" type="button" onclick="hideFcards('.content')">{{ __('Hide') }}</button>
+</div>
 @if (!isset($Notes[0]))
 <div class="alert alert-info mt-3 text-center" role="alert">
     {{ __('There is no data') }}
@@ -22,45 +25,34 @@
     </a>
 </div>
 @else
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">{{ __('Title') }}</th>
-            <th scope="col">{{ __('Content') }}</th>
-            @if(!isset($Data->category))
-            <th scope="col" class="d-none d-lg-block">{{ __('Categories') }}</th>
-            <th scope="col" class="table-tool py-2">
-                <a class="btn btn-success btn-sm" href="{{ route('createNote') }}"><i data-feather="plus"></i> {{ __('Add') }}</a>
-            </th>
-            @else
-            <th scope="col" class="table-tool">
-                <a class="btn btn-success btn-sm" href="{{ route('createNote',['category'=>$Data->category->id]) }}"><i data-feather="plus"></i> {{ __('Add') }}</a>
-            </th>
-            @endif
-        </tr>
-    </thead>
-    <tbody>
+<div class="card-columns mt-3">
+    @foreach($Notes as $Note)
+    <div class="card mb-3 p-3 bg-orange face">
+            <strong class="title pointer pb-2" data-toggle="collapse" data-target="#collapse{{ $Note->id }}">{{ $Note->title }}</strong>
+            <div class="content show" id="collapse{{ $Note->id }}">{{ $Note->content }}</div>
 
-    @foreach($Notes as $key => $Note)
-        <tr>
-            <th scope="row" title="{{ $Note->created_at }}">{{ ($Data->page-1)*$Data->limit+$key+1 }}</th>
-            <td>{{ $Note->title }}</td>
-            <td>{{ $Note->content }}</td>
-            @if(!isset($Data->category))
-            <td class="d-none d-lg-block"><a class="text-dark" href="{{ route('notes',['c'=>$Note->category_id ?? 'other']) }}">{{ $Note->category->title ?? __('Other') }}</a></td>
-            @endif
-            <td class="table-tool">
+            <div class="d-flex justify-content-between align-items-center pt-3">
+                <button type="button"
+                @if ($Note->mark == 2)
+                    class="btn btn-primary btn-sm"
+                @else
+                    class="btn btn-light btn-sm"
+                @endif
+                    data-id="{{ $Note->id }}" onclick="studied(this)"
+                    title="{{ __('Studied') }}"
+                >
+                    <i data-feather="check"></i>
+                </button>
 
-                @include('note.mediaBtn')
-                @include('note.noteDropdownBtn')
-
-            </td>
-        </tr>
+                <div>
+                    @include('note.mediaBtn')
+                    @include('note.noteDropdownBtn')
+                </div>
+            </div>
+    </div>
     @endforeach
 
-    </tbody>
-</table>
+</div>
 
 <nav aria-label="">
     <ul class="pagination justify-content-center">
