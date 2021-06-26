@@ -7,7 +7,7 @@
             </a>
         </div>
 
-        @if(!Route::is('notes') )
+        @if(!Route::is('notes') && !Route::is('fcards'))
         <!-- Search Form -->
         <form action="{{ route('notes') }}" method="get" class="search-form">
             <input type="text" placeholder="Search" name="kw">
