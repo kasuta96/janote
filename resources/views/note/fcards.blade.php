@@ -25,9 +25,10 @@
     </a>
 </div>
 @else
-<div class="card-columns mt-3">
+<div class="row mt-3">
     @foreach($Notes as $Note)
-    <div class="card mb-3 p-3 bg-orange face">
+    <div class="col-sm-6 col-md-4 col-lg-3 p-2">
+        <div class="card p-3 bg-orange face">
             <strong class="title pointer pb-2" data-toggle="collapse" data-target="#collapse{{ $Note->id }}">{{ $Note->title }}</strong>
             <div class="content show" id="collapse{{ $Note->id }}">{{ $Note->content }}</div>
 
@@ -49,6 +50,7 @@
                     @include('note.noteDropdownBtn')
                 </div>
             </div>
+        </div>
     </div>
     @endforeach
 

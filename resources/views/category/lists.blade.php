@@ -9,26 +9,28 @@
 
 @section('content')
     
-<div class="d-flex mb-3 flex-wrap">
+<div class="mb-3 row">
     @foreach($categories as $category)
-    <div class="-gcard bgray-400 bg-card m-2 p-3" style="width:280px;height: 200px;">
-        <a href="{{ route('notes', ['c'=>$category->id]) }}" style="color:black;"><i data-feather="folder"></i> <strong>{{ $category->title }}</strong></a>
-        <div class="d-flex justify-content-between align-items-center mt-auto">
-            <small class="text-muted">{{ __('Note').': '.$category->count }}</small>
-            <div>
-                <button type="button" class="btn btn-light btn-sm" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-                    <i data-feather="more-horizontal"></i>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right ">
-                    <div class="dropdown-header">
-                        <a class="btn btn-success btn-sm" href="{{ route('editCategory', $category->id) }}" role="button" title="{{ __('Edit')}}"><i data-feather="edit"></i></a>
-                    @if ($category->user_id == Auth::user()->id)
-                        <form action="{{ route('deleteCategory', $category->id) }}" method="get" class="d-inline-block">
-                        @csrf
-                            <button type="submit" class="btn btn-danger btn-sm" title="{{ __('Delete') }}"><i data-feather="delete"></i></button>
-                        </form>
-                    @endif
+    <div class="col-sm-6 col-lg-4 p-2">
+        <div class="card bg-card p-3">
+            <a href="{{ route('notes', ['c'=>$category->id]) }}" style="color:black;"><i data-feather="folder"></i> <strong>{{ $category->title }}</strong></a>
+            <div class="d-flex justify-content-between align-items-center mt-auto pt-3">
+                <small class="text-muted">{{ __('Note').': '.$category->count }}</small>
+                <div>
+                    <button type="button" class="btn btn-light btn-sm" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        <i data-feather="more-horizontal"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div class="dropdown-header">
+                            <a class="btn btn-success btn-sm" href="{{ route('editCategory', $category->id) }}" role="button" title="{{ __('Edit')}}"><i data-feather="edit"></i></a>
+                        @if ($category->user_id == Auth::user()->id)
+                            <form action="{{ route('deleteCategory', $category->id) }}" method="get" class="d-inline-block">
+                            @csrf
+                                <button type="submit" class="btn btn-danger btn-sm" title="{{ __('Delete') }}"><i data-feather="delete"></i></button>
+                            </form>
+                        @endif
+                        </div>
                     </div>
                 </div>
             </div>
