@@ -30,7 +30,7 @@
 @foreach($Notes as $key => $Note)
 
         <tr>
-            <td>{{ $Note->title }}</td>
+            <td>{{ $Note->title }}&nbsp; @include('note.mediaBtn')</td>
             <td>{{ $Note->content }}</td>
             <td>{{ $Note->user->name }}</td>
             <td>{{ (new App\Classes\General())->shortTime($Note->updated_at) }}</td>

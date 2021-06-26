@@ -2,7 +2,7 @@
     aria-expanded="false">
     <i data-feather="more-horizontal"></i>
 </button>
-<div class="dropdown-menu" style="max-width: 300px;">
+<div class="dropdown-menu" style="max-width: 300px">
     <div class="dropdown-header">
         <a href="{{ route('editNote', $Note->id) }}" role="button" class="btn btn-primary btn-sm" title="{{ __('Edit') }}"><i data-feather="edit"></i></a>
 
