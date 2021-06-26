@@ -13,7 +13,11 @@
 
 Auth::routes();
 
-Route::get('/{home}', 'HomeController@index')->name('home')->where('home','(home)?');
+// Route::get('/{home}', 'HomeController@index')->name('home')->where('home','(home)?');
+Route::get('/{home}', function ()
+{
+  return redirect()->route('fcards',['d'=>'dcards']);
+})->name('home')->where('home','(home)?');
 
 // show Posts
 Route::get('/posts', 'Post\PostController@showPosts')->name('posts');
