@@ -112,7 +112,7 @@ class CategoryController extends Controller
             }
             // $categoriess = [$categories];
         }
-            // Change status (0: active, 9: deleted)
+            // Change status (0: active, 9: deleted, 8:deleted cate)
         $categories->fill([
             'status' => 0,
         ]);
