@@ -19,6 +19,7 @@ class Note extends Model
         'image',
         'status',
         'hashtag',
+        'mark'
     ];
 
     // relationship

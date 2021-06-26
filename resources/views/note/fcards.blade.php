@@ -32,7 +32,17 @@
             <div class="content show" id="collapse{{ $Note->id }}">{{ $Note->content }}</div>
 
             <div class="d-flex justify-content-between align-items-center pt-3">
-                <button type="button" class="btn btn-light btn-sm" onclick="remembered({{ $Note->id }})"><i data-feather="check"></i></button>
+                <button type="button"
+                @if ($Note->mark == 2)
+                    class="btn btn-primary btn-sm"
+                @else
+                    class="btn btn-light btn-sm"
+                @endif
+                    data-id="{{ $Note->id }}" onclick="studied(this)"
+                    title="{{ __('Studied') }}"
+                >
+                    <i data-feather="check"></i>
+                </button>
 
                 <div>
                     @include('note.mediaBtn')

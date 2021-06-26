@@ -22,7 +22,7 @@ Route::post('/post/create', 'Post\PostController@create')->name('createPost');
 // delete Post
 Route::get('/post/delete/{id}', 'Post\PostController@delete')->name('deletePost');
 
-// show category's Notes
+// show Notes
 Route::get('/notes', 'Note\NoteController@index')->name('notes');
 Route::get('/fcards', 'Note\NoteController@index')->name('fcards');
 // Create note
@@ -42,13 +42,10 @@ Route::get('/trash/remove2/{id}', 'Category\CategoryController@remove')->name('r
 
 // show Categories
 Route::get('/categories', 'Category\CategoryController@show')->name('categories');
-
 //create Categories
 Route::post('/categories', 'Category\CategoryController@store')->name('createCategory');
-
 //delete Category
 Route::get('/categories/delete/{id}', 'Category\CategoryController@delete')->name('deleteCategory');
-
 //edit & update Category
 Route::get('/categories/edit/{id}', 'Category\CategoryController@edit')->name('editCategory');
 Route::post('/categories/{id}', 'Category\CategoryController@update')->name('updateCategory');
@@ -60,8 +57,10 @@ Route::get('lang/{lang}', 'LanguageController@switchLang')->name('lang.switch');
 Route::get('/hashtag', 'Hashtag\HashtagController@show')->name('hashtag');
 Route::get('/hashtag/{id}', 'Hashtag\HashtagController@wordtag')->name('wordtag');
 
-
 // profile
 Route::get('profile', 'Auth\ProfileController@index')->name('profile');
 Route::get('profile/edit', 'Auth\ProfileController@edit')->name('editProfile');
 Route::post('profile/update', 'Auth\ProfileController@update')->name('updateProfile');
+
+// studied axios
+Route::get('studied', 'Note\AxiosController@studied');
