@@ -77,6 +77,8 @@ class CategoryController extends Controller
                 'status' => 9,
             ]);
             $categories->save();
+
+            $deleteNotes = Note::where('category_id', $id)->update(['status' => 8]);
             // Category::destroy($id);
         } catch (\Throwable $th) {
             throw $th;
@@ -115,7 +117,7 @@ class CategoryController extends Controller
             'status' => 0,
         ]);
         $categories->save();
-
+        Note::where('category_id', $rq)->update(['status' => 0]);
         return redirect()->route('trash')->with('status', __('Restored'));
     }
 

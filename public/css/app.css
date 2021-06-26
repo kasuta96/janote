@@ -76,11 +76,11 @@ body {
         column-count: 4;
     }
 }
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     .navbar-brand {
         display: none;
     }
-}
+} */
 /* notes navbar */
 .note-navbar input, .note-navbar select {
     max-width: 180px;

@@ -18,6 +18,11 @@ class NoteController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->otherCate = (object) array(
+            "id" => "other",
+            "title" => __("Other"),
+            "status" => 0,
+        );
     }
     // function
     public function pagination($rq, $query)
@@ -52,13 +57,13 @@ class NoteController extends Controller
         if ($request->input('d')) {
             $params['d'] = $request->input('d'); // Display style
         }
-        $params['mark'] = $request->input('mark') ?? 1; // Mark
+        $params['mark'] = $request->input('mark') ?? ''; // Mark
 
 
         if (isset($params['c']) && $params['c'] == 'other') // note haven't catagory
         {
             $query = Note::where('category_id',NULL);
-            $Category = Category::find(1)->other;
+            $Category = $this->otherCate;
         }
         else if (isset($params['c'])) // note have category
         {
@@ -78,9 +83,10 @@ class NoteController extends Controller
         else // all
         {
             // query
-            $query = Note::whereHas('category', function (Builder $query) {
-                $query->where('status', 0);
-            });
+            // $query = Note::whereHas('category', function (Builder $query) {
+            //     $query->where('status', 0);
+            // });
+            $query = Note::with('category');
         }
         // mark ()
         if ($params['mark'] == 1 || $params['mark'] == 2) {
@@ -171,7 +177,7 @@ class NoteController extends Controller
         }
 
         // get Category info
-        $category = Category::find($input['category_id']) ?? Category::find(1)->other;
+        $category = Category::find($input['category_id']) ?? $this->otherCate;
         return redirect()->route('notes', ['c'=>$category->id] )->with('status', __('lang.savedto',['name' => $category->title ]));
     }
 
