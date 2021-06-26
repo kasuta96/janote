@@ -22,6 +22,9 @@ html {
 .bg-gray {
     background-color: var(--gray-200);
 }
+.bg-card {
+    background-color: #e1f5fe;
+}
 main.container-fluid {
     max-width: 960px;
 }

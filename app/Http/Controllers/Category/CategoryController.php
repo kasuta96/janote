@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Note;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -38,6 +39,11 @@ class CategoryController extends Controller
         $categories = $query->skip($pagination->limit*($pagination->page - 1))
         ->take($pagination->limit)
         ->get();
+        if (isset($categories[0])) {
+            foreach ($categories as $key => $category) {
+                $category->count = Note::where('category_id',$category->id)->count() ?? 0;
+            }
+        }
 
         return view('category.lists', compact('categories', 'pagination'));
     }
