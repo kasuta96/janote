@@ -274,7 +274,7 @@ class NoteController extends Controller
         }
         try
         {
-            // Change status (0: active, 9: deleted)
+            // Change status (0: active, 9: deleted, 8:deleted cate)
             $Note->fill([
                 'status' => 9,
             ]);
@@ -388,7 +388,7 @@ class NoteController extends Controller
         // Count deleted data
         $countNote = 0;
         foreach ($Notes as $Note) {
-            // Change status (0: active, 9: deleted)
+            // Change status (0: active, 9: deleted, 8:deleted cate)
             $Note->fill([
                 'status' => 0,
             ]);
